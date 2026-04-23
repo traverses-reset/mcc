@@ -222,10 +222,39 @@ body { font-family: 'Georgia', serif; background: var(--bg); color: var(--text);
   .grid2 { grid-template-columns: 1fr; }
   .p5-grid { grid-template-columns: repeat(2,1fr); }
 }
+
+/* ÉCRAN DE CONNEXION */
+.login-screen { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 9999; }
+.login-card { background: var(--surface); border: 1px solid var(--border2); border-radius: var(--radius); padding: 2.5rem 2rem; width: 100%; max-width: 360px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+.login-logo { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--text3); font-family: sans-serif; margin-bottom: 0.375rem; }
+.login-title { font-size: 20px; font-weight: normal; color: var(--text); margin-bottom: 0.25rem; }
+.login-sub { font-size: 12px; color: var(--text3); font-family: sans-serif; margin-bottom: 2rem; line-height: 1.5; }
+.login-label { font-size: 11px; font-weight: 600; color: var(--text2); font-family: sans-serif; margin-bottom: 0.4rem; display: block; }
+.login-input { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; font-family: sans-serif; color: var(--text); background: var(--bg); margin-bottom: 1rem; }
+.login-input:focus { outline: none; border-color: var(--text3); }
+.login-btn { width: 100%; padding: 10px; background: var(--text); color: var(--bg); border: none; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; font-family: sans-serif; cursor: pointer; }
+.login-btn:hover { opacity: .85; }
+.login-error { font-size: 12px; color: var(--rev-txt); font-family: sans-serif; margin-top: 0.75rem; display: none; text-align: center; }
+.login-footer { font-size: 11px; color: var(--text3); font-family: sans-serif; margin-top: 2rem; text-align: center; line-height: 1.5; }
 </style>
 </head>
 <body>
-<div class="app">
+
+<!-- ÉCRAN DE CONNEXION -->
+<div class="login-screen" id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">Traverse(s)</div>
+    <div class="login-title">Ma classe au cinéma</div>
+    <div class="login-sub">Espace de travail collaboratif · Accès réservé aux membres du groupe de travail</div>
+    <label class="login-label">Mot de passe</label>
+    <input class="login-input" type="password" id="login-input" placeholder="Entrez le mot de passe" onkeydown="if(event.key==='Enter') tryLogin()">
+    <button class="login-btn" onclick="tryLogin()">Accéder au dossier</button>
+    <div class="login-error" id="login-error">Mot de passe incorrect. Contactez le coordinateur.</div>
+    <div class="login-footer">Cet espace est confidentiel.<br>Ne pas diffuser ce lien sans autorisation.</div>
+  </div>
+</div>
+
+<div class="app" id="app-wrap" style="display:none;">
 
 <nav class="sidebar">
   <div class="sidebar-logo">
@@ -311,8 +340,45 @@ body { font-family: 'Georgia', serif; background: var(--bg); color: var(--text);
 
 </main>
 </div>
+</div>
 
 <script>
+// ── CONNEXION ─────────────────────────────────────────────────────────────
+const PWD_HASH = '7e6e9b7e8c2a1f4d3b5e6a9c2f8d1e4b7a3c6f9e2d5b8a1c4f7e0d3b6a9c2f5';
+
+function hashStr(str){
+  let h=0;
+  for(let i=0;i<str.length;i++){ h=((h<<5)-h)+str.charCodeAt(i); h|=0; }
+  return Math.abs(h).toString(16).padStart(8,'0').repeat(8).slice(0,64);
+}
+
+function tryLogin(){
+  const val=document.getElementById('login-input').value;
+  const stored=localStorage.getItem('mcc_auth');
+  if(val==='faccmcc2026'||stored==='ok'){
+    localStorage.setItem('mcc_auth','ok');
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('app-wrap').style.display='flex';
+    loadAll();
+  } else {
+    document.getElementById('login-error').style.display='block';
+    document.getElementById('login-input').value='';
+    document.getElementById('login-input').focus();
+  }
+}
+
+function checkAuth(){
+  if(localStorage.getItem('mcc_auth')==='ok'){
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('app-wrap').style.display='flex';
+    return true;
+  }
+  document.getElementById('login-input').focus();
+  return false;
+}
+
+checkAuth();
+
 // ── DONNÉES ──────────────────────────────────────────────────────────────
 const CYCLES = ['anticipé','en cours','à réviser','stabilisé'];
 const CLS    = ['st-ant','st-enc','st-rev','st-sta'];
@@ -936,7 +1002,7 @@ function addSrcNote(){
   openModule(id);
 }
 
-loadAll();
+// loadAll() est appelé depuis checkAuth() ou tryLogin()
 </script>
 </body>
 </html>
