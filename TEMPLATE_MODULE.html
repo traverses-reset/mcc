@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[ID] — [INTITULÉ] — MCC</title>
+<style>
+/* ============================================================
+   MCC INTRANET — TEMPLATE MODULE STANDARD v1
+   Fonctionne en autonome et dans l'iframe GitHub Pages.
+   Variables hardcodées — aucune dépendance au viewer Claude.
+   ============================================================ */
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --bg:        #fdfcf9;
+  --white:     #ffffff;
+  --text:      #1a1a1a;
+  --muted:     #555555;
+  --faint:     #888888;
+  --border:    rgba(0,0,0,0.10);
+  --border-md: rgba(0,0,0,0.20);
+  --surface:   #f4f2ec;
+  --accent:    #c4a35a;
+
+  /* Statuts */
+  --c-info:    #1a5fa0; --bg-info:    #e6f0fb;
+  --c-warn:    #a05808; --bg-warn:    #fdf0e0;
+  --c-danger:  #902018; --bg-danger:  #fceae8;
+  --c-success: #1f7040; --bg-success: #e6f5ec;
+  --c-neutral: #555555; --bg-neutral: #f4f2ec;
+}
+
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--text);
+  background: var(--bg);
+  padding: 1.75rem 1.5rem 4rem;
+  max-width: 860px;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 1rem;
+  margin-bottom: 1.75rem;
+  border-bottom: 0.5px solid var(--border-md);
+}
+.badge-group { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 11px; font-weight: 500;
+  padding: 3px 9px; border-radius: 6px; letter-spacing: 0.03em;
+}
+.b-warn    { background: var(--bg-warn);    color: var(--c-warn);    border: 0.5px solid #e5a800; }
+.b-info    { background: var(--bg-info);    color: var(--c-info);    border: 0.5px solid #76a9fa; }
+.b-success { background: var(--bg-success); color: var(--c-success); border: 0.5px solid #5aad7a; }
+.b-danger  { background: var(--bg-danger);  color: var(--c-danger);  border: 0.5px solid #e08070; }
+.b-neutral { background: var(--bg-neutral); color: var(--c-neutral); border: 0.5px solid var(--border-md); }
+
+/* ── EN-TÊTE DU MODULE ── */
+.eyebrow {
+  font-size: 11px; font-weight: 500;
+  color: var(--faint); letter-spacing: 0.07em;
+  margin-bottom: 0.2rem;
+}
+h1 {
+  font-size: 22px; font-weight: 500; line-height: 1.25;
+  color: var(--text); margin-bottom: 0.35rem;
+}
+.doc-sub { font-size: 13px; color: var(--muted); margin-top: 0.2rem; }
+
+.links-row {
+  display: flex; align-items: center; gap: 6px;
+  flex-wrap: wrap; margin-top: 0.75rem;
+}
+.links-label { font-size: 11px; color: var(--faint); font-weight: 500; }
+.link-pill {
+  font-size: 11px; padding: 2px 7px; border-radius: 4px;
+  background: var(--surface); border: 0.5px solid var(--border);
+  color: var(--muted);
+}
+
+/* ── SECTIONS ── */
+.section { margin-bottom: 2.75rem; }
+.section-header {
+  display: flex; align-items: baseline; gap: 10px;
+  margin-bottom: 1.25rem; padding-bottom: 0.5rem;
+  border-bottom: 0.5px solid var(--border);
+}
+.sec-num {
+  font-size: 11px; font-weight: 500;
+  color: var(--faint); letter-spacing: 0.07em; min-width: 22px;
+}
+h2 { font-size: 17px; font-weight: 500; color: var(--text); }
+
+p { margin-bottom: 0.75rem; color: var(--muted); }
+p:last-child { margin-bottom: 0; }
+p b { color: var(--text); font-weight: 500; }
+
+.sub-label {
+  font-size: 11px; font-weight: 500;
+  color: var(--faint); letter-spacing: 0.05em; text-transform: uppercase;
+  margin-bottom: 0.65rem; margin-top: 1.5rem;
+}
+.sub-label:first-child { margin-top: 0; }
+
+/* ── BLOCS DE VIGILANCE ── */
+.vlist { display: flex; flex-direction: column; gap: 10px; }
+.vitem { display: grid; grid-template-columns: 3px 1fr; gap: 13px; }
+.vacc  { border-radius: 2px; background: var(--border-md); }
+.vacc.d { background: #c0392b; }
+.vacc.w { background: #d07010; }
+.vacc.i { background: #2a6aaa; }
+.vtext  { font-size: 14px; color: var(--muted); line-height: 1.6; padding-top: 1px; }
+.vtext b { font-weight: 500; color: var(--text); }
+
+/* ── CARTES GÉNÉRIQUES ── */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-bottom: 1.25rem; }
+.card {
+  background: var(--white); border: 0.5px solid var(--border);
+  border-radius: 10px; padding: 0.9rem;
+}
+.card-title {
+  font-size: 13px; font-weight: 500; color: var(--text);
+  margin-bottom: 0.65rem; padding-bottom: 0.5rem;
+  border-bottom: 0.5px solid var(--border);
+}
+.card-row { margin-bottom: 0.5rem; }
+.card-row:last-child { margin-bottom: 0; }
+.card-label {
+  font-size: 10px; font-weight: 500; color: var(--faint);
+  letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 2px;
+}
+.card-val { font-size: 12px; color: var(--muted); line-height: 1.5; }
+.card-val.strong { color: var(--text); font-weight: 500; }
+
+/* ── SÉQUENCE NUMÉROTÉE ── */
+.seq { display: flex; flex-direction: column; gap: 9px; margin: 1rem 0; }
+.seq-item { display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start; }
+.seq-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--surface); border: 0.5px solid var(--border-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 500; color: var(--muted); flex-shrink: 0;
+}
+.seq-body { padding-top: 4px; font-size: 14px; color: var(--muted); }
+.seq-body b { font-weight: 500; color: var(--text); }
+
+/* ── CITATION ── */
+.quote {
+  border-left: 2.5px solid var(--border-md);
+  padding: 0.4rem 0 0.4rem 1rem; margin: 1rem 0;
+  font-size: 14px; color: var(--muted); font-style: italic;
+}
+
+/* ── SECTION STATUT (04) ── */
+.status-grid {
+  display: grid; grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 10px; margin-bottom: 1.25rem;
+}
+.scard { background: var(--surface); border-radius: 8px; padding: 0.75rem 1rem; }
+.scard-lbl {
+  font-size: 10px; font-weight: 500; color: var(--faint);
+  letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 4px;
+}
+.scard-val { font-size: 14px; font-weight: 500; color: var(--text); }
+
+/* ── NOTES DE RÉVISION ── */
+.notes-box {
+  background: var(--white); border: 0.5px solid var(--border);
+  border-radius: 10px; padding: 1rem;
+}
+.notes-hdr {
+  display: flex; align-items: center;
+  justify-content: space-between; margin-bottom: 0.75rem;
+}
+.notes-title { font-size: 13px; font-weight: 500; color: var(--muted); }
+.note-entry {
+  font-size: 13px; padding: 8px 0;
+  border-bottom: 0.5px solid var(--border); color: var(--muted);
+}
+.note-entry:last-child { border-bottom: none; }
+.note-meta { font-size: 10px; color: var(--faint); margin-bottom: 2px; }
+.note-empty { font-size: 13px; color: var(--faint); font-style: italic; padding: 8px 0; }
+.note-input-row { display: flex; gap: 8px; margin-top: 0.75rem; }
+.note-input-row textarea {
+  flex: 1; font-family: inherit; font-size: 13px; resize: none; height: 52px;
+  border: 0.5px solid var(--border-md); border-radius: 8px; padding: 8px;
+  background: var(--surface); color: var(--text);
+}
+.note-input-row button {
+  font-size: 12px; padding: 0 14px; cursor: pointer; border-radius: 8px;
+  background: var(--surface); border: 0.5px solid var(--border-md);
+  color: var(--muted); font-family: inherit;
+}
+.note-input-row button:hover { background: var(--border); }
+select {
+  font-size: 12px; padding: 3px 8px; border-radius: 6px;
+  border: 0.5px solid var(--border-md); background: var(--surface);
+  color: var(--muted); cursor: pointer; font-family: inherit;
+}
+.revision-note { font-size: 14px; color: var(--muted); margin-bottom: 1.25rem; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<!-- LECTEUR D'ÉCRAN -->
+<h2 class="sr-only">[Module ID] — [Intitulé complet] — Marché coordination éducation aux images</h2>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="badge-group">
+    <!-- Badge confidentialité si P0 : <span class="badge b-warn">⬤ Confidentiel — groupe pivot</span> -->
+    <span class="badge b-neutral">[Groupe] — [Libellé groupe]</span>
+  </div>
+  <div class="badge-group">
+    <span class="badge b-info" id="status-badge">Anticipé</span>
+    <span class="badge b-neutral">v1 · [mois année]</span>
+  </div>
+</div>
+
+<!-- EN-TÊTE -->
+<div style="margin-bottom:2rem">
+  <div class="eyebrow">[ID MODULE]</div>
+  <h1>[Intitulé du module]</h1>
+  <div class="doc-sub">[Sous-titre contextuel facultatif]</div>
+  <div class="links-row">
+    <span class="links-label">Liens :</span>
+    <span class="link-pill">→ [Module connexe A]</span>
+    <span class="link-pill">→ [Module connexe B]</span>
+  </div>
+</div>
+
+<!-- 01 — CONTEXTE ET ENJEUX -->
+<div class="section">
+  <div class="section-header">
+    <span class="sec-num">01</span>
+    <h2>Contexte et enjeux</h2>
+  </div>
+  <p>[Positionnement dans l'arborescence. Liens avec les modules connexes. Pour les modules scénarisés, cette section est commune à tous les scénarios d'une même entrée.]</p>
+</div>
+
+<!-- 02 — DÉVELOPPEMENT -->
+<div class="section">
+  <div class="section-header">
+    <span class="sec-num">02</span>
+    <h2>Développement</h2>
+  </div>
+  <p>[Contenu principal. Pour les modules scénarisés, cette section est propre au scénario traité et constitue le cœur de la différenciation.]</p>
+
+  <!-- Exemple de sous-section -->
+  <div class="sub-label">Titre de sous-section</div>
+  <p>[Contenu]</p>
+
+  <!-- Exemple de cartes -->
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title">Nom de l'acteur / item</div>
+      <div class="card-row">
+        <div class="card-label">Dimension A</div>
+        <div class="card-val strong">Valeur principale</div>
+      </div>
+      <div class="card-row">
+        <div class="card-label">Dimension B</div>
+        <div class="card-val">Valeur secondaire</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Exemple de séquence numérotée -->
+  <div class="seq">
+    <div class="seq-item">
+      <div class="seq-num">1</div>
+      <div class="seq-body"><b>Titre de l'étape.</b> Description détaillée.</div>
+    </div>
+    <div class="seq-item">
+      <div class="seq-num">2</div>
+      <div class="seq-body"><b>Titre de l'étape.</b> Description détaillée.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 03 — POINTS DE VIGILANCE -->
+<div class="section">
+  <div class="section-header">
+    <span class="sec-num">03</span>
+    <h2>Points de vigilance</h2>
+  </div>
+  <div class="vlist">
+    <div class="vitem">
+      <div class="vacc d"></div>
+      <div class="vtext"><b>Risque critique.</b> Description du risque et de ses conséquences.</div>
+    </div>
+    <div class="vitem">
+      <div class="vacc w"></div>
+      <div class="vtext"><b>Point d'attention.</b> Ambiguïté ou élément à surveiller.</div>
+    </div>
+    <div class="vitem">
+      <div class="vacc i"></div>
+      <div class="vtext"><b>Information manquante.</b> Ce qui est nécessaire pour compléter l'analyse.</div>
+    </div>
+    <div class="vitem">
+      <div class="vacc"></div>
+      <div class="vtext"><b>Note générale.</b> Observation sans caractère d'urgence.</div>
+    </div>
+  </div>
+  <!-- Pour les modules scénarisés, ajouter :
+  <p style="margin-top:1rem;font-size:14px;color:var(--muted)"><b>Critères d'arbitrage de ce scénario :</b> conditions à réunir pour retenir ou écarter ce scénario.</p>
+  -->
+</div>
+
+<!-- 04 — STATUT ET RÉVISIONS -->
+<div class="section">
+  <div class="section-header">
+    <span class="sec-num">04</span>
+    <h2>Statut et révisions</h2>
+  </div>
+
+  <div class="status-grid">
+    <div class="scard">
+      <div class="scard-lbl">Statut du module</div>
+      <div class="scard-val" id="status-display">Anticipé</div>
+    </div>
+    <div class="scard">
+      <div class="scard-lbl">Version</div>
+      <div class="scard-val">v1 · [mois année]</div>
+    </div>
+    <div class="scard">
+      <div class="scard-lbl">Prochaine révision</div>
+      <div class="scard-val">[Déclencheur de révision]</div>
+    </div>
+  </div>
+
+  <p class="revision-note">[Description des révisions nécessaires à la publication du marché.]</p>
+
+  <div class="notes-box">
+    <div class="notes-hdr">
+      <div class="notes-title">Notes de révision</div>
+      <select id="status-select" onchange="updateStatus(this.value)">
+        <option value="Anticipé">Anticipé</option>
+        <option value="En cours">En cours</option>
+        <option value="À réviser">À réviser</option>
+        <option value="Stabilisé">Stabilisé</option>
+      </select>
+    </div>
+    <div id="notes-entries"><div class="note-empty">Aucune note pour l'instant.</div></div>
+    <div class="note-input-row">
+      <textarea id="note-input" placeholder="Ajouter une note de révision…"></textarea>
+      <button onclick="addNote()">Ajouter</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* Clé de storage normalisée — à adapter pour chaque module */
+const KEY = 'mcc_[ID-MODULE]';
+
+function load() {
+  try {
+    const s = localStorage.getItem(KEY);
+    if (!s) return;
+    const d = JSON.parse(s);
+    if (d.status) {
+      document.getElementById('status-display').textContent = d.status;
+      document.getElementById('status-select').value = d.status;
+      document.getElementById('status-badge').textContent = d.status;
+      const badge = document.getElementById('status-badge');
+      badge.className = 'badge ' + statusClass(d.status);
+    }
+    if (d.notes && d.notes.length) renderNotes(d.notes);
+  } catch(e) {}
+}
+
+function statusClass(s) {
+  return {
+    'Anticipé': 'b-neutral',
+    'En cours': 'b-info',
+    'À réviser': 'b-warn',
+    'Stabilisé': 'b-success'
+  }[s] || 'b-neutral';
+}
+
+function get() {
+  try {
+    const s = localStorage.getItem(KEY);
+    if (s) return JSON.parse(s);
+  } catch(e) {}
+  return { status: 'Anticipé', notes: [] };
+}
+
+function save(d) {
+  try { localStorage.setItem(KEY, JSON.stringify(d)); } catch(e) {}
+}
+
+function renderNotes(notes) {
+  if (!notes || !notes.length) {
+    document.getElementById('notes-entries').innerHTML = '<div class="note-empty">Aucune note pour l\'instant.</div>';
+    return;
+  }
+  document.getElementById('notes-entries').innerHTML = notes
+    .map(n => `<div class="note-entry"><div class="note-meta">${n.date}</div><div>${n.text}</div></div>`)
+    .join('');
+}
+
+function addNote() {
+  const el = document.getElementById('note-input');
+  const text = el.value.trim();
+  if (!text) return;
+  const d = get();
+  const now = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+  d.notes = d.notes || [];
+  d.notes.unshift({ date: now, text });
+  save(d);
+  renderNotes(d.notes);
+  el.value = '';
+}
+
+function updateStatus(val) {
+  document.getElementById('status-display').textContent = val;
+  document.getElementById('status-badge').textContent = val;
+  document.getElementById('status-badge').className = 'badge ' + statusClass(val);
+  const d = get();
+  d.status = val;
+  save(d);
+}
+
+load();
+</script>
+</body>
+</html>
