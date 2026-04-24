@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P2-5 · Documents administratifs requis — MCC</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #1a2638;
+    --navy-mid: #243145;
+    --navy-light: #2e3f58;
+    --cream: #f5f0e8;
+    --cream-dim: #ede8df;
+    --text: #f0ece3;
+    --text-dim: #a8b3c4;
+    --text-muted: #6e7d93;
+    --accent: #c9a84c;
+    --accent-dim: #8a6e2e;
+    --blue-soft: #4a7fa8;
+    --blue-pale: #1e3a52;
+    --cat-a: #4a3f8a;
+    --cat-a-bg: #2a2050;
+    --cat-b: #2e7a5e;
+    --cat-b-bg: #1a3d2e;
+    --cat-c: #8a5e2e;
+    --cat-c-bg: #3d2a12;
+    --border: rgba(255,255,255,0.08);
+    --border-mid: rgba(255,255,255,0.14);
+  }
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: var(--navy);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 2rem 1.5rem 4rem;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+
+  /* HEADER */
+  .header { border-bottom: 1px solid var(--accent-dim); padding-bottom: 1.4rem; margin-bottom: 2.5rem; }
+  .breadcrumb { font-family: 'Courier New', monospace; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: .5rem; }
+  .module-title { font-size: 1.6rem; font-weight: normal; color: var(--cream); letter-spacing: -.01em; margin-bottom: .4rem; }
+  .module-title strong { color: var(--accent); font-weight: normal; }
+  .module-sub { font-size: .875rem; color: var(--text-dim); font-family: 'Courier New', monospace; }
+  .badges { display: flex; gap: .5rem; margin-top: .8rem; flex-wrap: wrap; }
+  .badge { font-family: 'Courier New', monospace; font-size: 10px; letter-spacing: .07em; text-transform: uppercase; padding: 3px 10px; border-radius: 3px; }
+  .badge-anticipe { background: var(--accent-dim); color: var(--accent); border: 1px solid var(--accent-dim); }
+  .badge-iter { background: var(--blue-pale); color: var(--blue-soft); border: 1px solid var(--blue-pale); }
+  .badge-p2 { background: transparent; color: var(--text-muted); border: 1px solid var(--border-mid); }
+
+  /* SECTIONS */
+  .section { margin-bottom: 3rem; }
+  .section-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.2rem; padding-bottom: .6rem; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'Courier New', monospace; font-size: 11px; color: var(--accent); letter-spacing: .1em; min-width: 20px; }
+  .section-title { font-size: 1rem; font-weight: normal; color: var(--cream); letter-spacing: .02em; text-transform: uppercase; font-family: 'Courier New', monospace; }
+  .prose { font-size: .875rem; color: var(--text-dim); line-height: 1.8; margin-bottom: .9rem; }
+
+  /* DÉPENDANCES */
+  .dep-row { display: flex; gap: .5rem; flex-wrap: wrap; margin: .7rem 0 1.3rem; }
+  .dep-tag { font-family: 'Courier New', monospace; font-size: 11px; padding: 3px 10px; border-radius: 2px; border: 1px solid var(--border-mid); color: var(--text-muted); }
+  .dep-tag.active { color: var(--blue-soft); border-color: #1e3a52; background: rgba(74,127,168,.08); }
+
+  /* CATÉGORIES */
+  .cat-block { border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 1.5rem; }
+  .cat-header { padding: .8rem 1.1rem; display: flex; align-items: flex-start; gap: .9rem; border-bottom: 1px solid var(--border); }
+  .cat-pill { font-family: 'Courier New', monospace; font-size: 10px; font-weight: bold; letter-spacing: .06em; text-transform: uppercase; padding: 3px 9px; border-radius: 2px; white-space: nowrap; margin-top: 2px; }
+  .cat-a .cat-pill { background: var(--cat-a-bg); color: #9b8fd4; border: 1px solid var(--cat-a); }
+  .cat-b .cat-pill { background: var(--cat-b-bg); color: #5dbf9a; border: 1px solid var(--cat-b); }
+  .cat-c .cat-pill { background: var(--cat-c-bg); color: #d4a06a; border: 1px solid var(--cat-c); }
+  .cat-title { font-size: .875rem; color: var(--cream); margin-bottom: .15rem; }
+  .cat-desc { font-family: 'Courier New', monospace; font-size: 11px; color: var(--text-muted); }
+
+  /* DOCUMENTS */
+  .doc-item { padding: .9rem 1.1rem; border-bottom: 1px solid var(--border); }
+  .doc-item:last-child { border-bottom: none; }
+  .doc-row { display: flex; align-items: baseline; gap: .8rem; margin-bottom: .35rem; }
+  .doc-code { font-family: 'Courier New', monospace; font-size: 12px; font-weight: bold; color: var(--accent); min-width: 52px; }
+  .doc-name { font-size: .875rem; color: var(--cream); }
+  .doc-body { font-size: .825rem; color: var(--text-dim); line-height: 1.75; padding-left: 60px; }
+  .doc-body ul { margin: .35rem 0; padding-left: 1.2rem; }
+  .doc-body li { margin-bottom: .2rem; }
+  .tag-note { display: inline-block; font-family: 'Courier New', monospace; font-size: 10px; padding: 2px 8px; border-radius: 2px; margin-top: .3rem; background: var(--cat-c-bg); color: #d4a06a; border: 1px solid var(--cat-c); }
+  .tag-xref { display: inline-block; font-family: 'Courier New', monospace; font-size: 10px; padding: 2px 8px; border-radius: 2px; margin-top: .3rem; margin-left: 4px; background: var(--blue-pale); color: var(--blue-soft); border: 1px solid #1e3a52; }
+
+  /* TABLEAU SYNOPTIQUE */
+  .table-wrap { overflow-x: auto; margin-top: .5rem; }
+  table { width: 100%; border-collapse: collapse; font-size: .8rem; }
+  th { font-family: 'Courier New', monospace; font-size: 10px; letter-spacing: .07em; text-transform: uppercase; color: var(--text-muted); padding: .6rem .8rem; text-align: left; border-bottom: 1px solid var(--border-mid); background: rgba(255,255,255,.03); }
+  td { padding: .6rem .8rem; border-bottom: 1px solid var(--border); color: var(--text-dim); vertical-align: top; line-height: 1.55; }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { color: var(--cream); font-size: .825rem; }
+  .role-label { font-size: 10px; color: var(--text-muted); font-family: 'Courier New', monospace; }
+  .pill { display: inline-block; font-family: 'Courier New', monospace; font-size: 10px; padding: 1px 6px; border-radius: 2px; margin: 1px 1px; white-space: nowrap; }
+  .pa { background: var(--cat-a-bg); color: #9b8fd4; border: 1px solid var(--cat-a); }
+  .pb { background: var(--cat-b-bg); color: #5dbf9a; border: 1px solid var(--cat-b); }
+  .pc { background: var(--cat-c-bg); color: #d4a06a; border: 1px solid var(--cat-c); }
+  .note-sm { font-size: .775rem; color: var(--text-muted); margin-top: .5rem; font-style: italic; }
+
+  /* DÉLAIS */
+  .delais-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: .75rem; margin-top: .8rem; }
+  .delai-card { background: rgba(255,255,255,.03); border: 1px solid var(--border); border-radius: 5px; padding: .8rem 1rem; }
+  .d-label { font-family: 'Courier New', monospace; font-size: 10px; color: var(--text-muted); margin-bottom: .3rem; text-transform: uppercase; letter-spacing: .06em; }
+  .d-doc { font-size: .825rem; color: var(--cream); margin-bottom: .2rem; }
+  .d-dur { font-size: .8rem; color: var(--accent); font-family: 'Courier New', monospace; }
+
+  /* VIGILANCE */
+  .vig-list { list-style: none; }
+  .vig-item { display: flex; gap: 1rem; padding: .85rem 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
+  .vig-item:last-child { border-bottom: none; }
+  .vig-num { font-family: 'Courier New', monospace; font-size: 11px; color: var(--accent); min-width: 24px; padding-top: 1px; }
+  .vig-body { font-size: .85rem; color: var(--text-dim); line-height: 1.75; }
+  .vig-body strong { color: var(--cream); font-weight: normal; }
+
+  /* STATUT */
+  .status-block { background: rgba(255,255,255,.03); border: 1px solid var(--border-mid); border-radius: 6px; padding: 1.2rem 1.4rem; }
+  .status-row { display: flex; gap: 1rem; margin-bottom: .5rem; align-items: flex-start; }
+  .status-key { font-family: 'Courier New', monospace; font-size: 11px; color: var(--text-muted); min-width: 110px; padding-top: 1px; text-transform: uppercase; letter-spacing: .05em; }
+  .status-val { font-size: .85rem; color: var(--text-dim); }
+  .rev-title { font-family: 'Courier New', monospace; font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: .06em; margin: 1rem 0 .5rem; }
+  .rev-list { list-style: none; }
+  .rev-list li { font-size: .825rem; color: var(--text-dim); padding: .3rem 0 .3rem 1.2rem; position: relative; line-height: 1.6; border-bottom: 1px solid var(--border); }
+  .rev-list li:last-child { border-bottom: none; }
+  .rev-list li::before { content: "→"; position: absolute; left: 0; color: var(--accent); }
+  .storage-row { display: flex; align-items: center; gap: .6rem; margin-top: 1rem; padding-top: .8rem; border-top: 1px solid var(--border); }
+  .storage-label { font-family: 'Courier New', monospace; font-size: 11px; color: var(--text-muted); }
+  .storage-key { font-family: 'Courier New', monospace; font-size: 11px; background: rgba(255,255,255,.06); border: 1px solid var(--border-mid); border-radius: 3px; padding: 2px 8px; color: var(--accent); }
+  .storage-status { font-family: 'Courier New', monospace; font-size: 10px; color: var(--text-muted); }
+  .storage-status.ok { color: #5dbf9a; }
+
+  /* SOUS-TITRE SECTION */
+  .sub-section-title { font-family: 'Courier New', monospace; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin: 2rem 0 .8rem; padding-bottom: .4rem; border-bottom: 1px solid var(--border); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- EN-TÊTE -->
+  <div class="header">
+    <div class="breadcrumb">Ma Classe au Cinéma · Réponse au marché public · P2 — Commande publique</div>
+    <h1 class="module-title"><strong>P2-5</strong> · Documents administratifs requis</h1>
+    <div class="module-sub">Inventaire des pièces à produire par le consortium · Procédure ouverte · Groupement conjoint · Mandataire FACC</div>
+    <div class="badges">
+      <span class="badge badge-anticipe">Anticipé · v1</span>
+      <span class="badge badge-iter">Module itératif</span>
+      <span class="badge badge-p2">P2 — Commande publique</span>
+    </div>
+  </div>
+
+  <!-- 01 CONTEXTE ET ENJEUX -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <span class="section-title">Contexte et enjeux</span>
+    </div>
+
+    <p class="prose">Ce module dresse l'inventaire exhaustif des pièces administratives requises à l'appui d'une candidature en groupement conjoint, dans le cadre présumé d'un appel d'offres ouvert lancé par le CNC (EPA soumis au seuil européen de 143 000 € HT). Il est directement conditionné par les modules suivants :</p>
+
+    <div class="dep-row">
+      <span class="dep-tag active">P2-1 · Cadre juridique et CCP</span>
+      <span class="dep-tag active">P2-3 · Co-traitance / sous-traitance</span>
+      <span class="dep-tag active">P3-1 · Formes juridiques du groupement</span>
+      <span class="dep-tag active">P3-2 · Portage — mandataire FACC</span>
+      <span class="dep-tag">P2-2 · Procédures et seuils</span>
+      <span class="dep-tag">P3-5 · Gouvernance</span>
+    </div>
+
+    <p class="prose">L'enjeu est double : anticiper l'intégralité des pièces à produire pour chacun des membres du consortium, et identifier les délais de collecte — systématiquement sous-estimés dans une réponse en consortium de sept membres ou plus. La hétérogénéité statutaire des membres (associations loi 1901, établissements publics, structures hybrides) génère des adaptations documentaires qui doivent être anticipées avant publication du marché, et non découvertes le jour J sous contrainte de délai.</p>
+
+    <p class="prose">Le module est organisé en trois catégories : pièces de groupement portées par le mandataire (A), pièces individuelles produites par chaque membre (B), et pièces complémentaires conditionnées par le règlement de la consultation (C). Un tableau synoptique par membre et un état des délais de collecte complètent l'inventaire.</p>
+  </div>
+
+  <!-- 02 DÉVELOPPEMENT -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <span class="section-title">Développement</span>
+    </div>
+
+    <!-- CATÉGORIE A -->
+    <div class="cat-block cat-a">
+      <div class="cat-header">
+        <span class="cat-pill">Cat. A</span>
+        <div>
+          <div class="cat-title">Pièces de groupement — portées par le mandataire FACC</div>
+          <div class="cat-desc">Documents engageant le groupement dans son ensemble · un seul exemplaire</div>
+        </div>
+      </div>
+
+      <div class="doc-item">
+        <div class="doc-row">
+          <span class="doc-code">DC1</span>
+          <span class="doc-name">Lettre de candidature — désignation du mandataire</span>
+        </div>
+        <div class="doc-body">
+          Formulaire officiel (CERFA n°12156) ou document libre de même teneur. Peut être signé par chaque co-traitant individuellement, ou par le mandataire seul accompagné des habilitations jointes de chaque membre. Contient : identité complète de chaque membre du groupement, désignation expresse de FACC comme mandataire, habilitation à engager et à signer l'acte d'engagement, déclaration sur l'honneur de non-exclusion (art. L. 2141-1 à L. 2141-14 CCP). La nature du groupement — conjoint ou solidaire — doit y être explicitement mentionnée, avec ses conséquences sur la responsabilité respective des membres.
+          <br><span class="tag-note">Signé par tous les membres, ou par FACC + habilitations individuelles jointes</span>
+        </div>
+      </div>
+
+      <div class="doc-item">
+        <div class="doc-row">
+          <span class="doc-code">AE</span>
+          <span class="doc-name">Acte d'engagement</span>
+        </div>
+        <div class="doc-body">
+          Pièce constitutive du lien contractuel entre l'acheteur et le titulaire. Dans un groupement conjoint (hypothèse retenue), l'AE est signé par le seul mandataire (FACC), qui engage chaque membre sur sa part de prestation telle que déclarée. La décomposition des prestations par membre figurant dans l'AE doit correspondre exactement à la répartition arrêtée dans la convention de groupement. En cas de groupement solidaire, tous les membres signent l'AE et sont engagés sur l'ensemble des prestations — exposition financière significativement différente.
+          <br><span class="tag-note">Groupement conjoint présumé : signature FACC seul + décomposition nominative des parts</span>
+          <span class="tag-xref">→ P3-5 gouvernance</span>
+        </div>
+      </div>
+
+      <div class="doc-item">
+        <div class="doc-row">
+          <span class="doc-code">Conv.</span>
+          <span class="doc-name">Convention de groupement</span>
+        </div>
+        <div class="doc-body">
+          Non imposée par le CCP au stade de la candidature (art. R. 2142-24), mais fréquemment requise par le RC dès le dépôt, ou exigée à l'attribution. Contenu minimal recommandé : nature du groupement (conjoint/solidaire), répartition précise et exhaustive des prestations par membre avec identification des lots si applicable, désignation du mandataire et périmètre de son mandat, modalités de prise de décision collégiale, règles financières internes (flux de reversement, délais, gestion des aléas), conditions de sortie ou de remplacement d'un membre. Document à co-rédiger entre tous les membres — délai de concertation à intégrer dans le rétroplannnig dès à présent.
+          <br><span class="tag-note">Préparer un projet avant publication · délai de co-rédaction : 3 à 6 semaines</span>
+          <span class="tag-xref">→ P3-5 gouvernance</span>
+        </div>
+      </div>
+
+      <div class="doc-item">
+        <div class="doc-row">
+          <span class="doc-code">Hab.</span>
+          <span class="doc-name">Habilitation statutaire du mandataire</span>
+        </div>
+        <div class="doc-body">
+          FACC en tant que fédération doit disposer d'une délibération formelle de son bureau ou conseil d'administration l'autorisant expressément à : (i) candidater à un marché public de services, (ii) signer l'acte d'engagement au nom du consortium, (iii) recevoir les paiements et les reverser aux membres. Cette habilitation doit être vérifiée dans les statuts en vigueur avant publication — si une modification statutaire ou une délibération ad hoc est nécessaire, anticiper le délai de convocation de l'instance compétente. Pièce souvent négligée, pouvant entraîner un rejet de candidature ou une irrégularité de l'offre.
+          <br><span class="tag-note">Vérification statutaire immédiate · convocation bureau/CA si nécessaire · délai incompressible</span>
+          <span class="tag-xref">→ P3-2 portage mandataire</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CATÉGORIE B -->
+    <div class="cat-block cat-b">
+      <div class="cat-header">
+        <span class="cat-pill">Cat. B</span>
+        <div>
+          <div class="cat-title">Pièces individuelles — à produire par chaque membre</div>
+          <div class="cat-desc">Documents attestant la situation juridique, financière et technique · un exemplaire par membre</div>
+        </div>
+      </div>
+
+      <div class="doc-item">
+        <div class="doc-row">
+          <span class="doc-code">DC2</span>
+          <span class="doc-name">Déclaration du candidat individuel ou du membre du groupement</span>
+        </div>
+        <div class="doc-body">
+          Formulaire CERFA n°12156-07 ou DUME (voir ci-dessous). Une DC2 par membre. Trois volets : (i) situation juridique — motifs d'exclusion obligatoire et facultative, procédures collectives en cours, mandatements ; (ii) capacités économiques et financières — chiffre d'affaires global et sectoriel des 3 derniers exercices, effectifs ; (iii) capacités techniques et professionnelles — références, moyens humains, matériels et organisationnels affectés.
+          <br><span class="tag-note">1 DC2 par membre · 7 exemplaires minimum pour les co-traitants identifiés</span>
+        </div>
+      </div>
+
+      <div class="doc-item">
+        <div class="doc-row">
+          <span class="doc-code">DUME</span>
+          <span class="doc-name">Document Unique de Marché Européen (alternative à DC1/DC2)</span>
+        </div>
+        <div class="doc-body">
+          Peut remplacer DC1 et DC2 si l'acheteur l'accepte ou l'exige (art. R. 2143-4 CCP). Format XML standardisé, à générer via le service e-DUME ou le profil d'acheteur du CNC. Son acceptation par l'acheteur n'est pas obligatoire — certains RC en font néanmoins une exigence. Certains profils d'acheteur imposent le DUME pour les appels d'offres au-dessus des seuils européens. Statut incertain jusqu'à publication du RC.
+          <br><span class="tag-note">Statut incertain · préparer DC1/DC2 et DUME en parallèle jusqu'à publication du RC</span>
+        </div>
+      </div>
+
+      <div class="doc-item">
+        <div class="doc-row">
+          <span class="doc-code">Att. F/S</span>
+          <span class="doc-name">Attestations de régularité fiscale et sociale</span>
+        </div>
+        <div class="doc-body">
+          Obligatoires pour chaque membre du groupement (art. L. 2141-2 CCP et R. 2143-6 à R. 2143-10). Comprend :
+          <ul>
+            <li>Attestation URSSAF (ou MSA selon secteur d'activité) de régularité de la situation au regard des cotisations sociales — datée de moins de 6 mois à la date de remise de l'offre</li>
+            <li>Attestation de régularité fiscale DGFiP (impôts sur les bénéfices, TVA) — datée de moins de 6 mois</li>
+            <li>Attestation sur l'honneur de non-emploi de travailleurs étrangers en situation irrégulière (art. L. 8254-1 code du travail)</li>
+          </ul>
+          Pour les associations non assujetties à la TVA : s'assurer que l'attestation DGFiP couvre les impôts effectivement applicables à la structure. Pour les membres relevant d'un statut particulier (EPA, EPCC, SCI) : identifier l'équivalent documentaire applicable et son mode d'obtention.
+          <br><span class="tag-note">Délai de collecte : 2 à 4 semaines · synchroniser avec la date de dépôt prévue</span>
+        </div>
+      </div>
+
+      <div class="doc-item">
+        <div class="doc-row">
+          <span class="doc-code">Cap. F</span>
+          <span class="doc-name">Pièces de capacité économique et financière</span>
+        </div>
+        <div class="doc-body">
+          Si requises par le RC avec niveaux minimaux fixés : bilans ou extraits de bilans des 3 derniers exercices, certifiés par l'expert-comptable ou le commissaire aux comptes si la structure y est soumise. Pour les associations sans commissaire aux comptes obligatoire : état financier annuel signé du président et du trésorier. Chiffres d'affaires ventilés par domaine si le RC distingue un CA sectoriel pertinent (éducation à l'image, animation culturelle, coordination de réseau). La mutualisation des capacités financières entre co-traitants est possible dans un groupement — à documenter explicitement.
+        </div>
+      </div>
+
+      <div class="doc-item">
+        <div class="doc-row">
+          <span class="doc-code">Cap. T</span>
+          <span class="doc-name">Pièces de capacité technique et professionnelle</span>
+        </div>
+        <div class="doc-body">
+          Références de marchés ou de subventions analogues exécutés au cours des 3 à 5 dernières années : intitulé de la mission, nom et nature de l'acheteur ou du financeur, montant, dates d'exécution, contact vérifiable. Effectifs moyens annuels par catégorie (cadres, chargés de mission, administratifs). CV des personnels-clés affectés à l'exécution (si demandés par le RC). Certifications, agréments ou labels pertinents (agrément jeunesse et éducation populaire, habilitations CNC si applicables). Équipements et outils techniques affectés.
+          <br><span class="tag-note">Anticiper la collecte des références dès maintenant · délai de vérification auprès des membres</span>
+        </div>
+      </div>
+
+      <div class="doc-item">
+        <div class="doc-row">
+          <span class="doc-code">RC Pro</span>
+          <span class="doc-name">Attestation d'assurance responsabilité civile professionnelle</span>
+        </div>
+        <div class="doc-body">
+          Attestation en cours de validité, couvrant les activités de coordination nationale, d'animation de réseau et de prestation de services d'éducation à l'image. Vérifier que la couverture s'étend aux prestations réalisées dans le cadre d'un marché public et qu'elle couvre les membres du consortium dans le cadre du groupement. Certains contrats associatifs standard excluent les prestations marchandes ou plafonnent la couverture à des montants incompatibles avec le volume financier d'un marché national.
+        </div>
+      </div>
+    </div>
+
+    <!-- CATÉGORIE C -->
+    <div class="cat-block cat-c">
+      <div class="cat-header">
+        <span class="cat-pill">Cat. C</span>
+        <div>
+          <div class="cat-title">Pièces complémentaires — selon le règlement de la consultation</div>
+          <div class="cat-desc">Pièces conditionnelles · contenu et exigibilité confirmés à publication du RC</div>
+        </div>
+      </div>
+
+      <div class="doc-item">
+        <div class="doc-row">
+          <span class="doc-code">Id.</span>
+          <span class="doc-name">Pièces d'identification de la personne morale</span>
+        </div>
+        <div class="doc-body">
+          Extrait SIRENE ou équivalent pour chaque membre. Pour les associations loi 1901 : récépissé de déclaration en préfecture, statuts à jour (version consolidée datée et certifiée conforme), liste des dirigeants en exercice. Procès-verbal de délibération du conseil d'administration ou bureau autorisant la candidature au marché et mandatant le signataire — exigé si les statuts le prévoient ou si le RC le demande. À produire par chaque membre du groupement.
+        </div>
+      </div>
+
+      <div class="doc-item">
+        <div class="doc-row">
+          <span class="doc-code">DC4</span>
+          <span class="doc-name">Déclaration de sous-traitance</span>
+        </div>
+        <div class="doc-body">
+          Formulaire CERFA n°12267 — à produire uniquement si des membres ou des tiers sont positionnés en sous-traitance (et non en co-traitance). Contient : identité complète du sous-traitant, nature précise et montant des prestations sous-traitées, conditions de paiement direct (si applicable). La déclaration est obligatoire au moment du dépôt de l'offre pour tout sous-traitant déjà identifié. Elle peut intervenir en cours d'exécution pour les sous-traitants successifs (art. L. 2193-6 CCP), sous réserve d'acceptation par l'acheteur.
+          <br><span class="tag-xref">→ P2-3 co-traitance / sous-traitance</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLEAU SYNOPTIQUE -->
+    <div class="sub-section-title">Tableau synoptique par membre</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Membre</th>
+            <th>Rôle</th>
+            <th>Cat. A — Groupement</th>
+            <th>Cat. B — Individuelles</th>
+            <th>Cat. C — Complémentaires</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>FACC<div class="role-label">Mandataire</div></td>
+            <td>Co-traitant mandataire</td>
+            <td><span class="pill pa">DC1</span><span class="pill pa">AE</span><span class="pill pa">Conv.</span><span class="pill pa">Hab.</span></td>
+            <td><span class="pill pb">DC2</span><span class="pill pb">Att.F/S</span><span class="pill pb">Cap.F</span><span class="pill pb">Cap.T</span><span class="pill pb">RC Pro</span></td>
+            <td><span class="pill pc">SIRENE</span><span class="pill pc">Statuts</span><span class="pill pc">PV CA</span></td>
+          </tr>
+          <tr>
+            <td>ACAP</td>
+            <td>Co-traitant</td>
+            <td><span class="pill pa">DC1*</span></td>
+            <td><span class="pill pb">DC2</span><span class="pill pb">Att.F/S</span><span class="pill pb">Cap.F</span><span class="pill pb">Cap.T</span><span class="pill pb">RC Pro</span></td>
+            <td><span class="pill pc">SIRENE</span><span class="pill pc">Statuts</span></td>
+          </tr>
+          <tr>
+            <td>CICLIC</td>
+            <td>Co-traitant</td>
+            <td><span class="pill pa">DC1*</span></td>
+            <td><span class="pill pb">DC2</span><span class="pill pb">Att.F/S</span><span class="pill pb">Cap.F</span><span class="pill pb">Cap.T</span><span class="pill pb">RC Pro</span></td>
+            <td><span class="pill pc">Acte créat.</span><span class="pill pc">Équiv.†</span></td>
+          </tr>
+          <tr>
+            <td>Images Est</td>
+            <td>Co-traitant</td>
+            <td><span class="pill pa">DC1*</span></td>
+            <td><span class="pill pb">DC2</span><span class="pill pb">Att.F/S</span><span class="pill pb">Cap.F</span><span class="pill pb">Cap.T</span><span class="pill pb">RC Pro</span></td>
+            <td><span class="pill pc">SIRENE</span><span class="pill pc">Statuts</span></td>
+          </tr>
+          <tr>
+            <td>Alhambra</td>
+            <td>Co-traitant</td>
+            <td><span class="pill pa">DC1*</span></td>
+            <td><span class="pill pb">DC2</span><span class="pill pb">Att.F/S</span><span class="pill pb">Cap.F</span><span class="pill pb">Cap.T</span><span class="pill pb">RC Pro</span></td>
+            <td><span class="pill pc">SIRENE</span><span class="pill pc">Statuts</span></td>
+          </tr>
+          <tr>
+            <td>CIP parisiens</td>
+            <td>Co-traitant</td>
+            <td><span class="pill pa">DC1*</span></td>
+            <td><span class="pill pb">DC2</span><span class="pill pb">Att.F/S</span><span class="pill pb">Cap.F</span><span class="pill pb">Cap.T</span><span class="pill pb">RC Pro</span></td>
+            <td><span class="pill pc">SIRENE</span><span class="pill pc">Statuts</span></td>
+          </tr>
+          <tr>
+            <td>Ag. court métrage</td>
+            <td>Co-traitant</td>
+            <td><span class="pill pa">DC1*</span></td>
+            <td><span class="pill pb">DC2</span><span class="pill pb">Att.F/S</span><span class="pill pb">Cap.F</span><span class="pill pb">Cap.T</span><span class="pill pb">RC Pro</span></td>
+            <td><span class="pill pc">SIRENE</span><span class="pill pc">Statuts</span></td>
+          </tr>
+          <tr>
+            <td>Sous-traitants<div class="role-label">Éventuels</div></td>
+            <td>Sous-traitant déclaré</td>
+            <td style="color: var(--text-muted);">—</td>
+            <td><span class="pill pb">Att.F/S</span></td>
+            <td><span class="pill pc">DC4</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note-sm">* DC1 peut être signé par FACC seul avec habilitations jointes de chaque co-traitant, ou cosigné par l'ensemble des membres selon le RC.<br>† CICLIC : selon statut juridique exact (EPA, EPCC, association), les équivalences documentaires sont à confirmer.</p>
+
+    <!-- DÉLAIS -->
+    <div class="sub-section-title">Délais de collecte estimés — rétroplanification à J-0 (publication)</div>
+    <div class="delais-grid">
+      <div class="delai-card">
+        <div class="d-label">Habilitation mandataire</div>
+        <div class="d-doc">Bureau / CA de FACC</div>
+        <div class="d-dur">3–5 semaines (convocation)</div>
+      </div>
+      <div class="delai-card">
+        <div class="d-label">Convention de groupement</div>
+        <div class="d-doc">Co-rédaction 7 membres</div>
+        <div class="d-dur">3–6 semaines</div>
+      </div>
+      <div class="delai-card">
+        <div class="d-label">Attestations URSSAF / DGFiP</div>
+        <div class="d-doc">× 7 co-traitants</div>
+        <div class="d-dur">2–4 semaines</div>
+      </div>
+      <div class="delai-card">
+        <div class="d-label">Bilans certifiés</div>
+        <div class="d-doc">Structures sans CAC obligatoire</div>
+        <div class="d-dur">1–3 semaines</div>
+      </div>
+      <div class="delai-card">
+        <div class="d-label">Références de prestations</div>
+        <div class="d-doc">Collecte auprès des membres</div>
+        <div class="d-dur">1–2 semaines</div>
+      </div>
+      <div class="delai-card">
+        <div class="d-label">Assurances RC Pro</div>
+        <div class="d-doc">Attestations en cours de validité</div>
+        <div class="d-dur">1 semaine</div>
+      </div>
+    </div>
+    <p class="prose" style="font-size:.8rem; margin-top: .7rem;">Délai de réponse anticipé : 30 jours. En séquence non maîtrisée, les pièces administratives mobilisent 4 à 6 semaines de délai cumulé. Un pilote documentaire doit être désigné dès publication (J+0), avec checklist nominative par membre, jalons de relance et tableau de bord de collecte partagé.</p>
+  </div>
+
+  <!-- 03 POINTS DE VIGILANCE -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <span class="section-title">Points de vigilance</span>
+    </div>
+
+    <ul class="vig-list">
+      <li class="vig-item">
+        <span class="vig-num">01</span>
+        <div class="vig-body"><strong>Hétérogénéité statutaire des membres.</strong> Associations loi 1901, établissements publics (CICLIC selon son statut exact), structures hybrides : les pièces admissibles pour attester de la capacité varient substantiellement selon le statut juridique. Anticiper les équivalences documentaires avant publication pour ne pas découvrir l'écart le jour J. Une matrice d'équivalences par membre doit être produite dès clarification des statuts.</div>
+      </li>
+      <li class="vig-item">
+        <span class="vig-num">02</span>
+        <div class="vig-body"><strong>Fraîcheur des attestations fiscales et sociales.</strong> La durée de validité est de 6 mois. La collecte doit être synchronisée avec la date prévisible de dépôt — ni trop tôt (attestation expirée à la date de remise), ni trop tard (délai d'obtention insuffisant). Un calendrier de relance nominatif par membre, intégré au plan de pilotage documentaire, est indispensable.</div>
+      </li>
+      <li class="vig-item">
+        <span class="vig-num">03</span>
+        <div class="vig-body"><strong>Habilitation statutaire de FACC à engager le consortium.</strong> Risque de rejet de candidature ou d'irrégularité de l'offre si FACC ne peut produire une délibération valide autorisant la candidature et la signature de l'acte d'engagement. Vérification à effectuer immédiatement dans les statuts en vigueur. Si une convocation de bureau ou de conseil d'administration est nécessaire, le délai incompressible doit être intégré au rétroplannnig sans attendre la publication.</div>
+      </li>
+      <li class="vig-item">
+        <span class="vig-num">04</span>
+        <div class="vig-body"><strong>Incertitude sur l'exigence du DUME.</strong> Le CNC peut exiger le DUME au format XML via son profil d'acheteur. Préparer les deux formats (DC1/DC2 traditionnels et DUME) en parallèle pour ne pas être pris de court. La génération du DUME via e-DUME requiert une maîtrise de l'outil que certains membres peuvent ne pas avoir — prévoir une formation ou un accompagnement préalable.</div>
+      </li>
+      <li class="vig-item">
+        <span class="vig-num">05</span>
+        <div class="vig-body"><strong>Convention de groupement : exigibilité au stade de la candidature incertaine.</strong> Certains RC exigent la convention dès le dépôt de candidature ; d'autres uniquement à l'attribution. L'ambiguïté est fréquente dans les marchés de services culturels. Ne pas attendre le RC pour initier la co-rédaction : commencer maintenant avec un document structuré en sections, réservant les blancs à compléter après publication des pièces.</div>
+      </li>
+      <li class="vig-item">
+        <span class="vig-num">06</span>
+        <div class="vig-body"><strong>Couverture assurantielle des prestations dans le cadre d'un marché public.</strong> Certains contrats d'assurance RC Pro associatifs excluent expressément les prestations réalisées dans le cadre de marchés publics, ou plafonnent la couverture à des montants sans rapport avec le volume financier d'un marché national de coordination. Vérifier systématiquement chaque attestation avant constitution du dossier — une mise en conformité assurantielle peut prendre plusieurs semaines.</div>
+      </li>
+      <li class="vig-item">
+        <span class="vig-num">07</span>
+        <div class="vig-body"><strong>Sous-traitance non déclarée.</strong> Toute prestation confiée à un tiers non identifié comme co-traitant ou sous-traitant déclaré expose à un risque de rejet de l'offre ou de résiliation en cours d'exécution (art. L. 2193-1 CCP). La distinction co-traitant / sous-traitant doit être définitivement arrêtée dans P2-3 avant la constitution du dossier — ne pas laisser cette décision en suspens jusqu'à la rédaction finale.</div>
+      </li>
+      <li class="vig-item">
+        <span class="vig-num">08</span>
+        <div class="vig-body"><strong>Pilotage documentaire en consortium à 7 membres ou plus.</strong> Avec 30 jours de délai de réponse, la collecte des pièces administratives constitue le goulot d'étranglement le plus critique. Un pilote documentaire unique doit être désigné au sein de FACC dès publication, avec mandat explicite, accès à un outil de suivi partagé et capacité de relance directe auprès des référents administratifs de chaque membre.</div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- 04 STATUT -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <span class="section-title">Statut et révisions</span>
+    </div>
+
+    <div class="status-block">
+      <div class="status-row">
+        <span class="status-key">Statut</span>
+        <span class="status-val">Anticipé — v1 · produit sur la base du Code de la commande publique et des formulaires CERFA en vigueur (2025–2026)</span>
+      </div>
+      <div class="status-row">
+        <span class="status-key">Hypothèses</span>
+        <span class="status-val">Appel d'offres ouvert · groupement conjoint · mandataire FACC · 7 co-traitants identifiés · seuil UE applicable (EPA · 143 000 € HT)</span>
+      </div>
+      <div class="status-row">
+        <span class="status-key">Prochaines actions</span>
+        <span class="status-val">Vérification de l'habilitation statutaire de FACC · clarification du statut juridique de CICLIC · initiation du projet de convention de groupement</span>
+      </div>
+
+      <div class="rev-title">Révisions nécessaires à publication du marché</div>
+      <ul class="rev-list">
+        <li>Relire le RC point par point et mettre à jour le tableau synoptique (liste exacte des pièces requises, niveaux minimaux de capacité si fixés, exigence ou non du DUME, format attendu des attestations)</li>
+        <li>Confirmer le statut juridique exact de CICLIC et adapter les équivalences documentaires en conséquence (EPA, EPCC ou autre)</li>
+        <li>Vérifier si le RC impose la convention de groupement dès le stade de la candidature ou seulement à l'attribution</li>
+        <li>Intégrer les conditions d'habilitation de FACC issues des statuts vérifiés, et confirmer si une délibération ad hoc est nécessaire</li>
+        <li>Actualiser les délais de collecte en fonction de la date de publication confirmée et lancer le plan de pilotage documentaire à J+0</li>
+        <li>Arbitrer définitivement la distinction co-traitant / sous-traitant pour chaque membre (P2-3) avant constitution du dossier</li>
+      </ul>
+
+      <div class="storage-row">
+        <span class="storage-label">Clé de stockage :</span>
+        <span class="storage-key">mcc_P2-5</span>
+        <span class="storage-status" id="st-status">—</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+(async () => {
+  const key = 'mcc_P2-5';
+  const el = document.getElementById('st-status');
+  const payload = {
+    module: 'P2-5',
+    titre: 'Documents administratifs requis',
+    statut: 'anticipe',
+    version: 'v1',
+    hypotheses: 'AOO · groupement conjoint · mandataire FACC · 7 co-traitants · seuil EPA 143 000€',
+    saved_at: new Date().toISOString()
+  };
+  if (typeof window.storage !== 'undefined') {
+    try {
+      const r = await window.storage.set(key, JSON.stringify(payload));
+      el.textContent = r ? '✓ Sauvegardé dans le projet' : 'Échec de sauvegarde';
+      if (r) el.className = 'storage-status ok';
+    } catch(e) { el.textContent = 'Storage indisponible'; }
+  } else {
+    el.textContent = 'window.storage non disponible';
+  }
+})();
+</script>
+</body>
+</html>

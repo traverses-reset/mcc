@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans,"system-ui,sans-serif");font-size:15px;line-height:1.65;color:var(--color-text-primary,#111);background:transparent;padding:1.5rem 1rem 3rem}
+h1{font-family:var(--font-serif,Georgia,serif);font-size:24px;font-weight:500;line-height:1.25;color:var(--color-text-primary,#111);margin-bottom:0.35rem}
+h2{font-size:17px;font-weight:500;color:var(--color-text-primary,#111)}
+p{margin-bottom:0.7rem}
+p:last-child{margin-bottom:0}
+.doc-topbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;padding-bottom:1rem;margin-bottom:1.5rem;border-bottom:0.5px solid var(--color-border-primary,#ccc)}
+.badge-group{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;padding:3px 9px;border-radius:6px;letter-spacing:0.03em}
+.b-warn{background:var(--color-background-warning,#fff8ed);color:var(--color-text-warning,#9a6000);border:0.5px solid var(--color-border-warning,#e5a800)}
+.b-info{background:var(--color-background-info,#eef4ff);color:var(--color-text-info,#1a56db);border:0.5px solid var(--color-border-info,#76a9fa)}
+.b-neutral{background:var(--color-background-secondary,#f5f5f5);color:var(--color-text-secondary,#555);border:0.5px solid var(--color-border-secondary,#ddd)}
+.doc-eyebrow{font-size:11px;font-weight:500;color:var(--color-text-tertiary,#888);letter-spacing:0.07em;margin-bottom:0.2rem}
+.doc-sub{font-size:13px;color:var(--color-text-secondary,#555);margin-top:0.25rem}
+.doc-links{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:0.75rem}
+.doc-link-label{font-size:11px;color:var(--color-text-tertiary,#888);font-weight:500}
+.doc-link-pill{font-size:11px;padding:2px 7px;border-radius:4px;background:var(--color-background-secondary,#f5f5f5);border:0.5px solid var(--color-border-tertiary,#e0e0e0);color:var(--color-text-secondary,#555)}
+.section{margin-bottom:2.5rem}
+.section-header{display:flex;align-items:baseline;gap:10px;margin-bottom:1.1rem;padding-bottom:0.5rem;border-bottom:0.5px solid var(--color-border-tertiary,#eee)}
+.sec-num{font-size:11px;font-weight:500;color:var(--color-text-tertiary,#aaa);letter-spacing:0.07em;min-width:20px}
+.sub-label{font-size:11px;font-weight:500;color:var(--color-text-tertiary,#aaa);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:0.7rem;margin-top:1.5rem}
+.sub-label:first-child{margin-top:0}
+.quote-block{border-left:2.5px solid var(--color-border-secondary,#ddd);padding:0.4rem 0 0.4rem 1rem;margin:1rem 0;font-size:14px;color:var(--color-text-secondary,#555);font-style:italic}
+.actor-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:1.25rem}
+.actor-card{background:var(--color-background-primary,#fff);border:0.5px solid var(--color-border-tertiary,#eee);border-radius:10px;padding:0.9rem}
+.actor-name{font-size:13px;font-weight:500;color:var(--color-text-primary,#111);margin-bottom:0.7rem;padding-bottom:0.5rem;border-bottom:0.5px solid var(--color-border-tertiary,#eee)}
+.arow{margin-bottom:0.55rem}
+.arow:last-child{margin-bottom:0}
+.alabel{font-size:10px;font-weight:500;color:var(--color-text-tertiary,#aaa);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:2px}
+.aval{font-size:12px;color:var(--color-text-secondary,#555);line-height:1.5}
+.aval.hi{color:var(--color-text-primary,#111);font-weight:500}
+.tbar{display:flex;align-items:center;gap:6px;margin-top:2px}
+.ttrack{flex:1;height:3px;background:var(--color-background-secondary,#f0f0f0);border-radius:2px;overflow:hidden}
+.tfill{height:100%;border-radius:2px}
+.tfill.danger{background:var(--color-text-danger,#c0392b)}
+.tfill.warn{background:var(--color-text-warning,#9a6000)}
+.tfill.ok{background:var(--color-text-success,#1e8449)}
+.tlabel{font-size:10px;color:var(--color-text-tertiary,#aaa);white-space:nowrap}
+.seq{display:flex;flex-direction:column;gap:8px;margin:1rem 0}
+.seq-item{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start}
+.seq-num-c{width:28px;height:28px;border-radius:50%;background:var(--color-background-secondary,#f5f5f5);border:0.5px solid var(--color-border-secondary,#ddd);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--color-text-secondary,#555);flex-shrink:0}
+.seq-body{padding-top:4px;font-size:14px;color:var(--color-text-secondary,#555)}
+.seq-body b{font-weight:500;color:var(--color-text-primary,#111)}
+.scen-list{display:flex;flex-direction:column;gap:10px}
+.scen-card{background:var(--color-background-primary,#fff);border:0.5px solid var(--color-border-tertiary,#eee);border-radius:10px;padding:0.9rem;display:grid;grid-template-columns:150px 1fr;gap:1rem;align-items:start}
+.scen-meta{border-right:0.5px solid var(--color-border-tertiary,#eee);padding-right:1rem}
+.scen-num{font-size:10px;font-weight:500;color:var(--color-text-tertiary,#aaa);letter-spacing:0.05em;margin-bottom:0.25rem}
+.scen-name{font-size:13px;font-weight:500;color:var(--color-text-primary,#111);margin-bottom:0.6rem;line-height:1.35}
+.proba-lbl{font-size:10px;color:var(--color-text-tertiary,#aaa);margin-bottom:4px}
+.proba-dots{display:flex;gap:4px;margin-bottom:4px}
+.pdot{width:8px;height:8px;border-radius:50%;background:var(--color-background-secondary,#f0f0f0);border:0.5px solid var(--color-border-secondary,#ddd)}
+.pdot.d-low{background:var(--color-border-secondary,#ccc)}
+.pdot.d-med{background:var(--color-text-warning,#9a6000)}
+.pdot.d-hi{background:var(--color-text-danger,#c0392b)}
+.proba-val{font-size:11px;color:var(--color-text-tertiary,#aaa)}
+.scen-body{font-size:13px;color:var(--color-text-secondary,#555);line-height:1.55}
+.scen-body .lbl{display:block;font-size:10px;font-weight:500;color:var(--color-text-tertiary,#aaa);letter-spacing:0.05em;text-transform:uppercase;margin-top:9px;margin-bottom:3px}
+.scen-body p{margin-bottom:0}
+.vlist{display:flex;flex-direction:column;gap:9px}
+.vitem{display:grid;grid-template-columns:3px 1fr;gap:12px;align-items:stretch}
+.vacc{border-radius:2px;background:var(--color-border-secondary,#ccc)}
+.vacc.d{background:var(--color-border-danger,#e74c3c)}
+.vacc.w{background:var(--color-border-warning,#e5a800)}
+.vtext{font-size:14px;color:var(--color-text-secondary,#555);line-height:1.55;padding-top:1px}
+.vtext b{font-weight:500;color:var(--color-text-primary,#111)}
+.status-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:1.25rem}
+.scard{background:var(--color-background-secondary,#f5f5f5);border-radius:8px;padding:0.75rem 1rem}
+.scard-lbl{font-size:10px;font-weight:500;color:var(--color-text-tertiary,#aaa);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px}
+.scard-val{font-size:14px;font-weight:500;color:var(--color-text-primary,#111)}
+.notes-box{background:var(--color-background-primary,#fff);border:0.5px solid var(--color-border-tertiary,#eee);border-radius:10px;padding:1rem}
+.notes-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem}
+.notes-title{font-size:13px;font-weight:500;color:var(--color-text-secondary,#555)}
+.note-entry{font-size:13px;padding:8px 0;border-bottom:0.5px solid var(--color-border-tertiary,#eee);color:var(--color-text-secondary,#555)}
+.note-entry:last-child{border-bottom:none}
+.note-meta{font-size:10px;color:var(--color-text-tertiary,#aaa);margin-bottom:2px}
+.note-input-row{display:flex;gap:8px;margin-top:0.75rem}
+.note-input-row textarea{flex:1;font-family:var(--font-sans,"system-ui,sans-serif");font-size:13px;resize:none;height:52px;border:0.5px solid var(--color-border-secondary,#ddd);border-radius:8px;padding:8px;background:var(--color-background-secondary,#f5f5f5);color:var(--color-text-primary,#111)}
+.note-input-row button{font-size:12px;padding:0 14px;cursor:pointer;border-radius:8px;background:var(--color-background-secondary,#f5f5f5);border:0.5px solid var(--color-border-secondary,#ddd);color:var(--color-text-secondary,#555)}
+select{font-size:12px;padding:3px 8px;border-radius:6px;border:0.5px solid var(--color-border-secondary,#ddd);background:var(--color-background-secondary,#f5f5f5);color:var(--color-text-secondary,#555);cursor:pointer}
+.divider-note{font-size:13px;color:var(--color-text-tertiary,#aaa);font-style:italic;padding:8px 0}
+</style>
+</head>
+<body>
+
+<h2 class="sr-only">Module P0-1 — Analyse de la situation de négociation — Marché coordination éducation aux images</h2>
+
+<div class="doc-topbar">
+  <div class="badge-group">
+    <span class="badge b-warn">⬤ Confidentiel — groupe pivot</span>
+    <span class="badge b-neutral">P0 — Recomposition politique</span>
+  </div>
+  <div class="badge-group">
+    <span class="badge b-info" id="status-badge">Anticipé</span>
+    <span class="badge b-neutral">v1 · mars 2026</span>
+  </div>
+</div>
+
+<div style="margin-bottom:2rem">
+  <div class="doc-eyebrow">P0-1</div>
+  <h1>Analyse de la situation de négociation</h1>
+  <div class="doc-sub">Marché national — coordination de l'éducation aux images · Consortium FACC</div>
+  <div class="doc-links">
+    <span class="doc-link-label">Liens :</span>
+    <span class="doc-link-pill">→ P0-2</span>
+    <span class="doc-link-pill">→ P1-1</span>
+    <span class="doc-link-pill">→ P3-1</span>
+    <span class="doc-link-pill">→ SRC-01</span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <span class="sec-num">01</span>
+    <h2>Contexte et enjeux</h2>
+  </div>
+  <p>Ce module est la première entrée du groupe P0 (Recomposition politique), qui opère exclusivement en mode groupe pivot. Il n'est pas partageable avec les membres du consortium à ce stade. Il analyse la situation de négociation telle qu'elle se présente en mars 2026, avant la publication du marché (attendue en avril 2026).</p>
+  <p>La situation de négociation est définie ici comme l'ensemble des relations, positions et marges de manœuvre entre les acteurs dont la posture conditionne les décisions stratégiques de la FACC : l'Archipel des Lucioles (titulaire sortant de fait), le CNC (pouvoir adjudicateur et interlocuteur institutionnel), et la FACC elle-même (mandataire pressenti du consortium en cours de constitution).</p>
+  <div class="quote-block">Ce module alimente directement P0-2 (scénarios avec/sans l'Archipel), P1-1 (cartographie des acteurs sectoriels) et les arbitrages de P3 (architecture du consortium). Les notes de terrain SRC constituent les sources primaires de ce diagnostic.</div>
+  <p>L'enjeu central est de distinguer rigoureusement ce qui est déclaré de ce qui est réel pour chaque acteur — positions officielles, intérêts effectifs, stratégies en cours et marges de manœuvre réelles. Cette distinction conditionne toute la stratégie de dialogue de la FACC dans les semaines à venir et le séquençage de ses démarches.</p>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <span class="sec-num">02</span>
+    <h2>Développement</h2>
+  </div>
+
+  <div class="sub-label">A — Cartographie des acteurs et des intérêts</div>
+
+  <div class="actor-grid">
+    <div class="actor-card">
+      <div class="actor-name">L'Archipel des Lucioles</div>
+      <div class="arow">
+        <div class="alabel">Position déclarée</div>
+        <div class="aval">Porteur d'une expertise irremplaçable. Victime d'une décision administrative sans fondement textuel dans le rapport Geffray. Opposé au basculement en marché public.</div>
+      </div>
+      <div class="arow">
+        <div class="alabel">Intérêts réels</div>
+        <div class="aval hi">Survie institutionnelle. Maintien des équipes. La subvention CNC (~873 k€) représente la quasi-totalité du budget. C'est une externalisation déléguée, non une structure indépendante au sens plein.</div>
+      </div>
+      <div class="arow">
+        <div class="alabel">Stratégie active</div>
+        <div class="aval">Résistance par le sourcing — démontrer l'irréalisme du calendrier, obtenir un report à 2028, pari sur un changement de mandat politique du CNC via les échéances électorales nationales.</div>
+      </div>
+      <div class="arow">
+        <div class="alabel">Marge de manœuvre</div>
+        <div class="aval">Objectivement faible. Dépendance mono-financeur, impossibilité technique de répondre seul en 30 jours, tensions internes au bureau non résolues.</div>
+      </div>
+      <div class="arow">
+        <div class="alabel">Fragilité structurelle</div>
+        <div class="tbar"><div class="ttrack"><div class="tfill danger" style="width:85%"></div></div><span class="tlabel">Élevée</span></div>
+      </div>
+    </div>
+
+    <div class="actor-card">
+      <div class="actor-name">CNC — Daphné Bruneau, pilote</div>
+      <div class="arow">
+        <div class="alabel">Position déclarée</div>
+        <div class="aval">Obligation juridique de mise en concurrence. Conformité aux principes de la commande publique. Appui revendiqué sur les conclusions du rapport Geffray.</div>
+      </div>
+      <div class="arow">
+        <div class="alabel">Intérêts réels</div>
+        <div class="aval hi">Rénover la gouvernance nationale sans assumer publiquement la critique du modèle existant. Trouver un challenger crédible — signal diplomatique déjà formulé. Décision irréversible.</div>
+      </div>
+      <div class="arow">
+        <div class="alabel">Fragilité de position</div>
+        <div class="aval">La justification juridique est contestable : le rapport Geffray ne contient aucune recommandation sur le passage au marché public pour la coordination nationale.</div>
+      </div>
+      <div class="arow">
+        <div class="alabel">Marge de manœuvre</div>
+        <div class="aval">Significative dans le sourcing — allotissement, calendrier et critères d'attribution restent modifiables jusqu'à publication du CDC.</div>
+      </div>
+      <div class="arow">
+        <div class="alabel">Exposition juridique</div>
+        <div class="tbar"><div class="ttrack"><div class="tfill warn" style="width:50%"></div></div><span class="tlabel">Modérée</span></div>
+      </div>
+    </div>
+
+    <div class="actor-card">
+      <div class="actor-name">FACC — mandataire pressenti</div>
+      <div class="arow">
+        <div class="alabel">Position déclarée</div>
+        <div class="aval">Responsabilité sectorielle, non-opportunisme. Garantir que le marché reste tenu par des acteurs pédagogiquement légitimes. Réponse à une évolution décidée par les pouvoirs publics.</div>
+      </div>
+      <div class="arow">
+        <div class="alabel">Intérêts réels</div>
+        <div class="aval hi">Valoriser le réseau territorial contre le modèle centralisé. Démontrer la supériorité du modèle coopératif en sobriété et redevabilité. Ancrage légitime pour une décennie.</div>
+      </div>
+      <div class="arow">
+        <div class="alabel">Contrainte institutionnelle</div>
+        <div class="aval">L'Archipel est membre du Conseil national de la FACC. Toute candidature sans dialogue documenté préalable serait perçue comme une rupture de la loyauté fédérale.</div>
+      </div>
+      <div class="arow">
+        <div class="alabel">Avantage structurel</div>
+        <div class="aval">Portage juridique non contestable. Agrégation de compétences distribuées. Coordination centrale inférieure à 20 % du budget — argument de sobriété publique de premier ordre.</div>
+      </div>
+      <div class="arow">
+        <div class="alabel">Exposition politique</div>
+        <div class="tbar"><div class="ttrack"><div class="tfill ok" style="width:40%"></div></div><span class="tlabel">Maîtrisable</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-label">B — État de la négociation à l'instant T</div>
+
+  <p>La situation est celle d'un premier contact diplomatique sans révélation d'intentions. Les deux présidentes ont échangé — geste initié par la FACC — signalant qu'une réflexion était en cours, sans préciser ni l'existence d'un projet de consortium, ni les conditions d'un dialogue approfondi. Ce premier geste est nécessaire mais insuffisant : il doit être prolongé rapidement par une offre structurée.</p>
+  <p>L'offre de dialogue que la FACC adresse à l'Archipel doit être franche, exigeante et voire critique — non un contournement diplomatique. Si l'Archipel refuse ou se tait, la responsabilité morale du fractionnement éventuel est assignée. La FACC sera alors libre de ses décisions, sans culpabilité collective.</p>
+
+  <div class="sub-label" style="margin-top:1rem">Séquençage impératif</div>
+  <div class="seq">
+    <div class="seq-item">
+      <div class="seq-num-c">1</div>
+      <div class="seq-body"><b>Suite du dialogue avec l'Archipel.</b> Formuler une offre de co-construction avec des conditions explicites — partage des données et des outils, gouvernance horizontale réelle, rôle opérationnel à redéfinir. Avant toute communication publique et tout élargissement du cercle de consortium.</div>
+    </div>
+    <div class="seq-item">
+      <div class="seq-num-c">2</div>
+      <div class="seq-body"><b>Demande de participation au sourcing CNC.</b> La FACC se positionne comme fédération sectorielle, sans révéler l'existence du consortium. Fenêtre qui se ferme avec le lancement du marché en avril 2026. Doit impérativement suivre l'étape 1 — pas la précéder.</div>
+    </div>
+    <div class="seq-item">
+      <div class="seq-num-c">3</div>
+      <div class="seq-body"><b>Décision interne sur la stratégie d'allotissement.</b> Répondre aux trois lots séparément, ou proposer dès le sourcing une architecture qui rende leur dissociation moins pertinente au regard du PEAC. Question à trancher avant d'entrer dans le sourcing.</div>
+    </div>
+  </div>
+
+  <div class="quote-block">Dans un secteur de cette taille, une démarche auprès du CNC sera connue très rapidement. Il serait politiquement coûteux que l'Archipel l'apprenne par le CNC plutôt que par la FACC elle-même.</div>
+
+  <div class="sub-label">C — Analyse des trois scénarios</div>
+  <div class="scen-list">
+    <div class="scen-card">
+      <div class="scen-meta">
+        <div class="scen-num">Scénario 1</div>
+        <div class="scen-name">L'Archipel s'intègre au consortium</div>
+        <div class="proba-lbl">Probabilité à court terme</div>
+        <div class="proba-dots">
+          <div class="pdot d-low"></div><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div>
+        </div>
+        <div class="proba-val">Faible</div>
+      </div>
+      <div class="scen-body">
+        <p>Le scénario le plus cohérent avec la logique coopérative du secteur, mais le plus complexe à sécuriser. L'Archipel ne peut entrer dans le consortium sans que soient posées des conditions non négociables — gouvernance réellement horizontale, partage des données, rôle opérationnel clairement distinct du pilotage.</p>
+        <span class="lbl">Risque principal</span>
+        <p>Reconstitution cosmétique du schéma existant. L'Archipel reconstitue son monopole de fait au sein même du consortium. Ce risque doit être anticipé et écarté dans la convention de groupement — c'est un critère rédhibitoire.</p>
+        <span class="lbl">Critère d'arbitrage</span>
+        <p>Retenu uniquement si l'Archipel accepte explicitement les conditions de gouvernance horizontale et de partage des ressources posées par la FACC. Toute ambiguïté le disqualifie.</p>
+      </div>
+    </div>
+
+    <div class="scen-card">
+      <div class="scen-meta">
+        <div class="scen-num">Scénario 2</div>
+        <div class="scen-name">Candidature concurrente de l'Archipel</div>
+        <div class="proba-lbl">Probabilité à court terme</div>
+        <div class="proba-dots">
+          <div class="pdot d-hi"></div><div class="pdot d-hi"></div><div class="pdot d-hi"></div><div class="pdot d-hi"></div><div class="pdot"></div>
+        </div>
+        <div class="proba-val">Élevée</div>
+      </div>
+      <div class="scen-body">
+        <p>Le scénario le plus probable, au regard de la stratégie de résistance validée au dernier CA de l'Archipel. Une fédération en concurrence directe avec l'un de ses membres est dans une position coûteuse — mais tenable si le dialogue préalable a eu lieu de bonne foi.</p>
+        <span class="lbl">Avantage concurrentiel du consortium</span>
+        <p>Structurel : distribution de la charge sur plusieurs structures, capacité de réponse multi-lots avec une cohérence que l'Archipel seul ne peut démontrer. Là où l'Archipel s'inquiète du délai de 30 jours, le consortium le distribue. C'est l'argument décisif.</p>
+        <span class="lbl">Condition préalable</span>
+        <p>La FACC doit avoir documenté l'offre de dialogue et son refus ou son silence. La responsabilité morale du fractionnement doit être clairement assignable à l'Archipel.</p>
+      </div>
+    </div>
+
+    <div class="scen-card">
+      <div class="scen-meta">
+        <div class="scen-num">Scénario 3</div>
+        <div class="scen-name">Fragilité accrue de l'Archipel</div>
+        <div class="proba-lbl">Probabilité à court terme</div>
+        <div class="proba-dots">
+          <div class="pdot d-med"></div><div class="pdot d-med"></div><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div>
+        </div>
+        <div class="proba-val">Modérée</div>
+      </div>
+      <div class="scen-body">
+        <p>Une structure dont le financement repose quasi-intégralement sur une subvention publique unique, confrontée à une mise en concurrence de ses missions dans un délai de 30 jours, est objectivement vulnérable. Les tensions internes au bureau peuvent accélérer cette fragilisation.</p>
+        <span class="lbl">Posture impérative de la FACC</span>
+        <p>Distinguer rigoureusement le rôle de fédération — pouvant inclure un accompagnement de l'Archipel dans sa réflexion sur son avenir institutionnel — et le rôle de mandataire potentiel, qui répond à une logique d'intérêt sectoriel. Ces deux rôles peuvent coexister, seulement s'ils sont nommés comme tels.</p>
+        <span class="lbl">Piège à éviter</span>
+        <p>Exploiter la fragilité de l'Archipel. Ce serait politiquement coûteux, éthiquement discutable, et contraire à la posture de responsabilité sectorielle que la FACC entend incarner.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-label">D — Variables critiques non résolues</div>
+  <div class="vlist">
+    <div class="vitem">
+      <div class="vacc w"></div>
+      <div class="vtext"><b>Suite du dialogue avec l'Archipel :</b> quand, comment, dans quel cadre formel ou informel ? Chaque semaine de délai réduit la fenêtre de dialogue sincère avant le lancement officiel du marché.</div>
+    </div>
+    <div class="vitem">
+      <div class="vacc w"></div>
+      <div class="vtext"><b>Tensions internes au bureau de l'Archipel :</b> constituent-elles une opportunité de dissidence favorable, ou un facteur de déstabilisation qui compliquerait une négociation déjà difficile ? L'information disponible est insuffisante pour trancher.</div>
+    </div>
+    <div class="vitem">
+      <div class="vacc"></div>
+      <div class="vtext"><b>Calendrier politique :</b> la stratégie de l'Archipel parie sur un changement de mandat du CNC via les échéances électorales nationales. Ce pari est-il fondé ? L'évolution du contexte peut modifier la posture de résistance dans un sens ou dans l'autre.</div>
+    </div>
+    <div class="vitem">
+      <div class="vacc"></div>
+      <div class="vtext"><b>Information asymétrique sur le signal CNC :</b> le désir affiché d'un challenger ne peut pas être invoqué directement dans les négociations avec l'Archipel, ni dans le sourcing. Il informe la stratégie sans pouvoir être cité.</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <span class="sec-num">03</span>
+    <h2>Points de vigilance</h2>
+  </div>
+  <div class="vlist">
+    <div class="vitem">
+      <div class="vacc d"></div>
+      <div class="vtext"><b>Risque de fuite prématurée.</b> Dans un secteur de cette taille, l'existence d'une réflexion consortiale circulera très rapidement. Le calendrier du dialogue avec l'Archipel est donc plus serré que le calendrier apparent du marché. Il n'y a pas de délai disponible pour différer la suite du dialogue.</div>
+    </div>
+    <div class="vitem">
+      <div class="vacc d"></div>
+      <div class="vtext"><b>La culpabilité fédérale comme levier de l'Archipel.</b> L'Archipel peut activer à tout moment, auprès du Conseil national de la FACC, l'argument de la trahison fédérale. La documentation scrupuleuse des démarches de dialogue — dates, formes, contenus — est la seule protection durable contre cet argument.</div>
+    </div>
+    <div class="vitem">
+      <div class="vacc w"></div>
+      <div class="vtext"><b>Le silence du rapport Geffray est un argument bilatéral.</b> Il fragilise le CNC (décision sans mandat de mission interministérielle) ET il ne protège pas l'Archipel (aucune des 19 mesures ne plaide pour la pérennisation de l'opérateur unique centralisé). La FACC doit maîtriser cet argument dans les deux directions.</div>
+    </div>
+    <div class="vitem">
+      <div class="vacc w"></div>
+      <div class="vtext"><b>Reconstitution cosmétique (scénario 1).</b> Si l'Archipel rejoint le consortium sans que les conditions de gouvernance horizontale soient posées avec précision, le risque est de reproduire le schéma existant sous apparence coopérative. Ce serait le pire des résultats — ni le modèle corrigé, ni la clarté d'une concurrence assumée.</div>
+    </div>
+    <div class="vitem">
+      <div class="vacc"></div>
+      <div class="vtext"><b>Surcoût TVA comme variable de calibrage budgétaire.</b> Le passage en marché public assujettit la prestation à la TVA (surcoût mécanique de ~20 %, soit environ 174 k€ sur une base de 873 k€). Cet argument doit être porté dans le sourcing — non pour faire échouer le marché, mais pour que le calibrage soit ajusté en conséquence.</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <span class="sec-num">04</span>
+    <h2>Statut et révisions</h2>
+  </div>
+
+  <div class="status-grid">
+    <div class="scard">
+      <div class="scard-lbl">Statut du module</div>
+      <div class="scard-val" id="status-display">Anticipé</div>
+    </div>
+    <div class="scard">
+      <div class="scard-lbl">Version</div>
+      <div class="scard-val">v1 · mars 2026</div>
+    </div>
+    <div class="scard">
+      <div class="scard-lbl">Prochaine révision</div>
+      <div class="scard-val">À l'issue du dialogue avec l'Archipel</div>
+    </div>
+  </div>
+
+  <p style="font-size:14px;color:var(--color-text-secondary,#555);margin-bottom:1.25rem">Révisions nécessaires à la publication du marché : mise à jour des scénarios (section C) en fonction de la suite du dialogue avec l'Archipel ; intégration des enseignements du sourcing CNC sur les critères réels d'attribution ; ajustement de l'analyse des marges de manœuvre en cas de changement de posture de l'un des acteurs.</p>
+
+  <div class="notes-box">
+    <div class="notes-hdr">
+      <div class="notes-title">Notes de révision</div>
+      <select id="status-select" onchange="updateStatus(this.value)">
+        <option value="Anticipé" selected>Anticipé</option>
+        <option value="En cours">En cours</option>
+        <option value="À réviser">À réviser</option>
+        <option value="Stabilisé">Stabilisé</option>
+      </select>
+    </div>
+    <div id="notes-entries"><div class="divider-note">Aucune note pour l'instant.</div></div>
+    <div class="note-input-row">
+      <textarea id="note-input" placeholder="Ajouter une note de révision…"></textarea>
+      <button onclick="addNote()">Ajouter</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const KEY='mcc_P0-1';
+async function load(){try{const r=await window.storage.get(KEY);if(!r||!r.value)return;const d=JSON.parse(r.value);if(d.status){document.getElementById('status-display').textContent=d.status;document.getElementById('status-select').value=d.status;document.getElementById('status-badge').textContent=d.status;}if(d.notes&&d.notes.length)renderNotes(d.notes);}catch(e){}}
+async function get(){try{const r=await window.storage.get(KEY);if(r&&r.value)return JSON.parse(r.value);}catch(e){}return{status:'Anticipé',notes:[]};}
+async function save(d){try{await window.storage.set(KEY,JSON.stringify(d));}catch(e){}}
+function renderNotes(notes){if(!notes||!notes.length){document.getElementById('notes-entries').innerHTML='<div class="divider-note">Aucune note pour l\'instant.</div>';return;}document.getElementById('notes-entries').innerHTML=notes.map(n=>`<div class="note-entry"><div class="note-meta">${n.date}</div><div>${n.text}</div></div>`).join('');}
+async function addNote(){const el=document.getElementById('note-input');const text=el.value.trim();if(!text)return;const d=await get();const now=new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});d.notes=d.notes||[];d.notes.unshift({date:now,text});await save(d);renderNotes(d.notes);el.value='';}
+async function updateStatus(val){document.getElementById('status-display').textContent=val;document.getElementById('status-badge').textContent=val;const d=await get();d.status=val;await save(d);}
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,356 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);font-size:15px;color:var(--color-text-primary);line-height:1.7}
+.wrap{max-width:860px;padding:1.5rem 0 3rem}
+.mod-header{border-bottom:0.5px solid var(--color-border-tertiary);padding-bottom:1rem;margin-bottom:1.5rem}
+.mod-id{font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.25rem}
+.mod-title{font-size:22px;font-weight:500;color:var(--color-text-primary);margin-bottom:.6rem}
+.badges{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.badge{font-size:11px;font-weight:500;padding:3px 10px;border-radius:var(--border-radius-md);border:0.5px solid}
+.b-ant{background:#E6F1FB;color:#0C447C;border-color:#B5D4F4}
+.b-v1{background:#F1EFE8;color:#444441;border-color:#D3D1C7}
+.b-iter{background:#EAF3DE;color:#27500A;border-color:#C0DD97}
+.b-dep{background:#FAEEDA;color:#633806;border-color:#FAC775}
+.b-strat{background:#EEEDFE;color:#3C3489;border-color:#AFA9EC}
+.section{margin-bottom:2.5rem}
+.sec-label{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:.35rem}
+.sec-title{font-size:18px;font-weight:500;color:var(--color-text-primary);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:0.5px solid var(--color-border-tertiary)}
+.sub{font-size:16px;font-weight:500;color:var(--color-text-primary);margin:1.4rem 0 .6rem}
+.sub2{font-size:14px;font-weight:500;color:var(--color-text-secondary);margin:.9rem 0 .35rem}
+p{margin-bottom:.75rem}
+.note{font-size:13px;color:var(--color-text-secondary);padding:.65rem .9rem;border-left:2px solid var(--color-border-secondary);margin:.75rem 0}
+.note-alert{font-size:13px;color:#791F1F;padding:.65rem .9rem;border-left:2px solid #F09595;margin:.75rem 0;background:#FCEBEB;border-radius:0 var(--border-radius-md) var(--border-radius-md) 0}
+.note-strat{font-size:13px;color:#3C3489;padding:.65rem .9rem;border-left:2px solid #AFA9EC;margin:.75rem 0;background:#EEEDFE;border-radius:0 var(--border-radius-md) var(--border-radius-md) 0}
+.card{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:.75rem}
+.card-head{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:.5rem;display:flex;align-items:center;gap:8px}
+.card-body{font-size:13px;color:var(--color-text-secondary);line-height:1.65}
+.pill{font-size:10px;font-weight:500;padding:2px 8px;border-radius:var(--border-radius-md);border:0.5px solid;white-space:nowrap}
+.p-co{background:#E6F1FB;color:#185FA5;border-color:#85B7EB}
+.p-ss{background:#EAF3DE;color:#3B6D11;border-color:#97C459}
+.p-both{background:#FAEEDA;color:#854F0B;border-color:#EF9F27}
+.p-warn{background:#FCEBEB;color:#A32D2D;border-color:#F09595}
+.p-strat{background:#EEEDFE;color:#3C3489;border-color:#AFA9EC}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:1rem 0}
+th{text-align:left;font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-secondary);padding:6px 10px;border-bottom:0.5px solid var(--color-border-secondary)}
+td{padding:7px 10px;border-bottom:0.5px solid var(--color-border-tertiary);vertical-align:top}
+tr:last-child td{border-bottom:none}
+.td-co{color:#185FA5;font-weight:500}
+.td-ss{color:#3B6D11;font-weight:500}
+ul{padding-left:1.25rem;margin:.4rem 0}
+li{margin-bottom:.3rem;font-size:13px;color:var(--color-text-primary)}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0}
+@media(max-width:580px){.compare{grid-template-columns:1fr}}
+.compare-col{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden}
+.compare-head{padding:.6rem 1rem;font-size:12px;font-weight:500}
+.ch-co{background:#E6F1FB;color:#185FA5}
+.ch-ss{background:#EAF3DE;color:#3B6D11}
+.compare-body{padding:.75rem 1rem}
+.ci{font-size:13px;color:var(--color-text-secondary);padding:.25rem 0;display:flex;gap:7px;align-items:flex-start;border-bottom:0.5px solid var(--color-border-tertiary)}
+.ci:last-child{border-bottom:none}
+.ci-dot{margin-top:.52rem;width:4px;height:4px;border-radius:50%;background:var(--color-border-secondary);flex-shrink:0}
+.vigil-item{display:flex;gap:10px;align-items:flex-start;padding:.75rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.vigil-item:last-child{border-bottom:none}
+.vigil-dot{width:6px;height:6px;border-radius:50%;margin-top:.58rem;flex-shrink:0;background:#E24B4A}
+.vigil-dot.orange{background:#EF9F27}
+.vigil-dot.bleu{background:#378ADD}
+.vigil-text{font-size:13px;line-height:1.65}
+.vigil-cat{font-weight:500;display:block;margin-bottom:.15rem}
+.matrix{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;margin:1rem 0}
+.matrix-head{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;background:var(--color-background-secondary);border-bottom:0.5px solid var(--color-border-secondary)}
+.mh{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-secondary);padding:7px 10px}
+.matrix-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;border-bottom:0.5px solid var(--color-border-tertiary)}
+.matrix-row:last-child{border-bottom:none}
+.matrix-row:hover{background:var(--color-background-secondary)}
+.mc{font-size:13px;padding:8px 10px;color:var(--color-text-primary)}
+.mc-actor{font-weight:500}
+.tag{font-size:10px;font-weight:500;padding:2px 7px;border-radius:var(--border-radius-md);border:0.5px solid;display:inline-block}
+.t-co{background:#E6F1FB;color:#185FA5;border-color:#85B7EB}
+.t-ss{background:#EAF3DE;color:#3B6D11;border-color:#97C459}
+.t-open{background:#FAEEDA;color:#854F0B;border-color:#EF9F27}
+.rev-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:.75rem}
+@media(max-width:600px){.rev-grid{grid-template-columns:1fr}}
+.rev-card{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.85rem 1rem}
+.rev-label{font-size:11px;font-weight:500;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.35rem}
+.rev-text{font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+.save-bar{display:flex;align-items:center;gap:10px;padding:.75rem 0;margin-top:1.5rem;border-top:0.5px solid var(--color-border-tertiary)}
+.save-btn{font-size:12px;padding:5px 14px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);cursor:pointer}
+.save-btn:hover{background:var(--color-background-secondary)}
+.save-msg{font-size:12px;color:var(--color-text-tertiary)}
+.ref-ccp{font-size:11px;color:var(--color-text-tertiary);font-style:italic}
+</style>
+
+<div class="wrap">
+
+<div class="mod-header">
+  <div class="mod-id">P2-3 — Commande publique · Régimes de participation</div>
+  <div class="mod-title">Co-traitance et sous-traitance : distinction, régimes juridiques et implications pour le consortium</div>
+  <div class="badges">
+    <span class="badge b-ant">Anticipé</span>
+    <span class="badge b-v1">v1 — avant publication du DCE</span>
+    <span class="badge b-iter">Module itératif P2</span>
+    <span class="badge b-strat">Conditionne P3</span>
+    <span class="badge b-dep">Dép. : P2-1 · P3</span>
+  </div>
+</div>
+
+<!-- 01 -->
+<div class="section">
+  <div class="sec-label">01</div>
+  <div class="sec-title">Contexte et enjeux</div>
+
+  <p>Ce module traite d'une distinction juridique dont les conséquences sont structurantes pour l'ensemble de l'architecture du consortium : la frontière entre <strong>co-traitance</strong> (participation au groupement) et <strong>sous-traitance</strong> (délégation d'une partie de l'exécution à un tiers extérieur au groupement). Les deux régimes sont radicalement différents en termes de responsabilité, de visibilité dans l'offre, de protection des paiements et de capacité à influencer les orientations du marché.</p>
+
+  <p>Pour le consortium MCC, la question est directement opérationnelle : le cercle des opérateurs (ACAP, CICLIC, Images Est, Alhambra, CIP parisiens, Agence du court métrage) et celui des partenaires associés ne relèvent pas nécessairement du même régime. Le positionnement de chaque acteur — cotraitant ou sous-traitant — est une décision stratégique à prendre avant la remise de l'offre, et elle ne se corrige pas aisément après.</p>
+
+  <div class="note-strat">Lien direct avec P3 : l'architecture du consortium (P3-1 à P3-5) ne peut être finalisée sans que la ligne de partage cotraitance / sous-traitance soit tracée pour chaque membre. Ce module fournit le cadre juridique ; P3 en tire les conséquences organisationnelles.</div>
+
+  <p class="ref-ccp">Références CCP : art. R. 2142-19 à R. 2142-27 (groupements) · art. L. 2193-1 à L. 2193-14 et R. 2193-1 à R. 2193-15 (sous-traitance) · Loi n° 75-1334 du 31 décembre 1975 relative à la sous-traitance (loi Spinetta)</p>
+</div>
+
+<!-- 02 -->
+<div class="section">
+  <div class="sec-label">02</div>
+  <div class="sec-title">Développement</div>
+
+  <div class="sub">A. La distinction fondamentale</div>
+
+  <div class="compare">
+    <div class="compare-col">
+      <div class="compare-head ch-co">Cotraitance — membre du groupement</div>
+      <div class="compare-body">
+        <div class="ci"><div class="ci-dot"></div>Partie prenante au contrat : cosignataire de facto via l'acte d'engagement</div>
+        <div class="ci"><div class="ci-dot"></div>Capacités agrégées à celles du groupement pour la candidature</div>
+        <div class="ci"><div class="ci-dot"></div>Apparaît dans les pièces de candidature (DC1, DC2)</div>
+        <div class="ci"><div class="ci-dot"></div>Acceptation par l'acheteur implicite dès l'admission du groupement</div>
+        <div class="ci"><div class="ci-dot"></div>Paiement direct par l'acheteur (dans un groupement conjoint) ou via le mandataire (solidaire)</div>
+        <div class="ci"><div class="ci-dot"></div>Influence pleine sur les orientations stratégiques de l'offre</div>
+        <div class="ci"><div class="ci-dot"></div>Responsabilité au titre du contrat (selon la forme du groupement)</div>
+      </div>
+    </div>
+    <div class="compare-col">
+      <div class="compare-head ch-ss">Sous-traitance — tiers extérieur au groupement</div>
+      <div class="compare-body">
+        <div class="ci"><div class="ci-dot"></div>Tiers au contrat : lié uniquement au titulaire, pas à l'acheteur</div>
+        <div class="ci"><div class="ci-dot"></div>Capacités non agrégées — le titulaire reste seul responsable des seuils</div>
+        <div class="ci"><div class="ci-dot"></div>N'apparaît pas dans les pièces de candidature</div>
+        <div class="ci"><div class="ci-dot"></div>Doit être accepté par l'acheteur (DC4) + ses conditions de paiement agréées</div>
+        <div class="ci"><div class="ci-dot"></div>Droit au paiement direct si montant &gt; 600 € TTC (loi Spinetta)</div>
+        <div class="ci"><div class="ci-dot"></div>Aucune influence directe sur les orientations stratégiques</div>
+        <div class="ci"><div class="ci-dot"></div>Responsabilité limitée à sa propre prestation vis-à-vis du titulaire</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub">B. Les formes du groupement (cotraitance)</div>
+  <p>La co-traitance s'organise en groupement, dont le Code de la commande publique reconnaît deux formes aux conséquences très différentes :</p>
+
+  <table>
+    <tr><th>Critère</th><th class="td-co">Groupement solidaire</th><th class="td-ss">Groupement conjoint</th></tr>
+    <tr><td>Responsabilité</td><td>Chaque membre est tenu à l'exécution de <strong>l'ensemble</strong> des prestations, quelle que soit sa part</td><td>Chaque membre n'est tenu qu'à l'exécution des prestations qui lui sont <strong>propres</strong> dans l'AE</td></tr>
+    <tr><td>Mandataire</td><td>Solidaire par définition</td><td>Solidaire des obligations de l'ensemble du groupement (même en groupement conjoint — art. R. 2142-24)</td></tr>
+    <tr><td>Facturation</td><td>Une seule facture par le mandataire</td><td>Chaque membre facture directement pour sa part</td></tr>
+    <tr><td>Préférence acheteur</td><td>Souvent exigé pour les marchés complexes — protection maximale</td><td>Possible — doit être explicitement autorisé par le RC</td></tr>
+    <tr><td>Risque pour les membres</td><td>Exposition croisée — un défaut de l'un engage tous</td><td>Exposition limitée à sa propre part — mais le mandataire reste solidaire de tout</td></tr>
+    <tr><td>TVA</td><td>Régime du mandataire s'applique à la facturation globale</td><td>Chaque membre facture selon son propre régime fiscal</td></tr>
+  </table>
+
+  <div class="note-alert">Point d'attention critique : dans un groupement conjoint, le mandataire (FACC) reste solidairement responsable de l'ensemble des obligations du groupement même si chaque membre n'est tenu que de sa propre part. La solidarité du mandataire est irréductible, quelle que soit la forme choisie. Ce point doit être intégré dans la gouvernance interne et dans les accords de consortium (P3-5).</div>
+
+  <div class="sub">C. Le régime de la sous-traitance</div>
+
+  <div class="sub2">C.1 — Principe et limites légales</div>
+  <p>Le titulaire d'un marché public peut sous-traiter une partie de son exécution, sous réserve que le pouvoir adjudicateur accepte chaque sous-traitant et agrée ses conditions de paiement. Deux limites absolues encadrent cette faculté :</p>
+
+  <div class="card">
+    <div class="card-head"><span class="pill p-warn">Interdictions</span> Limites légales de la sous-traitance</div>
+    <div class="card-body">
+      <ul>
+        <li><strong>Interdiction de sous-traiter la totalité du marché</strong> (art. L. 2193-2 CCP) — le titulaire doit exécuter une part substantielle par ses propres moyens. Le RC peut fixer un pourcentage minimal d'exécution directe.</li>
+        <li><strong>Interdiction de sous-traiter à une entreprise exclue</strong> — les conditions d'exclusion de la procédure s'appliquent également aux sous-traitants déclarés.</li>
+        <li><strong>Interdiction de la sous-traitance en chaîne non déclarée</strong> — le sous-traitant ne peut lui-même sous-traiter sans accord du titulaire et acceptation du pouvoir adjudicateur.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sub2">C.2 — Procédure d'acceptation et de paiement direct</div>
+  <p>Chaque sous-traitant déclaré doit faire l'objet d'une <strong>DC4</strong> (déclaration de sous-traitance), signée par le titulaire et le sous-traitant, soumise à l'acceptation du pouvoir adjudicateur. Cette acceptation porte à la fois sur l'identité du sous-traitant et sur ses conditions de paiement.</p>
+
+  <p>Le <strong>paiement direct</strong> est un droit pour tout sous-traitant dont le montant de sous-traitance dépasse 600 € TTC (loi Spinetta). Il signifie que le sous-traitant peut demander à être réglé directement par l'acheteur, sans transiter par le titulaire. Ce mécanisme est une protection forte pour le sous-traitant, mais il complexifie la gestion financière du marché et réduit la souplesse du mandataire dans la coordination des flux.</p>
+
+  <div class="note">La DC4 peut être déposée au moment de l'offre (sous-traitants prévisibles) ou en cours d'exécution pour les sous-traitants identifiés après notification. En pratique, anticiper au maximum les DC4 dans l'offre renforce la crédibilité du dossier et sécurise les relations avec les opérateurs concernés.</div>
+
+  <div class="sub">D. Matrice de positionnement pour le consortium MCC</div>
+  <p>Le tableau ci-dessous propose une lecture préliminaire du positionnement probable de chaque acteur. Il est <strong>indicatif et provisoire</strong> — il doit être arrêté dans P3 une fois les scénarios de consortium arbitrés.</p>
+
+  <div class="matrix">
+    <div class="matrix-head">
+      <div class="mh">Acteur</div>
+      <div class="mh">Hypothèse</div>
+      <div class="mh">Justification principale</div>
+      <div class="mh">Point ouvert</div>
+    </div>
+    <div class="matrix-row">
+      <div class="mc mc-actor">FACC</div>
+      <div class="mc"><span class="tag t-co">Cotraitant</span><br><span style="font-size:11px;color:var(--color-text-secondary)">mandataire</span></div>
+      <div class="mc" style="font-size:12px">Porteur juridique du groupement — responsabilité pleine et indéfectible</div>
+      <div class="mc" style="font-size:12px">Capacités propres à vérifier (CA, références)</div>
+    </div>
+    <div class="matrix-row">
+      <div class="mc mc-actor">ACAP · CICLIC · Images Est</div>
+      <div class="mc"><span class="tag t-co">Cotraitants</span></div>
+      <div class="mc" style="font-size:12px">Opérateurs territoriaux structurants — leurs capacités doivent être agrégées à la candidature</div>
+      <div class="mc" style="font-size:12px">Forme solidaire ou conjointe à arbitrer en P3</div>
+    </div>
+    <div class="matrix-row">
+      <div class="mc mc-actor">Alhambra · CIP parisiens</div>
+      <div class="mc"><span class="tag t-co">Cotraitants</span></div>
+      <div class="mc" style="font-size:12px">Opérateurs de coordination locale — présence dans la candidature renforce la couverture territoriale</div>
+      <div class="mc" style="font-size:12px">Poids financier à intégrer dans le calcul du CA agrégé</div>
+    </div>
+    <div class="matrix-row">
+      <div class="mc mc-actor">Agence du court métrage</div>
+      <div class="mc"><span class="tag t-co">Cotraitant</span></div>
+      <div class="mc" style="font-size:12px">Apport spécifique (catalogue, expertise) — positionnement en cotraitance valorise la transversalité de l'offre</div>
+      <div class="mc" style="font-size:12px">Périmètre de prestations à préciser</div>
+    </div>
+    <div class="matrix-row">
+      <div class="mc mc-actor">Partenaires associés</div>
+      <div class="mc"><span class="tag t-open">À arbitrer</span></div>
+      <div class="mc" style="font-size:12px">Selon leur rôle effectif : cotraitance si capacités déterminantes pour la candidature, sous-traitance si contribution ponctuelle ou spécialisée</div>
+      <div class="mc" style="font-size:12px">Décision à prendre avant remise — ne pas laisser en suspens</div>
+    </div>
+  </div>
+
+  <div class="sub">E. Critères d'arbitrage cotraitance / sous-traitance</div>
+  <p>Pour chaque acteur dont le positionnement est incertain, quatre questions permettent de trancher :</p>
+
+  <div class="card">
+    <div class="card-head">Grille d'arbitrage</div>
+    <div class="card-body">
+      <ul>
+        <li><strong>Ses capacités sont-elles nécessaires pour satisfaire les critères de sélection ?</strong> Si oui → cotraitance (sous-traitance ne permet pas d'agréger les capacités).</li>
+        <li><strong>Sa contribution est-elle continue sur la durée du marché, ou ponctuelle / spécialisée ?</strong> Contribution continue → cotraitance. Contribution délimitée → sous-traitance possible.</li>
+        <li><strong>Souhaite-t-il bénéficier du paiement direct et d'une relation contractuelle autonome vis-à-vis de l'acheteur ?</strong> Si oui → sous-traitance avec DC4. Si non → cotraitance (paiement via le mandataire).</li>
+        <li><strong>Doit-il être visible et valorisé dans l'offre comme acteur stratégique ?</strong> Si oui → cotraitance (les sous-traitants peuvent être mentionnés dans le mémoire technique mais n'ont pas le même statut).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="note-strat">Enjeu de lisibilité pour le CNC : un groupement de cotraitants bien identifiés, couvrant l'ensemble du territoire, est un signal fort de structuration du secteur. À l'inverse, une liste longue de sous-traitants peut donner l'impression d'une architecture peu intégrée. La composition du groupement est un argument politique autant que juridique.</div>
+</div>
+
+<!-- 03 -->
+<div class="section">
+  <div class="sec-label">03</div>
+  <div class="sec-title">Points de vigilance</div>
+
+  <div class="vigil-item">
+    <div class="vigil-dot"></div>
+    <div class="vigil-text">
+      <span class="vigil-cat">Irréversibilité de la composition du groupement après remise</span>
+      La composition du groupement est figée à la remise de l'offre. Un avenant peut modifier certains éléments en cours d'exécution, mais l'adjonction d'un nouveau cotraitant ou le retrait d'un membre existant est soumis à l'accord du pouvoir adjudicateur et ne peut intervenir qu'en cas de circonstances exceptionnelles dûment justifiées. Toute ambiguïté sur le statut d'un acteur doit être levée avant le dépôt.
+    </div>
+  </div>
+
+  <div class="vigil-item">
+    <div class="vigil-dot"></div>
+    <div class="vigil-text">
+      <span class="vigil-cat">Solidarité irréductible du mandataire — exposition de FACC</span>
+      Quelle que soit la forme du groupement retenue, FACC en tant que mandataire est solidairement responsable de l'exécution de l'ensemble du marché. Si un cotraitant est défaillant, FACC peut être mis en demeure d'exécuter ou de faire exécuter la prestation à ses frais. Ce risque doit être couvert par les accords internes de consortium (P3-5) — garanties croisées, mécanismes de substitution, clauses de sortie.
+    </div>
+  </div>
+
+  <div class="vigil-item">
+    <div class="vigil-dot orange"></div>
+    <div class="vigil-text">
+      <span class="vigil-cat">Paiement direct des sous-traitants — contrainte de trésorerie pour le mandataire</span>
+      Le paiement direct crée un flux financier parallèle que le mandataire ne contrôle pas. Si plusieurs sous-traitants exercent ce droit simultanément, le mandataire peut se retrouver avec des décalages de trésorerie non anticipés. Dans un groupement solidaire avec facturation centrale, ce mécanisme est particulièrement sensible. À intégrer dans la modélisation financière de P2-6.
+    </div>
+  </div>
+
+  <div class="vigil-item">
+    <div class="vigil-dot orange"></div>
+    <div class="vigil-text">
+      <span class="vigil-cat">Sous-traitance occulte — risque de résiliation</span>
+      Tout sous-traitant non déclaré et non accepté par le pouvoir adjudicateur est en situation de sous-traitance occulte. Cette situation expose le titulaire à une résiliation pour faute, voire à des sanctions pénales. Dans un écosystème sectoriel où les acteurs se connaissent et où des collaborations informelles existent, il est impératif de formaliser par DC4 toute relation de prestation entre le titulaire et un tiers, même ponctuelle.
+    </div>
+  </div>
+
+  <div class="vigil-item">
+    <div class="vigil-dot orange"></div>
+    <div class="vigil-text">
+      <span class="vigil-cat">Agrégation des capacités — règle du seuil individuel minimal</span>
+      Le RC peut exiger qu'au moins un membre du groupement — typiquement le mandataire — satisfasse seul un seuil minimal de capacité financière ou technique. Si cette clause est présente, elle conditionne directement le choix du mandataire et la composition du groupement. À vérifier à la publication du RC ; en anticipation, s'assurer que FACC peut défendre ses capacités propres sans s'appuyer exclusivement sur l'agrégation.
+    </div>
+  </div>
+
+  <div class="vigil-item">
+    <div class="vigil-dot bleu"></div>
+    <div class="vigil-text">
+      <span class="vigil-cat">Information manquante : périmètre exact des partenaires associés</span>
+      Le positionnement des partenaires associés (cotraitants vs sous-traitants) ne peut être arrêté sans connaître précisément la nature et le volume de leurs contributions. Un inventaire des prestations attendues par acteur est nécessaire avant que P3 puisse être finalisé. Ce recensement relève du groupe pivot et doit intégrer les contraintes de chaque acteur (gouvernance, capacité à s'engager contractuellement, etc.).
+    </div>
+  </div>
+
+  <div class="vigil-item">
+    <div class="vigil-dot bleu"></div>
+    <div class="vigil-text">
+      <span class="vigil-cat">Mention possible d'une limite de sous-traitance dans le RC</span>
+      Certains marchés de services plafonnent le recours à la sous-traitance (ex. : 30 % ou 50 % du montant total). Sans cette information — disponible uniquement à la publication du RC — la part exacte pouvant être sous-traitée reste indéterminée. L'architecture du consortium doit être conçue pour rester valide même avec une limite contraignante.
+    </div>
+  </div>
+</div>
+
+<!-- 04 -->
+<div class="section">
+  <div class="sec-label">04</div>
+  <div class="sec-title">Statut et révisions</div>
+
+  <div class="rev-grid">
+    <div class="rev-card">
+      <div class="rev-label">Statut actuel</div>
+      <div class="rev-text">Anticipé — v1<br>Cadre juridique : stable (droit constant).<br>Matrice de positionnement : provisoire, à arbitrer en P3.</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-label">Niveau de certitude</div>
+      <div class="rev-text">Régimes juridiques (solidaire / conjoint / sous-traitance) : certain.<br>Positionnement des acteurs : hypothétique jusqu'à P3.<br>Limite de sous-traitance : inconnue avant le RC.</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-label">Révisions à la publication du DCE</div>
+      <div class="rev-text">— Vérifier si le RC impose une forme de groupement (solidaire obligatoire ?)<br>— Identifier l'éventuel plafond de sous-traitance<br>— Vérifier les exigences de seuil minimal par membre<br>— Mettre à jour la matrice de positionnement selon CCTP</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-label">Dépendances à lever</div>
+      <div class="rev-text">— <strong>P3 (tous modules)</strong> : l'architecture du consortium traduit opérationnellement les arbitrages de ce module<br>— <strong>P3-5</strong> (gouvernance / litige) : accords internes de consortium, couverture du risque de solidarité mandataire<br>— <strong>P2-6</strong> : modélisation financière intégrant le paiement direct des sous-traitants</div>
+    </div>
+  </div>
+
+  <div class="save-bar">
+    <button class="save-btn" onclick="saveModule()">Sauvegarder dans le projet</button>
+    <span class="save-msg" id="save-msg"></span>
+  </div>
+</div>
+
+</div>
+
+<script>
+async function saveModule(){
+  const msg=document.getElementById('save-msg');
+  msg.textContent='Sauvegarde en cours…';
+  try{
+    const data={
+      id:'P2-3',
+      titre:'Co-traitance et sous-traitance : distinction, régimes juridiques et implications pour le consortium',
+      statut:'Anticipé',
+      version:'v1',
+      saved:new Date().toISOString()
+    };
+    const r=await window.storage.set('mcc_P2-3',JSON.stringify(data));
+    if(r) msg.textContent='Sauvegardé — clé mcc_P2-3 ✓';
+    else msg.textContent='Erreur de sauvegarde.';
+  }catch(e){
+    msg.textContent='Erreur : '+e.message;
+  }
+}
+</script>

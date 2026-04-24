@@ -1,0 +1,437 @@
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+strong{font-weight:500}
+.doc{font-family:var(--font-sans);font-size:14px;color:var(--color-text-primary);line-height:1.7;padding-bottom:2.5rem}
+.hdr{padding:1.25rem 0 1rem;border-bottom:0.5px solid var(--color-border-secondary);margin-bottom:0}
+.hdr-path{font-size:11px;font-family:var(--font-mono);color:var(--color-text-tertiary);letter-spacing:.04em;margin-bottom:6px}
+.hdr-title{font-family:var(--font-serif);font-size:19px;font-weight:500;line-height:1.35;color:var(--color-text-primary);margin-bottom:10px}
+.hdr-meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.bdg{font-size:11px;font-weight:500;padding:2px 9px;border-radius:20px;border:0.5px solid;letter-spacing:.03em;white-space:nowrap}
+.bdg-warn{background:var(--color-background-warning);color:var(--color-text-warning);border-color:var(--color-border-warning)}
+.bdg-neu{background:var(--color-background-secondary);color:var(--color-text-secondary);border-color:var(--color-border-secondary)}
+.bdg-info{background:var(--color-background-info);color:var(--color-text-info);border-color:var(--color-border-info)}
+.mono-sm{font-family:var(--font-mono);font-size:11px;color:var(--color-text-tertiary)}
+.nav{display:flex;gap:0;border-bottom:0.5px solid var(--color-border-tertiary);margin:0 0 1.75rem;overflow-x:auto}
+.nav-btn{font-size:12px;color:var(--color-text-secondary);padding:9px 14px;cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;white-space:nowrap;font-family:var(--font-sans);transition:color .12s}
+.nav-btn:hover{color:var(--color-text-primary)}
+.nav-btn.on{color:var(--color-text-primary);font-weight:500;border-bottom-color:var(--color-text-primary)}
+.sec{margin-bottom:2.25rem;scroll-margin-top:40px}
+.sec-hdr{display:flex;align-items:baseline;gap:10px;margin-bottom:1.1rem;padding-left:12px}
+.s1 .sec-hdr{border-left:3px solid var(--color-border-info)}
+.s2 .sec-hdr{border-left:3px solid var(--color-border-success)}
+.s3 .sec-hdr{border-left:3px solid var(--color-border-warning)}
+.s4 .sec-hdr{border-left:3px solid var(--color-border-tertiary)}
+.sec-num{font-size:11px;font-family:var(--font-mono);color:var(--color-text-tertiary)}
+.sec-name{font-family:var(--font-serif);font-size:17px;font-weight:500;color:var(--color-text-primary)}
+hr.div{border:none;border-top:0.5px solid var(--color-border-tertiary);margin:1.4rem 0}
+.sub{margin-bottom:1.5rem}
+.sub-ttl{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:.7rem;display:flex;align-items:baseline;gap:8px}
+.sub-id{font-family:var(--font-mono);font-size:11px;color:var(--color-text-tertiary);flex-shrink:0}
+p{margin-bottom:.65rem;font-size:13px}p:last-child{margin-bottom:0}
+.call{padding:.75rem 1rem;border-radius:var(--border-radius-md);border:0.5px solid;margin:.85rem 0}
+.call-info{background:var(--color-background-info);border-color:var(--color-border-info)}
+.call-warn{background:var(--color-background-warning);border-color:var(--color-border-warning)}
+.call-ok{background:var(--color-background-success);border-color:var(--color-border-success)}
+.call-lbl{font-size:10px;font-weight:500;letter-spacing:.06em;color:var(--color-text-secondary);margin-bottom:4px;text-transform:uppercase}
+.call p,.call ul,.call li{font-size:13px}
+.tbl-wrap{overflow-x:auto;margin:.85rem 0}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{font-weight:500;font-size:11px;color:var(--color-text-secondary);text-align:left;padding:6px 10px;border-bottom:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);white-space:nowrap}
+td{padding:7px 10px;border-bottom:0.5px solid var(--color-border-tertiary);vertical-align:top;color:var(--color-text-primary);font-size:12px}
+tr:last-child td{border-bottom:none}
+.tbl-lbl{font-weight:500;white-space:nowrap;color:var(--color-text-secondary);font-size:11px}
+.ra{background:var(--color-background-secondary)}
+.lr{font-family:var(--font-mono);font-size:10px;color:var(--color-text-secondary);background:var(--color-background-secondary);padding:1px 5px;border-radius:3px;border:0.5px solid var(--color-border-tertiary);white-space:nowrap}
+ul,ol{padding-left:1.15rem;margin-bottom:.65rem}
+li{margin-bottom:.35rem;font-size:13px}li:last-child{margin-bottom:0}
+.mlink{font-family:var(--font-mono);font-size:10px;color:var(--color-text-info);background:var(--color-background-info);border:0.5px solid var(--color-border-info);padding:1px 6px;border-radius:3px;cursor:pointer;display:inline}
+.risk{padding:.75rem 1rem;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);margin-bottom:.6rem;background:var(--color-background-primary)}
+.risk-row{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:5px}
+.risk-name{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.risk-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.55}
+.rl{font-size:10px;font-weight:500;padding:1px 8px;border-radius:12px;flex-shrink:0;margin-top:2px;white-space:nowrap}
+.lvl-h{background:var(--color-background-danger);color:var(--color-text-danger)}
+.lvl-m{background:var(--color-background-warning);color:var(--color-text-warning)}
+.lvl-l{background:var(--color-background-success);color:var(--color-text-success)}
+.sg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:9px;margin:.85rem 0}
+.sc{background:var(--color-background-secondary);border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);padding:.75rem}
+.sc-ttl{font-size:10px;font-weight:500;color:var(--color-text-secondary);margin-bottom:7px;text-transform:uppercase;letter-spacing:.04em}
+.si{font-size:12px;color:var(--color-text-primary);display:flex;align-items:flex-start;gap:6px;margin-bottom:5px;line-height:1.45}
+.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.dg{background:var(--color-text-success)}.da{background:var(--color-text-warning)}.dr{background:var(--color-text-danger)}
+.rv{display:flex;gap:9px;align-items:flex-start;padding:.6rem .9rem;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);margin-bottom:.45rem}
+.rv-trig{font-size:10px;font-family:var(--font-mono);color:var(--color-text-info);background:var(--color-background-info);padding:2px 7px;border-radius:10px;white-space:nowrap;flex-shrink:0}
+.rv-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+.tl-item{display:flex;gap:12px;align-items:flex-start;margin-bottom:.65rem}
+.tl-date{font-family:var(--font-mono);font-size:11px;color:var(--color-text-secondary);white-space:nowrap;min-width:90px;margin-top:2px}
+.tl-dot{width:8px;height:8px;border-radius:50%;border:1.5px solid var(--color-border-secondary);flex-shrink:0;margin-top:4px;background:var(--color-background-primary)}
+.tl-dot.on{background:var(--color-text-info);border-color:var(--color-border-info)}
+.tl-main{font-size:13px;color:var(--color-text-primary)}
+.tl-note{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.stat-foot{padding:.75rem 1rem;background:var(--color-background-secondary);border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);font-size:12px;color:var(--color-text-secondary);margin-top:1rem}
+</style>
+
+<div class="doc">
+
+<div class="hdr">
+  <div class="hdr-path">Ma classe au cinéma &rsaquo; P2 — Commande publique &rsaquo; P2-1</div>
+  <div class="hdr-title">Nature juridique du marché et cadre procédural applicable</div>
+  <div class="hdr-meta">
+    <span class="bdg bdg-warn">Anticipé</span>
+    <span class="bdg bdg-neu">v1 — avril 2026</span>
+    <span class="bdg bdg-info">Module itératif</span>
+    <span class="mono-sm">mcc_P2-1</span>
+  </div>
+</div>
+
+<div class="nav" id="nav">
+  <button class="nav-btn on" onclick="go('s01',0)">01 — Contexte et enjeux</button>
+  <button class="nav-btn" onclick="go('s02',1)">02 — Développement</button>
+  <button class="nav-btn" onclick="go('s03',2)">03 — Points de vigilance</button>
+  <button class="nav-btn" onclick="go('s04',3)">04 — Statut et révisions</button>
+</div>
+
+<!-- ═══════════════════════════════════ S01 ═══════════════════════════════════ -->
+<div class="sec s1" id="s01">
+  <div class="sec-hdr"><span class="sec-num">01</span><span class="sec-name">Contexte et enjeux</span></div>
+
+  <div class="sub">
+    <div class="sub-ttl"><span class="sub-id">1.1</span> Position dans l'arborescence et articulations</div>
+    <p>P2-1 est le module fondateur du bloc P2 (Commande publique). Il doit être lu en priorité par l'ensemble des membres du consortium, indépendamment de leur degré de familiarité avec les marchés publics. Sa fonction est double : poser la grille juridique et procédurale sur laquelle toute la réponse sera construite ; et ancrer une compréhension commune de ce que signifie, dans ses implications concrètes, la conversion d'un régime de subvention en régime de marché public.</p>
+    <p>P2 est un bloc itératif : chaque pièce publiée par l'acheteur (règlement de la consultation, CCTP, CCAP) nécessite une révision ciblée des entrées concernées. P2-1 (v1) est intégralement construit sur des hypothèses de travail — son statut est explicitement "anticipé" et sa mise à jour est prévue dès publication de l'avis d'appel à la concurrence.</p>
+  </div>
+
+  <div class="sub">
+    <div class="sub-ttl"><span class="sub-id">1.2</span> Liens avec les modules connexes</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Module</th><th>Titre</th><th>Lien avec P2-1</th></tr></thead>
+        <tbody>
+          <tr><td class="tbl-lbl"><span class="mlink">P1</span></td><td>Cadrage stratégique</td><td>A documenté la situation existante, les acteurs, les enjeux institutionnels. P2-1 prend le relais sur le terrain juridique et procédural.</td></tr>
+          <tr class="ra"><td class="tbl-lbl"><span class="mlink">P1-5</span></td><td>Hypothèses de lots</td><td>L'allotissement éventuel conditionne directement la structure de la réponse. P2-1 pose le cadre général ; P1-5 travaille la variable des lots comme levier stratégique.</td></tr>
+          <tr><td class="tbl-lbl"><span class="mlink">P3</span></td><td>Architecture du consortium</td><td>Forme juridique du groupement, rôle du mandataire, distinction cotraitant / sous-traitant — questions instruites à la lumière des obligations procédurales identifiées ici.</td></tr>
+          <tr class="ra"><td class="tbl-lbl"><span class="mlink">P4</span></td><td>Conception de l'offre</td><td>Le CCTP définit les missions attendues — c'est lui qui structure la réponse technique construite en P4. P2-1 prépare la lecture de cette pièce.</td></tr>
+          <tr><td class="tbl-lbl"><span class="mlink">P5</span></td><td>Rédaction de la réponse</td><td>Module verrouillé, activé à la publication du marché. P2-1 prépare les conditions de son déclenchement (connaissance des pièces, des délais, des formats exigés).</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-ttl"><span class="sub-id">1.3</span> Enjeu central et public visé</div>
+    <p>La conversion d'une subvention directe en marché public n'est pas un simple ajustement administratif. Elle modifie structurellement les règles du jeu pour tous les acteurs du secteur — y compris l'opérateur en place — et impose à tout candidat de maîtriser les mécanismes procéduraux qui encadrent la mise en concurrence, la sélection et l'exécution du contrat, avec une rigueur que le régime de la subvention ne requiert pas.</p>
+    <div class="call call-info">
+      <div class="call-lbl">Lire ce module comme</div>
+      <p>Une boîte à outils partagée. Les membres du consortium qui n'ont pas de pratique régulière de la commande publique y trouveront les notions essentielles, explicitées sans raccourci. Ceux qui en ont une y trouveront le cadrage spécifique à ce marché et les incertitudes à surveiller jusqu'à la publication du cahier des charges.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ S02 ═══════════════════════════════════ -->
+<div class="sec s2" id="s02">
+  <div class="sec-hdr"><span class="sec-num">02</span><span class="sec-name">Développement</span></div>
+
+  <!-- 2.1 -->
+  <div class="sub">
+    <div class="sub-ttl"><span class="sub-id">2.1</span> La rupture juridique : de la subvention au marché public</div>
+    <p>Les deux régimes reposent sur des logiques radicalement différentes. Le tableau ci-dessous en résume les points de divergence structurels — utile pour calibrer ce que la bascule change concrètement pour les membres du consortium.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:30%">Critère</th><th>Subvention</th><th>Marché public</th></tr></thead>
+        <tbody>
+          <tr><td class="tbl-lbl">Initiative</td><td>L'opérateur propose un projet à financer</td><td>L'acheteur définit un besoin à satisfaire</td></tr>
+          <tr class="ra"><td class="tbl-lbl">Attribution</td><td>Décision discrétionnaire du financeur</td><td>Mise en concurrence formalisée, critères objectifs</td></tr>
+          <tr><td class="tbl-lbl">Contrôle procédural</td><td>Limité — convention d'objectifs, rapports d'activité</td><td>Rigoureux — CCP, règlement de la consultation, délais et formes obligatoires</td></tr>
+          <tr class="ra"><td class="tbl-lbl">Concurrence</td><td>Non obligatoire — renouvellement possible sans appel</td><td>Obligatoire dès dépassement des seuils — tout opérateur peut candidater</td></tr>
+          <tr><td class="tbl-lbl">Maîtrise de l'opérateur</td><td>Forte — liberté de mise en œuvre dans le cadre des objectifs</td><td>Encadrée — exécution conforme au CCTP et CCAP, pénalités possibles</td></tr>
+          <tr class="ra"><td class="tbl-lbl">Durée</td><td>Annuelle ou pluriannuelle, renouvelable librement</td><td>Durée contractualisée, reconductions encadrées, pas de tacite reconduction indéfinie</td></tr>
+          <tr><td class="tbl-lbl">Recours des tiers</td><td>Limité</td><td>Ouvert — référé précontractuel, contractuel, recours Tarn-et-Garonne</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="call call-warn">
+      <div class="call-lbl">Impact pour l'opérateur en place</div>
+      <p>L'opérateur sortant perd le bénéfice de la relation directe et discrétionnaire avec le CNC. Sa connaissance du terrain est un atout compétitif réel, mais ne lui confère aucun avantage procédural : il doit candidater dans les mêmes conditions que tout autre opérateur. Sa participation à la phase de définition des besoins peut, inversement, constituer un risque juridique pour l'acheteur (→ note de risques procéduraux, <span class="mlink">P1</span>).</p>
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- 2.2 -->
+  <div class="sub">
+    <div class="sub-ttl"><span class="sub-id">2.2</span> Qualification juridique du contrat</div>
+    <p>Le contrat qui résultera de cette mise en concurrence est un <strong>marché public de services</strong> au sens de l'article <span class="lr">L. 1111-1 CCP</span>. Trois critères en assurent la qualification :</p>
+    <ul>
+      <li><strong>L'acheteur est un pouvoir adjudicateur soumis au CCP.</strong> Le CNC est un établissement public administratif (EPA) de l'État, sous tutelle du ministre chargé de la culture. À ce titre, il constitue un pouvoir adjudicateur soumis intégralement au code de la commande publique (<span class="lr">art. L. 1211-1 et L. 1211-3 CCP</span>).</li>
+      <li><strong>La prestation est un service.</strong> Les missions attendues — coordination nationale, animation de réseau, ingénierie pédagogique, capitalisation, diffusion — relèvent de la catégorie des marchés de services, et non des fournitures ni des travaux.</li>
+      <li><strong>La rémunération est intégralement assurée par l'acheteur.</strong> L'opérateur ne perçoit pas de recettes propres liées à la fréquentation ou à l'usage des dispositifs — il est intégralement rémunéré par le CNC. Il n'y a donc pas de transfert de risque d'exploitation, ce qui exclut la qualification de délégation de service public (DSP).</li>
+    </ul>
+    <div class="call call-info">
+      <div class="call-lbl">Pourquoi la distinction marché / DSP importe</div>
+      <p>Une DSP aurait impliqué un régime procédural distinct (<span class="lr">art. L. 3100-1 et s. CCP</span>) et une liberté tarifaire pour l'opérateur. En l'espèce, l'absence de recettes propres et la rémunération forfaitaire par le CNC excluent la qualification de DSP. Le régime des marchés publics s'applique dans sa plénitude — y compris ses obligations de mise en concurrence, ses délais et ses formes.</p>
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- 2.3 -->
+  <div class="sub">
+    <div class="sub-ttl"><span class="sub-id">2.3</span> Seuils applicables et procédure déclenchée</div>
+    <p>Le CNC est un EPA de l'État soumis aux seuils applicables à l'administration centrale. Pour les marchés de services, le seuil de procédure formalisée est de <strong>143 000 € HT</strong> (seuil UE en vigueur depuis le 1er janvier 2024, <span class="lr">annexe I de la directive 2014/24/UE</span>, transposé dans le CCP).</p>
+    <div class="call call-ok">
+      <div class="call-lbl">Situation du marché au regard du seuil</div>
+      <p>Budget de référence estimé : ~873 000 €/an, soit environ six fois le seuil de procédure formalisée applicable. <strong>Une procédure formalisée est obligatoire.</strong></p>
+    </div>
+    <p>Les procédures formalisées envisageables et leur probabilité respective :</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:24%">Procédure</th><th style="width:15%">Fondement</th><th>Caractéristiques essentielles</th><th style="width:18%">Probabilité</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="tbl-lbl">Appel d'offres ouvert (AOO)</td>
+            <td><span class="lr">L. 2124-2 CCP</span></td>
+            <td>Procédure de droit commun pour les marchés formalisés. Toute candidature est recevable dès lors que les conditions de participation sont satisfaites. Absence de phase de négociation — l'offre déposée est l'offre finale.</td>
+            <td><strong>Élevée</strong> — procédure de référence</td>
+          </tr>
+          <tr class="ra">
+            <td class="tbl-lbl">Procédure avec négociation (PAN)</td>
+            <td><span class="lr">L. 2124-3 CCP</span></td>
+            <td>Une phase de remise d'offre initiale précède une négociation avec les candidats sélectionnés. Applicable si l'acheteur justifie d'une complexité technique ou si la prestation requiert des solutions adaptées à la conception.</td>
+            <td><strong>Modérée</strong> — complexité pédagogique potentiellement justificative, mais le CNC peut préférer la sécurité de l'AOO</td>
+          </tr>
+          <tr>
+            <td class="tbl-lbl">Dialogue compétitif</td>
+            <td><span class="lr">L. 2124-4 CCP</span></td>
+            <td>Réservé aux situations où l'acheteur ne peut pas définir seul les solutions susceptibles de répondre à ses besoins. Dialogue avec les candidats sélectionnés avant remise d'offre.</td>
+            <td><strong>Faible</strong> — le CNC a une connaissance approfondie des missions existantes</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="call call-info">
+      <div class="call-lbl">Hypothèse de travail retenue</div>
+      <p><strong>Appel d'offres ouvert (AOO).</strong> Tous les développements du présent projet de réponse sont construits sur cette hypothèse. Si le règlement de la consultation confirme une procédure avec négociation, la section 2.3 sera mise à jour et les modules <span class="mlink">P4</span> et <span class="mlink">P5</span> adaptés en conséquence — la PAN ouvre des possibilités d'ajustement de l'offre initiale qui changent substantiellement la stratégie de dépôt.</p>
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- 2.4 -->
+  <div class="sub">
+    <div class="sub-ttl"><span class="sub-id">2.4</span> Structure documentaire attendue</div>
+    <p>Le dossier de consultation des entreprises (DCE) sera composé de plusieurs catégories de pièces. Vue d'ensemble anticipée, avec les implications pratiques pour le consortium.</p>
+
+    <p style="font-size:11px;font-weight:500;color:var(--color-text-secondary);margin:.85rem 0 .4rem">Pièces publiées par l'acheteur — à télécharger sur la plateforme de dématérialisation</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:8%">Pièce</th><th style="width:38%">Contenu et rôle</th><th>Implications pour le consortium</th></tr></thead>
+        <tbody>
+          <tr><td class="tbl-lbl">RC</td><td>Règlement de la consultation. Fixe les règles de la mise en concurrence : conditions de participation, critères d'attribution et pondération, forme des offres, délai de remise.</td><td>Document de référence pour l'ensemble du projet de réponse. À lire dès publication avec une attention particulière aux critères et à leur pondération. Déclenche la mise à jour de P2-1 (v2).</td></tr>
+          <tr class="ra"><td class="tbl-lbl">CCTP</td><td>Cahier des clauses techniques particulières. Définit précisément les prestations attendues : périmètre des missions, livrables, indicateurs, niveaux d'exigence.</td><td>Pièce centrale pour la construction de l'offre technique (<span class="mlink">P4</span>). Son analyse fine déclenchera la mise à jour de tous les modules scénarisés. Conditionne également la distinction cotraitants / sous-traitants (<span class="mlink">P3</span>).</td></tr>
+          <tr><td class="tbl-lbl">CCAP</td><td>Cahier des clauses administratives particulières. Fixe les conditions d'exécution : durée du marché, modalités de paiement et de révision du prix, pénalités, résiliation anticipée.</td><td>Conditionne le montage financier du consortium et les arbitrages de gouvernance (<span class="mlink">P3</span>). La durée effective et les modalités de reconduction ont un impact direct sur le niveau d'investissement initial justifiable.</td></tr>
+          <tr class="ra"><td class="tbl-lbl">AE</td><td>Acte d'engagement. Document contractuel que le mandataire signe au nom du groupement. Engage le titulaire sur les prix et les engagements de l'offre.</td><td>Signé par la FACC en tant que mandataire. Toute l'offre financière y est reprise ou annexée. Sa structure doit être anticipée pour l'architecture financière du consortium.</td></tr>
+          <tr><td class="tbl-lbl">BPU / DQE</td><td>Bordereau de prix unitaires / Décomposition du prix global et forfaitaire. Présents si les prestations sont partiellement unitarisables ou si l'acheteur souhaite une transparence renforcée sur les postes de coût.</td><td>À compléter si demandé. Conditionne la construction et la présentation de l'offre financière. La structure imposée peut contraindre ou, au contraire, faciliter la valorisation de l'architecture du consortium.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p style="font-size:11px;font-weight:500;color:var(--color-text-secondary);margin:.85rem 0 .4rem">Pièces fournies par les candidats — à produire et déposer sur la plateforme</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:8%">Pièce</th><th style="width:38%">Contenu et rôle</th><th>Qui la produit / qui la signe</th></tr></thead>
+        <tbody>
+          <tr><td class="tbl-lbl">DC1</td><td>Lettre de candidature. Désigne le mandataire du groupement, liste les membres, habilite chacun à engager le groupement. Document unique pour l'ensemble du groupement.</td><td>Un seul DC1. FACC = mandataire désigné. Tous les membres cotraitants cosignent. À préparer dès stabilisation de la liste des membres.</td></tr>
+          <tr class="ra"><td class="tbl-lbl">DC2</td><td>Déclaration individuelle du candidat ou du cotraitant. Contient les informations juridiques, financières, professionnelles et techniques de chaque entité. Un DC2 par membre.</td><td>Chaque cotraitant du groupement produit son propre DC2. Attention aux seuils de chiffre d'affaires et aux exigences de capacité technique que l'acheteur peut fixer.</td></tr>
+          <tr><td class="tbl-lbl">DUME</td><td>Document Unique de Marché Européen (ESPD en anglais). Équivalent européen des DC1+DC2, accepté ou exigé par certains acheteurs. Son acceptation est réglementairement obligatoire si le candidat le soumet.</td><td>Alternative aux DC. Vérifier si le RC l'impose, l'autorise ou en précise les modalités. En cas de groupement, un DUME par entité.</td></tr>
+          <tr class="ra"><td class="tbl-lbl">Mémoire technique</td><td>Pièce centrale de l'offre. Répond aux exigences du CCTP sur la méthodologie, l'organisation, les compétences. Noté selon les critères du RC.</td><td>Développé en <span class="mlink">P5</span>, préparé en <span class="mlink">P4</span>. Rédigé sous coordination du mandataire avec contributions de tous les membres.</td></tr>
+          <tr><td class="tbl-lbl">Offre financière</td><td>Décomposition du prix conforme à la structure demandée (AE, BPU/DQE ou formulaire propre). Doit être cohérente avec le mémoire technique.</td><td>Construite en <span class="mlink">P3</span> et <span class="mlink">P4</span>. La rigueur budgétaire est un argument de notation et un argument politique.</td></tr>
+          <tr class="ra"><td class="tbl-lbl">Attestations fiscales et sociales</td><td>Justificatifs de régularité (impôts, cotisations sociales). Demandés à l'attributaire seulement — pas exigibles à la remise des offres en procédure ordinaire.</td><td>À anticiper : chaque membre doit pouvoir produire ses attestations rapidement après notification du marché.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- 2.5 -->
+  <div class="sub">
+    <div class="sub-ttl"><span class="sub-id">2.5</span> Éléments de calendrier procédural anticipés</div>
+    <p>Estimations construites sur les informations disponibles en avril 2026. Elles seront actualisées à la publication de l'avis d'appel à la concurrence.</p>
+    <div style="margin:.85rem 0">
+      <div class="tl-item">
+        <div class="tl-date">Avril 2026</div><div class="tl-dot on"></div>
+        <div><div class="tl-main">Publication de l'avis (JOUE / BOAMP / plateforme e-marchés)</div><div class="tl-note">Déclenchement du délai réglementaire — activation du module <span class="mlink">P5</span>, mise à jour de P2-1 vers v2</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Mai – Juin 2026</div><div class="tl-dot"></div>
+        <div><div class="tl-main">Date limite de remise des offres</div><div class="tl-note">Délai légal minimum en AOO : 35 jours à compter de la publication (<span class="lr">art. R. 2143-1 CCP</span>). Réductible à 30 jours si avis de préinformation publié ≥ 35 jours avant. En pratique : 45 à 60 jours souhaitables compte tenu de la complexité — un délai plus long peut être sollicité lors de la phase de sourcing.</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Juin – Juil. 2026</div><div class="tl-dot"></div>
+        <div><div class="tl-main">Analyse des offres, commission d'appel d'offres, attribution</div><div class="tl-note">Phase non publique — durée variable selon le volume de candidatures et la complexité technique</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Automne 2026</div><div class="tl-dot"></div>
+        <div><div class="tl-main">Notification du marché — signature de l'acte d'engagement par la FACC</div><div class="tl-note">Début de la période de préparation opérationnelle avant prise en charge effective</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Sept. 2027</div><div class="tl-dot"></div>
+        <div><div class="tl-main">Démarrage opérationnel des missions</div><div class="tl-note">Calé sur le calendrier scolaire — date structurante pour l'ensemble du dispositif pédagogique</div></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- 2.6 -->
+  <div class="sub">
+    <div class="sub-ttl"><span class="sub-id">2.6</span> Particularités procédurales liées à la candidature en groupement</div>
+    <p>La candidature en groupement momentané d'entreprises (GME) est expressément prévue par le CCP (<span class="lr">art. R. 2142-19 à R. 2142-27 CCP</span>). Elle présente des contraintes procédurales spécifiques.</p>
+
+    <p><strong>Deux formes de groupement aux implications différentes :</strong></p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:22%">Forme</th><th>Responsabilité de chaque membre</th><th>Enjeu pour le consortium</th></tr></thead>
+        <tbody>
+          <tr><td class="tbl-lbl">Groupement conjoint</td><td>Chaque membre n'est responsable que des prestations qui lui sont allouées dans l'acte d'engagement. Le mandataire peut, en plus, être rendu solidaire des cotraitants par le RC.</td><td>Forme adaptée si les missions sont clairement réparties. La FACC n'assume que la responsabilité du mandataire — sauf clause de solidarité du mandataire imposée par le RC.</td></tr>
+          <tr class="ra"><td class="tbl-lbl">Groupement solidaire</td><td>Chaque membre est solidairement responsable de l'ensemble des obligations du groupement vis-à-vis de l'acheteur.</td><td>Souvent exigée pour les marchés de services complexes. Implique que la FACC assume une exposition financière globale (~873 k€/an) — à évaluer au regard de sa capacité financière réelle.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="call call-warn">
+      <div class="call-lbl">Point à surveiller dans le RC</div>
+      <p>L'acheteur peut imposer l'une ou l'autre forme de groupement (<span class="lr">art. R. 2142-21 CCP</span>), ou encore interdire certaines configurations. Ces choix conditionnent directement l'architecture juridique à construire en <span class="mlink">P3</span> — ils ne peuvent être anticipés qu'une fois le RC publié.</p>
+    </div>
+
+    <p><strong>Cotraitance vs sous-traitance — distinction structurante pour P3 :</strong></p>
+    <ul>
+      <li>Les <strong>cotraitants</strong> sont membres du GME — parties directes au contrat, signataires du DC1, chacun dépossant un DC2. Leurs capacités financière et technique sont prises en compte lors de l'évaluation de la candidature.</li>
+      <li>Les <strong>sous-traitants</strong> interviennent en exécution du contrat, mandatés par le groupement — ils ne sont pas parties au contrat principal. Leur désignation doit être acceptée et agréée par l'acheteur. Leur paiement direct est protégé par la loi de 1975 sur la sous-traitance.</li>
+      <li>La question de savoir quels membres du consortium relèvent de l'un ou l'autre statut est l'enjeu central de <span class="mlink">P3</span>. Elle sera tranchée à la lumière du CCTP (répartition des missions) et du CCAP (conditions d'exécution imposées).</li>
+    </ul>
+
+    <p><strong>DC1 — document clé du groupement :</strong> un seul DC1 pour l'ensemble du groupement, signé par tous les membres, désignant expressément la FACC comme mandataire. Sa rédaction est à préparer dès que la liste des cotraitants est stabilisée — elle peut être engagée dès maintenant sur la base des membres envisagés.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ S03 ═══════════════════════════════════ -->
+<div class="sec s3" id="s03">
+  <div class="sec-hdr"><span class="sec-num">03</span><span class="sec-name">Points de vigilance</span></div>
+
+  <div class="risk">
+    <div class="risk-row"><div class="risk-name">Durée du marché et modalités de reconduction</div><span class="rl lvl-h">Critique</span></div>
+    <div class="risk-desc">La durée effective (1 an + X reconductions) et les conditions de reconduction (tacite ou expresse, plafond du nombre de périodes) conditionnent directement le modèle économique du consortium et le niveau d'investissement initial justifiable. Un marché d'un an sans reconduction ne justifie pas les mêmes charges de démarrage qu'un marché de 3 ou 4 ans. Cette information figure dans le CCAP — à analyser en priorité absolue à la publication.</div>
+  </div>
+
+  <div class="risk">
+    <div class="risk-row"><div class="risk-name">Forme du groupement imposée par l'acheteur</div><span class="rl lvl-h">Critique</span></div>
+    <div class="risk-desc">Si le RC impose un groupement solidaire, la FACC assume une responsabilité financière solidaire de l'ensemble du marché (~873 k€/an). La vérification préalable de sa capacité à supporter cette exposition est un prérequis à l'architecture de <span class="mlink">P3</span>. Inversement, si l'acheteur interdisait les groupements (très improbable mais théoriquement possible), l'ensemble du montage devrait être repensé en profondeur.</div>
+  </div>
+
+  <div class="risk">
+    <div class="risk-row"><div class="risk-name">Délai de réponse et planning de production collective</div><span class="rl lvl-h">Critique</span></div>
+    <div class="risk-desc">Le délai légal minimum de 35 jours en AOO est très court pour un groupement de plusieurs membres devant produire un mémoire technique cohérent, une offre financière consolidée et l'ensemble des pièces administratives. La préparation anticipée de ces éléments — objet du présent projet — est la réponse structurelle à ce risque. La coordination du mandataire dès la publication de l'avis est critique. Tout retard dans la collecte des DC2 ou des pièces financières peut compromettre la remise.</div>
+  </div>
+
+  <div class="risk">
+    <div class="risk-row"><div class="risk-name">Incertitude sur la procédure exacte</div><span class="rl lvl-m">Important</span></div>
+    <div class="risk-desc">L'hypothèse AOO est retenue, mais si le CNC opte pour une procédure avec négociation, la stratégie de dépôt change significativement. En AOO, l'offre initiale est l'offre finale — toute erreur est irrémédiable, tout positionnement insuffisant ne peut être corrigé. En PAN, une offre "de position" peut être déposée, puis ajustée après négociation. La confirmation dans le RC doit déclencher une relecture critique du mémoire technique en cours de préparation.</div>
+  </div>
+
+  <div class="risk">
+    <div class="risk-row"><div class="risk-name">Allotissement du marché</div><span class="rl lvl-m">Important</span></div>
+    <div class="risk-desc">Si le CNC allotit le marché (découpage en plusieurs lots attribuables à des opérateurs distincts), l'architecture de réponse change radicalement : arbitrage sur les lots à couvrir, gouvernance du groupement par lot, cohérence transversale de l'offre. Cette variable est travaillée en <span class="mlink">P1-5</span> et doit être suivie avec attention dans le RC et le CCTP. Le consortium doit anticiper les deux hypothèses (lot unique / multi-lots) sans attendre la publication.</div>
+  </div>
+
+  <div class="risk">
+    <div class="risk-row"><div class="risk-name">Exigences de capacité financière et technique</div><span class="rl lvl-m">Important</span></div>
+    <div class="risk-desc">L'acheteur peut fixer des niveaux minimaux de capacité financière (chiffre d'affaires annuel moyen, ratios de bilan) ou technique (références, effectifs). Ces exigences sont légales si proportionnées à l'objet du marché. Si elles sont élevées, certains membres du consortium (associations de petite taille) pourraient ne pas y satisfaire individuellement — la mutualisation des capacités au sein du groupement est la réponse prévue par le code (<span class="lr">art. R. 2142-3 CCP</span>), à condition de le justifier précisément dans le DC2 et l'acte d'engagement.</div>
+  </div>
+
+  <div class="risk">
+    <div class="risk-row"><div class="risk-name">Critères d'attribution et pondération</div><span class="rl lvl-m">À anticiper</span></div>
+    <div class="risk-desc">Le RC définira les critères d'attribution et leur pondération. Pour un marché de services culturels et éducatifs, une forte pondération du critère technique est attendue (70-80 %). Le critère prix reste présent et doit être traité sérieusement — la rigueur budgétaire est à la fois un argument de notation et un argument politique de crédibilité. L'anticipation de ces critères dès maintenant permet de calibrer la structure et la hiérarchie du mémoire technique en <span class="mlink">P4</span>.</div>
+  </div>
+
+  <div class="risk">
+    <div class="risk-row"><div class="risk-name">Clauses de performance propre ou d'exécution directe</div><span class="rl lvl-l">À confirmer</span></div>
+    <div class="risk-desc">L'acheteur peut imposer dans le CCAP qu'une part minimale des prestations essentielles soit exécutée directement par les membres du groupement (clause de performance propre ou d'autoexécution). Si une telle clause figure, elle crée une limite de facto au volume sous-traitable, ce qui conditionne la distinction cotraitants / sous-traitants dans le montage <span class="mlink">P3</span>. Cette information n'existe pas dans les textes généraux — elle est propre au marché.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ S04 ═══════════════════════════════════ -->
+<div class="sec s4" id="s04">
+  <div class="sec-hdr"><span class="sec-num">04</span><span class="sec-name">Statut et révisions</span></div>
+
+  <div class="sub">
+    <div class="sub-ttl">État des informations au 12 avril 2026</div>
+    <div class="sg">
+      <div class="sc">
+        <div class="sc-ttl">Éléments confirmés</div>
+        <div class="si"><span class="dot dg"></span>Le CNC est un EPA de l'État soumis au CCP</div>
+        <div class="si"><span class="dot dg"></span>Budget de référence : ~873 000 €/an</div>
+        <div class="si"><span class="dot dg"></span>Seuil de procédure formalisée largement dépassé</div>
+        <div class="si"><span class="dot dg"></span>Procédure formalisée obligatoire</div>
+        <div class="si"><span class="dot dg"></span>Mandataire désigné : FACC</div>
+        <div class="si"><span class="dot dg"></span>Démarrage opérationnel cible : septembre 2027</div>
+        <div class="si"><span class="dot dg"></span>Qualification : marché public de services</div>
+      </div>
+      <div class="sc">
+        <div class="sc-ttl">Éléments anticipés — à confirmer dans le RC</div>
+        <div class="si"><span class="dot da"></span>Procédure : AOO (hypothèse de travail)</div>
+        <div class="si"><span class="dot da"></span>Délai de réponse : 35 à 60 jours</div>
+        <div class="si"><span class="dot da"></span>Durée du marché et nombre de reconductions</div>
+        <div class="si"><span class="dot da"></span>Structure des lots (lot unique ou multi-lots)</div>
+        <div class="si"><span class="dot da"></span>Critères d'attribution et pondération</div>
+        <div class="si"><span class="dot da"></span>Forme de groupement imposée ou libre</div>
+        <div class="si"><span class="dot da"></span>Seuil de chiffre d'affaires exigé</div>
+      </div>
+      <div class="sc" style="grid-column:span 2">
+        <div class="sc-ttl">Éléments inconnus — dépendent exclusivement des pièces du marché</div>
+        <div class="si"><span class="dot dr"></span>Périmètre précis des missions et livrables attendus (CCTP)</div>
+        <div class="si"><span class="dot dr"></span>Conditions d'exécution, pénalités, révision du prix (CCAP)</div>
+        <div class="si"><span class="dot dr"></span>Exigences de capacité financière et technique détaillées (RC)</div>
+        <div class="si"><span class="dot dr"></span>Structure de l'offre financière — BPU, DQE ou forfait global (AE)</div>
+        <div class="si"><span class="dot dr"></span>Plateforme de dématérialisation et format de dépôt</div>
+        <div class="si"><span class="dot dr"></span>Conditions de sous-traitance imposées par l'acheteur</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-ttl">Révisions nécessaires à la publication des pièces du marché</div>
+    <div class="rv"><span class="rv-trig">RC → P2-1</span><div class="rv-desc">Confirmer ou infirmer la procédure (AOO vs PAN). Actualiser la section 2.3. Relire tous les points de vigilance à la lumière des critères effectifs et des exigences de capacité imposées. Identifier les conditions posées au groupement (forme, mandataire solidaire, exécution directe).</div></div>
+    <div class="rv"><span class="rv-trig">CCTP → P2-1 + P4</span><div class="rv-desc">L'analyse du CCTP déclenchera la mise à jour de la section 2.4 (structure documentaire) et l'activation complète du module P4 (conception de l'offre). C'est la pièce la plus structurante — elle conditionne également la distinction cotraitants / sous-traitants (P3) et la répartition des tâches au sein du groupement.</div></div>
+    <div class="rv"><span class="rv-trig">CCAP → P2-1 + P3</span><div class="rv-desc">Durée du marché, modalités de reconduction, pénalités de retard, révision du prix, conditions de résiliation — éléments conditionnant le montage financier et la gouvernance du consortium (P3). La durée réelle du contrat détermine le niveau d'amortissement des charges de structure.</div></div>
+    <div class="rv"><span class="rv-trig">AE → P5</span><div class="rv-desc">Structure de l'acte d'engagement et de l'offre financière associée. À intégrer directement dans le module de rédaction (P5), verrouillé jusqu'à la publication du marché.</div></div>
+  </div>
+
+  <div class="stat-foot"><strong>Statut :</strong> Anticipé — v1 — avril 2026. Prochain niveau de maturité visé : v2 (révisé sur pièces réelles), dès publication de l'avis d'appel à la concurrence. La révision sera partielle si seul le RC est disponible, complète si le DCE intégral est publié simultanément.</div>
+</div>
+
+</div>
+
+<script>
+function go(id,idx){
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+  document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('on',i===idx));
+}
+(async()=>{
+  try{
+    const r=await window.storage.get('mcc_P2-1');
+    if(r&&r.value){const d=JSON.parse(r.value);if(d.s){const idx=['s01','s02','s03','s04'].indexOf(d.s);if(idx>0)setTimeout(()=>go(d.s,idx),400);}}
+  }catch(e){}
+})();
+let st;
+window.addEventListener('scroll',()=>{
+  clearTimeout(st);
+  st=setTimeout(async()=>{
+    const ids=['s01','s02','s03','s04'];
+    let cur=ids[0];
+    for(const id of ids){const el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<120)cur=id;}
+    const idx=ids.indexOf(cur);
+    document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('on',i===idx));
+    try{await window.storage.set('mcc_P2-1',JSON.stringify({s:cur,at:new Date().toISOString()}));}catch(e){}
+  },300);
+});
+</script>

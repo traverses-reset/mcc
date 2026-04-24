@@ -1,0 +1,374 @@
+
+<style>
+  .r{font-family:var(--font-sans);color:var(--color-text-primary);max-width:820px;margin:0 auto;padding:1.5rem 0 3rem}
+  .mh{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:2rem;gap:1.5rem}
+  .badge{font-size:11px;font-weight:500;padding:3px 10px;border-radius:var(--border-radius-md);display:inline-block}
+  .b-ant{background:var(--color-background-warning);color:var(--color-text-warning)}
+  .sec{margin-bottom:2.5rem}
+  .sh{font-size:18px;font-weight:500;margin:0 0 1.25rem;padding-bottom:0.625rem;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:baseline;gap:0.75rem;line-height:1.3}
+  .sn{font-size:11px;font-weight:400;color:var(--color-text-tertiary);letter-spacing:0.06em;text-transform:uppercase;flex-shrink:0}
+  .sub{margin:1.5rem 0 0}
+  .stit{font-size:16px;font-weight:500;margin:0 0 0.75rem;display:flex;align-items:center;gap:0.5rem}
+  .sl{font-size:11px;font-weight:500;background:var(--color-background-secondary);color:var(--color-text-secondary);padding:2px 8px;border-radius:var(--border-radius-md)}
+  p{font-size:15px;line-height:1.7;margin:0 0 0.875rem}
+  ul{font-size:15px;line-height:1.7;padding-left:1.25rem;margin:0.5rem 0 0.875rem}
+  li{margin-bottom:0.5rem}
+  .cl{border-left:2px solid;padding:0.75rem 1rem;border-radius:0 var(--border-radius-md) var(--border-radius-md) 0;margin:1rem 0;background:var(--color-background-secondary)}
+  .cl p{margin:0;font-size:14px}
+  .ct{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;display:block}
+  .ci{border-color:var(--color-border-info)}.ci .ct{color:var(--color-text-info)}
+  .cw{border-color:var(--color-border-warning)}.cw .ct{color:var(--color-text-warning)}
+  .cd{border-color:var(--color-border-danger)}.cd .ct{color:var(--color-text-danger)}
+  .cs{border-color:var(--color-border-success)}.cs .ct{color:var(--color-text-success)}
+  .tbl{width:100%;border-collapse:collapse;font-size:14px;margin:1rem 0}
+  .tbl th{text-align:left;font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;color:var(--color-text-secondary);padding:8px 12px;border-bottom:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary)}
+  .tbl td{padding:10px 12px;border-bottom:0.5px solid var(--color-border-tertiary);vertical-align:top;line-height:1.55}
+  .tbl tr:last-child td{border-bottom:none}
+  .ph{font-size:13px;font-weight:500}
+  .phi{color:var(--color-text-info)}.phm{color:var(--color-text-success)}.phl{color:var(--color-text-secondary)}
+  .bc{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin:0.75rem 0;background:var(--color-background-primary)}
+  .bn{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.05em;margin:0 0 4px}
+  .bt{font-size:15px;font-weight:500;margin:0 0 8px}
+  .bb{font-size:14px;color:var(--color-text-secondary);line-height:1.6}
+  .vi{display:flex;gap:0.75rem;margin-bottom:1rem;align-items:flex-start}
+  .vn{font-size:11px;font-weight:500;min-width:22px;height:22px;border-radius:50%;background:var(--color-background-danger);color:var(--color-text-danger);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+  .vc{font-size:14px;line-height:1.65}
+  .vtt{font-weight:500;display:block;margin-bottom:3px;font-size:15px}
+  .sg{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0}
+  .sc{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem}
+  .sc1{border-top:2px solid var(--color-border-info)}.sc2{border-top:2px solid var(--color-border-success)}
+  .scp{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.05em;margin:0 0 6px}
+  .sc1 .scp{color:var(--color-text-info)}.sc2 .scp{color:var(--color-text-success)}
+  .sct{font-size:15px;font-weight:500;margin:0 0 8px}
+  .scb{font-size:13px;line-height:1.6;color:var(--color-text-secondary)}
+  .ri{display:flex;gap:0.625rem;align-items:flex-start;margin-bottom:0.625rem;font-size:14px;line-height:1.55}
+  .rd{width:6px;height:6px;border-radius:50%;background:var(--color-text-warning);flex-shrink:0;margin-top:6px}
+  .ch{display:flex;flex-wrap:wrap;gap:0.5rem;margin:0.875rem 0}
+  .chip{font-size:12px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:4px 10px;color:var(--color-text-secondary);line-height:1.4}
+  .chip strong{font-weight:500;color:var(--color-text-primary)}
+  code{font-family:var(--font-mono);font-size:12px;background:var(--color-background-secondary);padding:2px 6px;border-radius:4px}
+  h4{font-size:14px;font-weight:500;margin:1.25rem 0 0.5rem;color:var(--color-text-secondary)}
+  @media(max-width:600px){.sg{grid-template-columns:1fr}.mh{flex-direction:column;gap:0.75rem}}
+</style>
+
+<div class="r">
+
+  <!-- HEADER -->
+  <div class="mh">
+    <div>
+      <p style="font-size:12px;color:var(--color-text-secondary);margin:0 0 6px;text-transform:uppercase;letter-spacing:0.05em;font-weight:500">P2 — Commande publique · module itératif</p>
+      <h1 style="font-size:22px;font-weight:500;margin:0 0 6px;line-height:1.25">P2-4 · Critères de sélection et notation</h1>
+      <p style="font-size:13px;color:var(--color-text-secondary);margin:0">Clé de stockage : <code>mcc_P2-4</code></p>
+    </div>
+    <div style="flex-shrink:0;text-align:right">
+      <span class="badge b-ant">ANTICIPÉ</span>
+      <p style="font-size:12px;color:var(--color-text-secondary);margin:6px 0 0;text-align:center">v1 · avril 2026</p>
+    </div>
+  </div>
+
+  <!-- 01 CONTEXTE -->
+  <div class="sec">
+    <h2 class="sh"><span class="sn">01</span>Contexte et enjeux</h2>
+
+    <p style="font-size:12px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.05em;margin:0 0 0.5rem">Positionnement dans l'arborescence</p>
+    <p>P2-4 est produit après P2-1 (cadre juridique et CCP) et P2-3 (co-traitance / sous-traitance). Il constitue l'un des modules P2 à la plus forte valeur stratégique directe : la connaissance anticipée des critères d'attribution est indispensable pour orienter l'architecture de l'offre (P4) et la rédaction du mémoire technique (P5-1). Un consortium qui découvre les critères réels après avoir construit son offre ne peut qu'effectuer des ajustements superficiels — souvent visibles dans leur artificialité.</p>
+
+    <p style="font-size:12px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.05em;margin:1rem 0 0.5rem">Enjeu de la distinction fondamentale</p>
+    <p>Le droit de la commande publique articule deux moments distincts, gouvernés par des critères de nature entièrement différente : la <strong style="font-weight:500">sélection des candidatures</strong> (aptitude à contracter) et l'<strong style="font-weight:500">attribution du marché</strong> (qualité de l'offre). Cette distinction est souvent méconnue des acteurs du secteur culturel peu habitués aux procédures formalisées. Une confusion entre les deux niveaux génère des dossiers de candidature surchargés et des offres techniques mal calibrées.</p>
+
+    <div class="cl ci">
+      <span class="ct">Note pédagogique — public hétérogène</span>
+      <p>Ce module est rédigé pour des lecteurs dont le niveau de familiarité avec la commande publique est variable. Les fondements juridiques sont mentionnés pour permettre une vérification autonome, mais ce n'est pas l'essentiel. L'essentiel est opérationnel : que doit faire le consortium pour être sélectionné, et que doit-il produire pour remporter le marché ?</p>
+    </div>
+
+    <p style="font-size:12px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.05em;margin:1rem 0 0.5rem">Liens avec les modules connexes</p>
+    <div class="ch">
+      <div class="chip"><strong>P2-1</strong> — cadre procédural et type de procédure</div>
+      <div class="chip"><strong>P2-2</strong> — AO ouvert vs. procédure avec négociation</div>
+      <div class="chip"><strong>P2-3</strong> — capacités mobilisables en groupement</div>
+      <div class="chip"><strong>P4</strong> — conception de l'offre construite sur les critères</div>
+      <div class="chip"><strong>P5-1</strong> — mémoire technique adressant les critères</div>
+      <div class="chip"><strong>P2-6</strong> — offre financière et calibrage prix</div>
+    </div>
+  </div>
+
+  <!-- 02 DÉVELOPPEMENT -->
+  <div class="sec">
+    <h2 class="sh"><span class="sn">02</span>Développement</h2>
+
+    <!-- A -->
+    <div class="sub">
+      <h3 class="stit"><span class="sl">A</span>Les deux stades de l'évaluation</h3>
+      
+      <div class="sg">
+        <div class="sc sc1">
+          <p class="scp">Stade 1</p>
+          <p class="sct">Sélection des candidatures</p>
+          <p class="scb">Fondement : CCP art. L. 2142-1 et s., R. 2142-1 et s. L'acheteur vérifie l'aptitude du candidat à exécuter le marché — non la qualité de sa proposition. Porte sur les capacités économiques, financières, techniques et professionnelles. Critère binaire : seuil minimal à franchir.</p>
+        </div>
+        <div class="sc sc2">
+          <p class="scp">Stade 2</p>
+          <p class="sct">Attribution du marché</p>
+          <p class="scb">Fondement : CCP art. L. 2152-1 et s. Le marché est attribué à l'"offre économiquement la plus avantageuse" (OEPA). Porte sur la valeur de ce qui est proposé — indépendamment des capacités. Critère comparatif : classement des offres par note pondérée.</p>
+        </div>
+      </div>
+
+      <div class="cl cw">
+        <span class="ct">Particularité de l'appel d'offres ouvert (hypothèse prioritaire)</span>
+        <p>En procédure ouverte, il n'y a pas de phase de présélection formelle. Sélection des candidatures et examen des offres sont menés simultanément dans un même pli. L'acheteur peut éliminer les candidats ne satisfaisant pas aux niveaux minimaux de capacité avant d'examiner leurs offres, mais il ne le fait généralement qu'a posteriori. Dans la pratique : candidature et offre sont déposées ensemble ; seul l'acheteur distingue les deux stades dans son analyse.</p>
+      </div>
+
+      <h4>Capacités requises pour la sélection des candidatures</h4>
+      <p>Pour un marché de services culturels à forte dimension intellectuelle et de coordination, les niveaux minimaux exigés portent généralement sur :</p>
+      <ul>
+        <li><strong style="font-weight:500">Capacités économiques et financières :</strong> chiffre d'affaires des trois derniers exercices, bilans ou extraits de bilans, attestation d'assurance responsabilité professionnelle. Pour un groupement, ces capacités sont appréciées globalement — chaque membre y contribue.</li>
+        <li><strong style="font-weight:500">Capacités techniques et professionnelles :</strong> liste des principales références de services similaires au cours des trois dernières années (nature, montant, destinataire), moyens humains et techniques dédiés à l'exécution, certifications ou agréments sectoriels si exigés.</li>
+        <li><strong style="font-weight:500">Aptitude professionnelle :</strong> KBIS ou équivalent, inscriptions aux registres obligatoires. Aucune qualification spécifique n'est a priori requise pour des services de coordination culturelle — à vérifier à la publication du RC.</li>
+      </ul>
+
+      <div class="cl ci">
+        <span class="ct">Principe pour le groupement — mutualisation des capacités</span>
+        <p>Les capacités du groupement s'apprécient globalement. La FACC, en qualité de mandataire, n'a pas à réunir à elle seule l'ensemble des capacités requises. Chaque membre peut apporter sa contribution en références, en moyens humains ou en couverture territoriale. Cette mutualisation est l'un des arguments les plus directs en faveur de la structure consortium dans la phase de candidature.</p>
+      </div>
+    </div>
+
+    <!-- B -->
+    <div class="sub">
+      <h3 class="stit"><span class="sl">B</span>Architecture probable des critères d'attribution</h3>
+
+      <p>Pour un marché de services à forte dimension intellectuelle et pédagogique — coordination nationale, animation de réseau, ressources pédagogiques — la structuration suivante est la plus vraisemblable. Elle s'appuie sur les pratiques observées pour des marchés analogues auprès d'EPA culturels et sur les orientations de la subvention précédente.</p>
+
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th style="width:28%">Critère principal</th>
+            <th style="width:18%">Poids anticipé</th>
+            <th>Contenu attendu</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong style="font-weight:500">Valeur technique</strong></td>
+            <td><span class="ph phi">60 – 70 %</span></td>
+            <td>Méthodologie de coordination, organisation, qualité des ressources proposées, capacité d'innovation, couverture territoriale. Subdivisé en sous-critères avec pondération propre publiée dans le RC.</td>
+          </tr>
+          <tr>
+            <td><strong style="font-weight:500">Prix</strong></td>
+            <td><span class="ph phm">30 – 40 %</span></td>
+            <td>Prix global HT ou décomposition par poste / par lot. Évalué par notation relative ou grille absolue selon la méthode publiée. En appel d'offres ouvert, le prix ne peut être le seul critère si plusieurs offres sont techniquement comparables.</td>
+          </tr>
+          <tr>
+            <td><strong style="font-weight:500">Critères annexes</strong><br><span style="font-size:12px;color:var(--color-text-secondary)">(RSE, insertion, égalité pro.)</span></td>
+            <td><span class="ph phl">0 – 10 %</span></td>
+            <td>De plus en plus fréquents dans les marchés de l'État. Présence et pondération incertaines — à vérifier à la publication. Peuvent porter sur l'éco-responsabilité, l'égalité femmes-hommes, l'emploi de personnes en situation de handicap.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="cl ci">
+        <span class="ct">Fondements légaux — attribution</span>
+        <p>CCP art. L. 2152-1 : le marché est attribué à l'"offre économiquement la plus avantageuse". Art. L. 2152-6 : les critères et leur pondération doivent être publiés avant remise des offres. Art. R. 2152-6 à R. 2152-11 : liste indicative de critères pouvant porter sur la qualité, le prix, les délais, les performances techniques, les caractéristiques environnementales.</p>
+      </div>
+    </div>
+
+    <!-- C -->
+    <div class="sub">
+      <h3 class="stit"><span class="sl">C</span>Décomposition probable de la valeur technique</h3>
+
+      <p>La valeur technique sera vraisemblablement subdivisée en sous-critères pondérés, publiés dans le RC. Cinq blocs sont anticipés pour un marché de cette nature — leur pondération relative reste inconnue jusqu'à la publication. L'architecture de l'offre (P4) doit être robuste à plusieurs configurations de pondération.</p>
+
+      <div class="bc">
+        <p class="bn">Bloc 1</p>
+        <p class="bt">Compréhension des missions et du contexte sectoriel</p>
+        <p class="bb">Connaissance du dispositif MCC et de son histoire institutionnelle · Lecture des enjeux sectoriels (cinéma, éducation à l'image, territoires, numérique) · Clarté de l'analyse des attentes du CNC · Identification des points de tension à résoudre (transition opérateur, continuité de service, relations avec les associations régionales)</p>
+      </div>
+
+      <div class="bc">
+        <p class="bn">Bloc 2</p>
+        <p class="bt">Méthodologie de coordination nationale</p>
+        <p class="bb">Organisation de la coordination centrale (équipe, répartition des missions, calendrier type) · Articulation entre pilote national et opérateurs régionaux · Modalités de pilotage et de suivi (indicateurs, instances de gouvernance, reportings périodiques) · Capacité à assurer la continuité de service dès le premier mois d'exécution du marché</p>
+      </div>
+
+      <div class="bc">
+        <p class="bn">Bloc 3</p>
+        <p class="bt">Capacité à mobiliser et animer le réseau territorial</p>
+        <p class="bb">Couverture territoriale du consortium · Qualité et solidité des partenariats déjà constitués avec les opérateurs régionaux · Modalités concrètes d'animation du réseau (rencontres, outils collaboratifs, espaces de ressources partagés) · Gestion des situations de désaccord ou de défaillance d'un opérateur local</p>
+      </div>
+
+      <div class="bc">
+        <p class="bn">Bloc 4</p>
+        <p class="bt">Outils et ressources pédagogiques</p>
+        <p class="bb">Qualité et adéquation des outils existants mobilisables dès la prise en charge · Capacité d'innovation pédagogique et documentaire · Ressources numériques (accessibilité, maintenabilité, interopérabilité) · Différenciation par niveau scolaire, par territoire et par type d'établissement</p>
+      </div>
+
+      <div class="bc">
+        <p class="bn">Bloc 5</p>
+        <p class="bt">Évaluation, reporting et amélioration continue</p>
+        <p class="bb">Dispositifs d'évaluation interne du dispositif · Indicateurs proposés (quantitatifs et qualitatifs) · Capacité à produire les bilans attendus par le CNC dans les délais fixés · Mécanismes de retour d'expérience et d'ajustement en cours d'exécution du marché</p>
+      </div>
+    </div>
+
+    <!-- D -->
+    <div class="sub">
+      <h3 class="stit"><span class="sl">D</span>Méthodes de notation et implications</h3>
+
+      <p>L'acheteur est libre de choisir sa méthode de notation, sous réserve de la publier dans le RC avant remise des offres. Trois méthodes sont couramment utilisées pour des marchés de services intellectuels.</p>
+
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th style="width:22%">Méthode</th>
+            <th style="width:38%">Fonctionnement</th>
+            <th>Implications pour le consortium</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong style="font-weight:500">Notation absolue</strong></td>
+            <td>Note de 0 à 10 (ou 0 à 20) attribuée par l'acheteur selon une grille qualitative : insuffisant / passable / satisfaisant / très satisfaisant / excellent. Indépendante des offres concurrentes.</td>
+            <td>Prévisible et défendable. Permet de cibler la note maximale sur chaque sous-critère. Risque : la grille qualitative n'est pas toujours publiée — il faut viser systématiquement le niveau "très satisfaisant" ou supérieur.</td>
+          </tr>
+          <tr>
+            <td><strong style="font-weight:500">Notation relative</strong></td>
+            <td>La meilleure offre obtient la note maximale. Les autres sont notées proportionnellement à l'écart avec la meilleure. Très courante pour le critère prix.</td>
+            <td>Sur le prix : pénalise peu un écart modéré avec le moins-disant. Sur la technique : si un concurrent excelle sur un sous-critère, les autres sont fortement pénalisés. Incite à l'excellence sur l'ensemble des blocs.</td>
+          </tr>
+          <tr>
+            <td><strong style="font-weight:500">Méthode mixte</strong></td>
+            <td>Notation absolue sur la valeur technique, notation relative sur le prix. Combinaison fréquente dans les marchés de services publics culturels.</td>
+            <td>Configuration favorable : l'offre technique peut atteindre le score maximal indépendamment du positionnement prix des concurrents. Favorise un calibrage financier défensif (ni trop haut ni trop bas).</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="cl cd">
+        <span class="ct">Offre anormalement basse (OAB) — CCP art. L. 2152-5</span>
+        <p>Si l'offre financière est significativement inférieure aux autres candidats, l'acheteur est tenu de demander des justifications. Il peut rejeter l'offre si celles-ci sont insuffisantes. Le budget historique de la subvention à l'Archipel des Lucioles constitue une référence de marché exploitable. Il faut construire une offre défendable, documentée poste par poste, permettant à l'acheteur de comprendre la logique économique sans que le prix soit irréaliste. La décomposition du prix en annexe au BPU (cf. P2-6) est la réponse préventive à ce risque.</p>
+      </div>
+    </div>
+
+    <!-- E -->
+    <div class="sub">
+      <h3 class="stit"><span class="sl">E</span>Implications directes pour le consortium</h3>
+
+      <h4>Sur la constitution du dossier de candidature</h4>
+      <p>Chaque membre du groupement fournit ses propres documents de candidature (cf. P2-5). Les références peuvent être mutualisées : le groupement présente l'ensemble de ses références agrégées, ce qui constitue un avantage structurel majeur face à un candidat seul. Le mandataire FACC doit démontrer une capacité propre à assurer le rôle de pilote — solidité financière, expérience de coordination multi-acteurs, légitimité institutionnelle dans le secteur.</p>
+
+      <h4>Sur la construction de l'offre technique</h4>
+      <p>L'architecture de l'offre (P4) doit être calquée sur la structure anticipée des critères d'attribution. Chaque bloc de valeur technique doit faire l'objet d'une section dédiée dans le mémoire (P5-1), dans l'ordre de présentation des critères tel que publié dans le RC. La cohérence entre la structure juridique du consortium (P3) et la méthodologie proposée est un argument en soi : un groupement dont la gouvernance est lisible démontre qu'il ne s'agit pas d'un simple portage administratif.</p>
+
+      <div class="cl cs">
+        <span class="ct">Levier différenciant principal du consortium</span>
+        <p>La complémentarité des membres est un atout stratégique direct sur le Bloc 3 (réseau territorial) et le Bloc 4 (outils pédagogiques). L'Agence du court métrage sur les ressources filmiques, ACAP / Images Est / Ciclic sur les pratiques territoriales, les CIP parisiens sur la ressource critique — chaque membre apporte une contribution identifiable et différenciante. Cette lisibilité doit être rendue visible dans l'offre, non pas seulement dans la liste des membres : chaque section du mémoire doit mentionner les membres porteurs de la mission correspondante.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 VIGILANCE -->
+  <div class="sec">
+    <h2 class="sh"><span class="sn">03</span>Points de vigilance</h2>
+
+    <div class="vi">
+      <div class="vn">1</div>
+      <div class="vc">
+        <span class="vtt">Pondérations réelles inconnues jusqu'à la publication du RC</span>
+        L'architecture en cinq blocs est anticipée, mais les pondérations réelles peuvent s'écarter significativement des hypothèses. Une sur-pondération du Bloc 2 (méthodologie de coordination) favorise le mandataire ; une sur-pondération du Bloc 3 (réseau territorial) valorise davantage les membres régionaux. L'offre doit être robuste à plusieurs configurations — ne pas être optimisée pour une seule hypothèse au détriment des autres.
+      </div>
+    </div>
+
+    <div class="vi">
+      <div class="vn">2</div>
+      <div class="vc">
+        <span class="vtt">Procédure avec négociation : critères potentiellement évolutifs</span>
+        Si la procédure avec négociation est retenue (cf. P2-1, incertitude matérielle), les critères et leur pondération peuvent évoluer entre la phase de consultation initiale et la phase de négociation, dans les limites posées par le CCP (art. R. 2164-6 : pas de modification des conditions minimales). Il faut conserver une marge de manœuvre dans l'offre initiale et éviter de se dévoiler entièrement dès la première remise.
+      </div>
+    </div>
+
+    <div class="vi">
+      <div class="vn">3</div>
+      <div class="vc">
+        <span class="vtt">Confusion sélection / attribution chez les membres du consortium</span>
+        La distinction entre capacités à candidater et qualité de l'offre est souvent mal comprise dans le secteur culturel. Un partenaire peut penser que ses références "comptent" dans l'évaluation sans que ce soit le cas si les références du groupement sont déjà suffisantes. Informer les membres sur ce point dès le démarrage pour éviter des dossiers surchargés, des doublons documentaires et des malentendus sur le rôle de chacun dans le dossier.
+      </div>
+    </div>
+
+    <div class="vi">
+      <div class="vn">4</div>
+      <div class="vc">
+        <span class="vtt">Calibrage financier et risque d'offre anormalement basse</span>
+        Le budget historique de la subvention à l'Archipel des Lucioles fournit un plancher de référence (coordination centrale représentant moins d'un cinquième du total, cf. P1-5). Une offre trop basse expose à une procédure OAB ; une offre trop haute dégrade le score prix. Il faut construire un prévisionnel documenté avec décomposition par poste permettant de justifier chaque hypothèse de coût si l'acheteur le demande.
+      </div>
+    </div>
+
+    <div class="vi">
+      <div class="vn">5</div>
+      <div class="vc">
+        <span class="vtt">Critères annexes RSE et égalité professionnelle</span>
+        Leur présence est incertaine mais croissante dans les marchés de l'État et de ses établissements publics. Il faut préparer des éléments de réponse en amont (politique d'égalité femmes-hommes, accessibilité des ressources, éco-responsabilité des déplacements) même si leur poids probable est faible. Ces critères peuvent faire la différence entre deux offres à niveau technique égal.
+      </div>
+    </div>
+
+    <div class="vi">
+      <div class="vn">6</div>
+      <div class="vc">
+        <span class="vtt">Lisibilité de la contribution individuelle des membres</span>
+        Si l'acheteur attend que l'offre rende visible comment chaque membre du groupement contribue à la valeur technique — et non uniquement le mandataire —, un mémoire où FACC est la seule voix identifiable ne valorisera pas la complémentarité du consortium. Chaque bloc doit mentionner les membres porteurs de la mission correspondante, avec des éléments concrets sur leur apport spécifique.
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 STATUT -->
+  <div class="sec">
+    <h2 class="sh"><span class="sn">04</span>Statut et révisions</h2>
+
+    <div style="display:flex;gap:0.875rem;margin-bottom:1.5rem;flex-wrap:wrap">
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:0.875rem 1.25rem;flex:1;min-width:130px">
+        <p style="font-size:11px;text-transform:uppercase;letter-spacing:0.05em;color:var(--color-text-secondary);margin:0 0 4px;font-weight:500">Statut</p>
+        <p style="font-size:15px;font-weight:500;margin:0;color:var(--color-text-warning)">Anticipé</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:0.875rem 1.25rem;flex:1;min-width:130px">
+        <p style="font-size:11px;text-transform:uppercase;letter-spacing:0.05em;color:var(--color-text-secondary);margin:0 0 4px;font-weight:500">Version</p>
+        <p style="font-size:15px;font-weight:500;margin:0">v1 — anticipée</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:0.875rem 1.25rem;flex:1;min-width:130px">
+        <p style="font-size:11px;text-transform:uppercase;letter-spacing:0.05em;color:var(--color-text-secondary);margin:0 0 4px;font-weight:500">Produit le</p>
+        <p style="font-size:15px;font-weight:500;margin:0">Avril 2026</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:0.875rem 1.25rem;flex:1;min-width:130px">
+        <p style="font-size:11px;text-transform:uppercase;letter-spacing:0.05em;color:var(--color-text-secondary);margin:0 0 4px;font-weight:500">Clé storage</p>
+        <p style="font-size:15px;font-weight:500;margin:0"><code>mcc_P2-4</code></p>
+      </div>
+    </div>
+
+    <p style="font-size:12px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.05em;margin:0 0 0.75rem">Révisions nécessaires à la publication du marché (passage en v2)</p>
+
+    <div class="ri"><div class="rd"></div><span>Récupérer le règlement de consultation (RC) pour identifier les critères exacts, leur pondération et les éventuels sous-critères — ainsi que la méthode de notation retenue par l'acheteur.</span></div>
+    <div class="ri"><div class="rd"></div><span>Vérifier si des niveaux minimaux de capacité sont explicitement fixés pour la sélection des candidatures et évaluer si le groupement les satisfait en l'état ou si des ajustements sont nécessaires.</span></div>
+    <div class="ri"><div class="rd"></div><span>Identifier la méthode de notation retenue (absolue, relative, mixte) et en déduire la stratégie de calibrage de l'offre financière — en lien direct avec P2-6.</span></div>
+    <div class="ri"><div class="rd"></div><span>Vérifier la présence et la pondération de critères annexes RSE, égalité professionnelle, accessibilité et préparer les éléments de réponse correspondants.</span></div>
+    <div class="ri"><div class="rd"></div><span>Mettre à jour P4 (conception de l'offre) en alignant l'architecture du mémoire technique sur les critères et sous-critères réels publiés dans le RC.</span></div>
+    <div class="ri"><div class="rd"></div><span>Déclencher la production de P5-1 dès réception du DCE — le mémoire technique doit adresser explicitement chaque critère dans son ordre et sa pondération officiels.</span></div>
+
+    <div class="cl cw" style="margin-top:1.5rem">
+      <span class="ct">Ce module conditionne directement P4 et P5-1</span>
+      <p>La publication du RC est le déclencheur de la révision v2. Tant que les critères réels ne sont pas connus, P4 doit être construit sur l'architecture anticipée en cinq blocs, avec la capacité de pivoter rapidement à la publication. Ne pas démarrer la rédaction de P5-1 avant d'avoir lu et analysé le RC.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(async () => {
+  try {
+    await window.storage.set('mcc_P2-4', JSON.stringify({
+      id: 'P2-4',
+      titre: 'Critères de sélection et notation',
+      statut: 'anticipé',
+      version: 'v1',
+      date: '2026-04',
+      cle: 'mcc_P2-4',
+      blocs_anticipes: ['compréhension missions', 'méthodologie coordination', 'réseau territorial', 'outils pédagogiques', 'évaluation reporting']
+    }));
+  } catch(e) {}
+})();
+</script>

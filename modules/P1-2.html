@@ -1,0 +1,386 @@
+
+<style>
+.doc-wrap{max-width:100%;font-family:var(--font-sans)}
+.mod-header{border-bottom:0.5px solid var(--color-border-secondary);padding:1rem 0 0.75rem;margin-bottom:1.25rem}
+.mod-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:500;background:var(--color-background-warning);color:var(--color-text-warning);padding:2px 8px;border-radius:4px;margin-bottom:0.5rem}
+.mod-title{font-size:20px;font-weight:500;color:var(--color-text-primary);margin:0 0 4px;font-family:var(--font-serif)}
+.mod-meta{font-size:11px;color:var(--color-text-tertiary);margin:0}
+.sec-nav{display:flex;gap:2px;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:1.25rem;flex-wrap:wrap}
+.sec-tab{font-size:12px;padding:6px 11px;cursor:pointer;border:none;background:none;color:var(--color-text-secondary);border-bottom:2px solid transparent;margin-bottom:-0.5px;transition:all 0.12s}
+.sec-tab:hover{color:var(--color-text-primary)}
+.sec-tab.active{color:var(--color-text-primary);border-bottom-color:var(--color-text-primary);font-weight:500}
+.sec-pane{display:none}
+.sec-pane.active{display:block}
+.sh1{font-size:15px;font-weight:500;color:var(--color-text-primary);margin:1.25rem 0 0.6rem;padding-bottom:6px;border-bottom:0.5px solid var(--color-border-tertiary);font-family:var(--font-serif)}
+.sh2{font-size:11px;font-weight:500;color:var(--color-text-secondary);margin:1rem 0 0.5rem;text-transform:uppercase;letter-spacing:0.05em}
+p{font-size:13px;line-height:1.7;color:var(--color-text-primary);margin:0 0 0.7rem}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:1rem 0}
+.stat-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px}
+.stat-label{font-size:11px;color:var(--color-text-secondary);margin:0 0 3px}
+.stat-value{font-size:20px;font-weight:500;color:var(--color-text-primary);margin:0}
+.stat-sub{font-size:10px;color:var(--color-text-tertiary);margin:2px 0 0}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0.75rem 0}
+.pill{display:inline-block;font-size:10px;font-weight:500;padding:2px 6px;border-radius:20px;margin-right:3px}
+.pill-info{background:var(--color-background-info);color:var(--color-text-info)}
+.pill-warn{background:var(--color-background-warning);color:var(--color-text-warning)}
+.pill-success{background:var(--color-background-success);color:var(--color-text-success)}
+.pill-danger{background:var(--color-background-danger);color:var(--color-text-danger)}
+ul.doc-list{padding-left:1.1rem;margin:0.4rem 0}
+ul.doc-list li{font-size:13px;line-height:1.6;color:var(--color-text-primary);margin-bottom:3px}
+.alert{padding:9px 13px;border-radius:var(--border-radius-md);font-size:12px;line-height:1.6;margin:0.75rem 0;border-left:3px solid}
+.alert-warn{background:var(--color-background-warning);color:var(--color-text-warning);border-color:var(--color-text-warning)}
+.alert-info{background:var(--color-background-info);color:var(--color-text-info);border-color:var(--color-text-info)}
+.alert-danger{background:var(--color-background-danger);color:var(--color-text-danger);border-color:var(--color-text-danger)}
+.alert-success{background:var(--color-background-success);color:var(--color-text-success);border-color:var(--color-text-success)}
+.doc-table{width:100%;border-collapse:collapse;font-size:12px;margin:0.75rem 0}
+.doc-table th{text-align:left;font-size:10px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.04em;padding:5px 8px;border-bottom:0.5px solid var(--color-border-secondary)}
+.doc-table td{padding:7px 8px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:top}
+.doc-table tr:last-child td{border-bottom:none}
+.timeline{position:relative;padding-left:20px;border-left:0.5px solid var(--color-border-secondary);margin:1rem 0}
+.tl-item{position:relative;margin-bottom:14px}
+.tl-item::before{content:'';position:absolute;left:-24px;top:4px;width:7px;height:7px;border-radius:50%;background:var(--color-background-warning);border:0.5px solid var(--color-text-warning)}
+.tl-year{font-size:10px;font-weight:500;color:var(--color-text-warning);margin:0 0 2px}
+.tl-desc{font-size:12px;color:var(--color-text-primary);line-height:1.55;margin:0}
+.device-hdr{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);cursor:pointer;margin-bottom:2px;transition:background 0.12s}
+.device-hdr:hover{background:var(--color-background-primary)}
+.device-hdr-left{display:flex;align-items:center;gap:9px}
+.device-year{font-size:10px;font-weight:500;color:var(--color-text-tertiary);background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);padding:2px 5px;border-radius:4px}
+.device-name{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.device-level{font-size:11px;color:var(--color-text-secondary)}
+.device-stats{display:flex;align-items:center;gap:10px}
+.device-stat{font-size:11px;color:var(--color-text-secondary)}
+.device-stat strong{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.trend-up{color:var(--color-text-success)}
+.trend-dn{color:var(--color-text-danger)}
+.device-toggle{font-size:12px;color:var(--color-text-tertiary);min-width:12px}
+.device-body{display:none;border:0.5px solid var(--color-border-tertiary);border-top:none;border-radius:0 0 var(--border-radius-md) var(--border-radius-md);padding:14px;margin-bottom:6px}
+.device-body.open{display:block}
+.mission-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0.75rem 0}
+.mission-card{padding:9px 11px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);background:var(--color-background-primary)}
+.mission-num{font-size:10px;font-weight:500;color:var(--color-text-tertiary);margin:0 0 3px}
+.mission-title{font-size:12px;font-weight:500;color:var(--color-text-primary);margin:0 0 4px}
+.mission-desc{font-size:11px;color:var(--color-text-secondary);margin:0;line-height:1.5}
+.vig-item{padding:10px 12px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);margin-bottom:6px}
+.vig-hdr{display:flex;align-items:center;gap:7px;margin-bottom:5px}
+.vig-num{font-size:10px;font-weight:500;color:var(--color-text-tertiary);min-width:18px}
+.vig-title{font-size:12px;font-weight:500;color:var(--color-text-primary)}
+.vig-body{font-size:12px;color:var(--color-text-secondary);line-height:1.6;margin:0}
+.status-box{padding:12px 14px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);margin-bottom:12px}
+.status-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;padding:3px 8px;border-radius:20px;background:var(--color-background-info);color:var(--color-text-info)}
+.store-status{font-size:10px;color:var(--color-text-tertiary);text-align:right;margin-top:1.25rem;padding-top:0.6rem;border-top:0.5px solid var(--color-border-tertiary)}
+</style>
+
+<div class="doc-wrap">
+<div class="mod-header">
+  <div class="mod-badge">P1 — Cadrage stratégique · v1 anticipée</div>
+  <h1 class="mod-title">P1-2 · Analyse des missions existantes</h1>
+  <p class="mod-meta">Module simple · Clé storage : mcc_P1-2 · Dépendances : P1-1 → conditionne P1-5, P3, P4 · Avril 2026</p>
+</div>
+
+<nav class="sec-nav">
+  <button class="sec-tab active" onclick="showSec('s01',this)">01 Contexte</button>
+  <button class="sec-tab" onclick="showSec('s02',this)">02 Développement</button>
+  <button class="sec-tab" onclick="showSec('s03',this)">03 Vigilance</button>
+  <button class="sec-tab" onclick="showSec('s04',this)">04 Statut</button>
+</nav>
+
+<div id="s01" class="sec-pane active">
+  <h2 class="sh1">Contexte et enjeux</h2>
+  <p>Ce module constitue le socle documentaire de la préparation de l'offre. Il vise à reconstituer, à partir des sources publiques disponibles, le périmètre exact et le contenu réel des missions de coordination nationale actuellement assurées par L'Archipel des Lucioles dans le cadre du programme Ma classe au cinéma. Il conditionne directement P1-5 (configuration des lots), P3 (architecture du consortium) et P4-1 à P4-4 (conception de l'offre).</p>
+  <p>L'objet du futur marché porte sur les missions nationales de coordination de l'éducation à l'image. Ma classe au cinéma n'est pas un dispositif unique mais un programme-cadre regroupant cinq opérations distinctes, aux histoires, gouvernances, publics et modèles opérationnels propres. Cette hétérogénéité est constitutive : elle implique que la coordination nationale n'est pas une mission homogène mais un faisceau de tâches différenciées selon chaque dispositif.</p>
+  <h2 class="sh2">Positionnement dans l'arborescence</h2>
+  <div class="two-col">
+    <div>
+      <p class="sh2">Modules amont</p>
+      <ul class="doc-list"><li><strong>P1-1</strong> — Cartographie des acteurs</li><li><strong>P2-1</strong> — Cadre juridique CCP</li></ul>
+    </div>
+    <div>
+      <p class="sh2">Modules conditionnés par P1-2</p>
+      <ul class="doc-list"><li><strong>P1-5</strong> — Hypothèses de configuration des lots</li><li><strong>P3-2 à P3-5</strong> — Architecture du consortium</li><li><strong>P4-1 à P4-4</strong> — Conception de l'offre</li></ul>
+    </div>
+  </div>
+  <div class="alert alert-info">Lecture recommandée en parallèle : cahier des charges national Ma classe au cinéma publié par le CNC (accessible via le site L'Archipel des Lucioles). Ce document contractuel constitue une source primaire sur le contenu des missions attendues. Il précède le CCTP du marché et en constitue la matrice la plus directement opérationnelle disponible.</div>
+</div>
+
+<div id="s02" class="sec-pane">
+  <div class="sec-nav" style="margin-top:0">
+    <button class="sec-tab active" onclick="showSub('sub01',this)">Genèse</button>
+    <button class="sec-tab" onclick="showSub('sub02',this)">Dispositifs MCC</button>
+    <button class="sec-tab" onclick="showSub('sub03',this)">Passeurs d'images</button>
+    <button class="sec-tab" onclick="showSub('sub04',this)">Missions coord. nationale</button>
+    <button class="sec-tab" onclick="showSub('sub05',this)">Infrastructure numérique</button>
+    <button class="sec-tab" onclick="showSub('sub06',this)">Enjeux marché</button>
+  </div>
+
+  <div id="sub01" class="sec-pane active">
+    <h2 class="sh1">Genèse et architecture d'ensemble</h2>
+    <div class="stats-grid">
+      <div class="stat-card"><p class="stat-label">Élèves MCC / an (2024–25)</p><p class="stat-value">1 858 000</p><p class="stat-sub">↓ vs 1 900 000 (N-1)</p></div>
+      <div class="stat-card"><p class="stat-label">Enseignants mobilisés</p><p class="stat-value">79 000</p><p class="stat-sub">N-1 : 80 000</p></div>
+      <div class="stat-card"><p class="stat-label">Établissements</p><p class="stat-value">21 000</p><p class="stat-sub">N-1 : 21 700</p></div>
+      <div class="stat-card"><p class="stat-label">Cinémas partenaires</p><p class="stat-value">1 674</p><p class="stat-sub">dont circuits itinérants</p></div>
+      <div class="stat-card"><p class="stat-label">Taux de couverture</p><p class="stat-value">14,8 %</p><p class="stat-sub">élèves touchés / total scolarisés</p></div>
+      <div class="stat-card"><p class="stat-label">Coordinations territoriales</p><p class="stat-value">240+</p><p class="stat-sub">réseau L'Archipel</p></div>
+    </div>
+    <h2 class="sh2">Chronologie de construction du programme</h2>
+    <div class="timeline">
+      <div class="tl-item"><p class="tl-year">1989</p><p class="tl-desc"><strong>Collège au cinéma</strong> — premier programme national d'éducation cinématographique, co-fondé par la FNCF, le CNC et le Ministère de l'Éducation nationale. Point d'origine de toute la politique publique en la matière.</p></div>
+      <div class="tl-item"><p class="tl-year">1991</p><p class="tl-desc"><strong>Passeurs d'images</strong> — lancé par le Ministère de la Culture et le CNC, initialement orienté vers les banlieues. Dispositif hors temps scolaire, précurseur d'une approche éducation populaire au cinéma.</p></div>
+      <div class="tl-item"><p class="tl-year">1994</p><p class="tl-desc"><strong>École et cinéma</strong> — extension aux élèves du primaire (CP→CM2). Premières coordinations départementales binôme EN/cinéma. Création des <em>Cahiers de notes sur les films</em> (outil pédagogique fondateur).</p></div>
+      <div class="tl-item"><p class="tl-year">1998</p><p class="tl-desc"><strong>Lycéens et apprentis au cinéma</strong> — complétion du parcours scolaire jusqu'au lycée et CFA. Gouvernance régionale distincte (DRAC + Conseils régionaux + coordinateurs régionaux). Premières coordinations IDF en 2003.</p></div>
+      <div class="tl-item"><p class="tl-year">1999</p><p class="tl-desc"><strong>Pôles régionaux d'éducation aux images</strong> — réseau de pôles régionaux, financement CNC + DRAC + Régions. Mission : coordination et animation des acteurs locaux, centre de ressources régional.</p></div>
+      <div class="tl-item"><p class="tl-year">2014–2022</p><p class="tl-desc"><strong>Maternelle au cinéma</strong> — expérimentation dans ~40 départements à partir de 2014, nationalisation officielle en 2022. Le plus récent et le seul dispositif en croissance robuste (+11,8% en 2024-25).</p></div>
+      <div class="tl-item"><p class="tl-year">2018</p><p class="tl-desc"><strong>L'Archipel des Lucioles</strong> — l'association Passeurs d'images se refonde et adopte ce nom. Elle prend en charge la coordination nationale de Maternelle, EEC, CAC et Passeurs d'images. Nota bene : LAAC conserve une architecture distincte, sans coordination nationale assurée par l'Archipel.</p></div>
+    </div>
+    <h2 class="sh2">Architecture institutionnelle partenariale</h2>
+    <table class="doc-table">
+      <thead><tr><th>Niveau</th><th>Acteur</th><th>Rôle</th></tr></thead>
+      <tbody>
+        <tr><td><strong>National — politique</strong></td><td>CNC + Ministères (Culture, EN, Agriculture)</td><td>Cahier des charges national, validation catalogue, financement copies, production documents pédagogiques nationaux</td></tr>
+        <tr><td><strong>National — opérationnel</strong></td><td>L'Archipel des Lucioles (4 dispositifs)</td><td>Animation réseau, ressources numériques, rencontres nationales, bilans, plaidoyer</td></tr>
+        <tr><td><strong>Régional</strong></td><td>DRAC + Conseils régionaux + coordinateurs régionaux</td><td>Cofinancement coordinations régionales, comités de pilotage, choix films à partir du catalogue national</td></tr>
+        <tr><td><strong>Départemental</strong></td><td>Binôme coordinateur EN / coordinateur cinéma</td><td>Mise en œuvre concrète, inscriptions, planification séances, formation enseignants</td></tr>
+        <tr><td><strong>Local</strong></td><td>Salle de cinéma + enseignant</td><td>Accueil des élèves, qualité de projection, travail pédagogique en amont et aval</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="sub02" class="sec-pane">
+    <h2 class="sh1">Les quatre dispositifs scolaires — analyse comparée</h2>
+    <div id="dev-acc">
+      <div>
+        <div class="device-hdr" onclick="toggleDev(this)">
+          <div class="device-hdr-left"><span class="device-year">dep. 2022</span><div><div class="device-name">Maternelle au cinéma</div><div class="device-level">Petite, Moyenne, Grande Section</div></div></div>
+          <div class="device-stats"><div class="device-stat"><strong>300 000</strong> élèves</div><div class="device-stat trend-up">+11,8 %</div><div class="device-toggle">▾</div></div>
+        </div>
+        <div class="device-body">
+          <div class="two-col">
+            <div>
+              <p class="sh2">Caractéristiques</p>
+              <table class="doc-table" style="font-size:11px"><tr><td style="color:var(--color-text-secondary)">Public</td><td>PS, MS, GS</td></tr><tr><td style="color:var(--color-text-secondary)">Séances</td><td>2 (PS) / 3 min (MS–GS) par an</td></tr><tr><td style="color:var(--color-text-secondary)">Tarif</td><td>2,50 – 3,50 € / élève</td></tr><tr><td style="color:var(--color-text-secondary)">Catalogue</td><td>Courts + longs métrages, animation et prise de vue réelle</td></tr><tr><td style="color:var(--color-text-secondary)">Comité sélection</td><td>Présidé CNC + représentants petite enfance</td></tr><tr><td style="color:var(--color-text-secondary)">Ressources</td><td>Guide MaC, Nanouk (espace dédié), fiches élèves</td></tr></table>
+            </div>
+            <div>
+              <p class="sh2">Spécificités opérationnelles</p>
+              <ul class="doc-list" style="font-size:12px"><li>Dispositif le plus récent — maturité opérationnelle encore en construction</li><li>Coordinatrice nationale dédiée (Delphine Lizot, L'Archipel)</li><li>Enjeux propres : partenariats petite enfance, DSDEN comme interlocuteur, accompagnement des familles</li><li>Expansion en cours : 5 nouveaux départements en 2024-25</li><li>Seul dispositif en forte croissance — argument de développement pour l'offre</li></ul>
+            </div>
+          </div>
+          <div class="alert alert-success">Point fort pour la réponse : Maternelle au cinéma est en expansion, son modèle est encore en structuration. Un consortium apportant méthodologie et ressources pédagogiques dédiées peut se différencier sur ce volet, en montrant sa capacité à accompagner des coordinations débutantes.</div>
+        </div>
+      </div>
+      <div>
+        <div class="device-hdr" onclick="toggleDev(this)">
+          <div class="device-hdr-left"><span class="device-year">dep. 1994</span><div><div class="device-name">École et cinéma</div><div class="device-level">CP → CM2 (école élémentaire)</div></div></div>
+          <div class="device-stats"><div class="device-stat"><strong>849 000</strong> élèves</div><div class="device-stat trend-dn">−0,1 % (−9 % /N-2)</div><div class="device-toggle">▾</div></div>
+        </div>
+        <div class="device-body">
+          <div class="two-col">
+            <div>
+              <p class="sh2">Caractéristiques</p>
+              <table class="doc-table" style="font-size:11px"><tr><td style="color:var(--color-text-secondary)">Public</td><td>CP à CM2</td></tr><tr><td style="color:var(--color-text-secondary)">Séances</td><td>3 films min par an, sur volontariat</td></tr><tr><td style="color:var(--color-text-secondary)">Tarif</td><td>2,50 – 3,50 € / élève</td></tr><tr><td style="color:var(--color-text-secondary)">Comité sélection</td><td>National, présidé par CNC</td></tr><tr><td style="color:var(--color-text-secondary)">Ressources</td><td>Nanouk (plateforme principale), Cahiers de notes</td></tr><tr><td style="color:var(--color-text-secondary)">Coordination</td><td>Binôme dép. : conseiller péda arts visuels EN + coordinateur cinéma</td></tr></table>
+            </div>
+            <div>
+              <p class="sh2">Spécificités opérationnelles</p>
+              <ul class="doc-list" style="font-size:12px"><li>Plus gros effectif — le plus structurant pour la coordination nationale</li><li>Nanouk : 3 espaces (famille / enseignant / classe) — actif numérique central, propriété L'Archipel</li><li>Rencontres nationales annuelles des coordinateurs (3 jours), organisation L'Archipel</li><li>Recul préoccupant : −9% en deux ans malgré apparente stabilité N/N-1</li><li>Inscriptions via DSDEN (volontariat enseignant)</li></ul>
+            </div>
+          </div>
+          <div class="alert alert-warn">Signal à surveiller : le recul de 9% en deux ans sur École et cinéma peut signaler un problème structurel — fatigue des enseignants, contraintes logistiques, complexité des outils. Ce diagnostic relève directement de la coordination nationale et doit apparaître dans l'offre.</div>
+        </div>
+      </div>
+      <div>
+        <div class="device-hdr" onclick="toggleDev(this)">
+          <div class="device-hdr-left"><span class="device-year">dep. 1989</span><div><div class="device-name">Collège au cinéma</div><div class="device-level">6e → 3e (collège)</div></div></div>
+          <div class="device-stats"><div class="device-stat"><strong>398 000</strong> élèves</div><div class="device-stat trend-dn">−14,8 %</div><div class="device-toggle">▾</div></div>
+        </div>
+        <div class="device-body">
+          <div class="two-col">
+            <div>
+              <p class="sh2">Caractéristiques</p>
+              <table class="doc-table" style="font-size:11px"><tr><td style="color:var(--color-text-secondary)">Public</td><td>6e à 3e (collège)</td></tr><tr><td style="color:var(--color-text-secondary)">Séances</td><td>3 min (1 par trimestre), VOSTF</td></tr><tr><td style="color:var(--color-text-secondary)">Tarif</td><td>2,80 – 3,80 € / élève</td></tr><tr><td style="color:var(--color-text-secondary)">Catalogue</td><td>National — art et essai, films français et européens prioritaires</td></tr><tr><td style="color:var(--color-text-secondary)">Ressources</td><td>Transmettre le cinéma (plateforme historique, 1999)</td></tr><tr><td style="color:var(--color-text-secondary)">Inscription</td><td>Via rectorats (chef d'établissement + enseignants)</td></tr></table>
+            </div>
+            <div>
+              <p class="sh2">Spécificités opérationnelles</p>
+              <ul class="doc-list" style="font-size:12px"><li>Dispositif historiquement le plus emblématique (premier programme national, 1989)</li><li>Baisse la plus sévère en 2024-25 (−14,8%) — signal d'alerte prioritaire</li><li>Intégré au PEAC mais non obligatoire — dépendance au projet d'établissement</li><li>Transmettre le cinéma : référence historique, riche, moins interactif que Nanouk</li></ul>
+            </div>
+          </div>
+          <div class="alert alert-danger">Risque prioritaire : la chute de 14,8% en une seule année est un signal de crise. Le CNC en est conscient. Le cahier des charges imposera vraisemblablement un objectif de reconquête. Toute offre sans stratégie de développement des inscriptions sur Collège au cinéma sera perçue comme insuffisante.</div>
+        </div>
+      </div>
+      <div>
+        <div class="device-hdr" onclick="toggleDev(this)">
+          <div class="device-hdr-left"><span class="device-year">dep. 1998</span><div><div class="device-name">Lycéens et apprentis au cinéma</div><div class="device-level">Lycées G / T / Pro / Agri + CFA</div></div></div>
+          <div class="device-stats"><div class="device-stat"><strong>311 000</strong> élèves</div><div class="device-stat trend-dn">−1,2 % (−7 % /N-2)</div><div class="device-toggle">▾</div></div>
+        </div>
+        <div class="device-body">
+          <div class="two-col">
+            <div>
+              <p class="sh2">Caractéristiques</p>
+              <table class="doc-table" style="font-size:11px"><tr><td style="color:var(--color-text-secondary)">Public</td><td>Lycéens (G, T, Pro, Agri) + apprentis CFA</td></tr><tr><td style="color:var(--color-text-secondary)">Séances</td><td>3 films min / an, tous en VOSTF</td></tr><tr><td style="color:var(--color-text-secondary)">Tarif</td><td>3 € / élève (depuis septembre 2024)</td></tr><tr><td style="color:var(--color-text-secondary)">Catalogue</td><td>National : patrimoine + film français + film étranger</td></tr><tr><td style="color:var(--color-text-secondary)">Ressources</td><td>Transmettre le cinéma + dossiers régionaux</td></tr><tr><td style="color:var(--color-text-secondary)">Formation</td><td>Journée de rencontre annuelle par région (programmation films)</td></tr></table>
+            </div>
+            <div>
+              <p class="sh2">Particularité structurelle majeure</p>
+              <div class="alert alert-warn" style="margin:0;font-size:11px">LAAC est structurellement différent des trois autres dispositifs MCC : il n'y a <strong>pas de coordination nationale assurée par L'Archipel des Lucioles</strong>. La gouvernance est régionalisée (comités de pilotage DRAC/Région/Rectorat), avec des coordinateurs régionaux très variés (ACRIF+CIP en IDF, RECIT en Alsace, structures indépendantes en province). Le CNC exerce directement le rôle de coordination nationale. Des intervenants professionnels sont systématiquement présents à chaque séance. L'enseignement agricole (DRAAF) est intégré — partenariat MEN + MAA.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h2 class="sh2">Tableau comparatif synthétique</h2>
+    <table class="doc-table">
+      <thead><tr><th>Dispositif</th><th>Public</th><th>Coord. nat.</th><th>Plateforme</th><th>Élèves 24-25</th><th>Tendance</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Maternelle au cinéma</strong></td><td>PS–GS</td><td>L'Archipel</td><td>Nanouk</td><td>300 000</td><td><span class="pill pill-success">+11,8 %</span></td></tr>
+        <tr><td><strong>École et cinéma</strong></td><td>CP–CM2</td><td>L'Archipel</td><td>Nanouk</td><td>849 000</td><td><span class="pill pill-warn">−9 % /N-2</span></td></tr>
+        <tr><td><strong>Collège au cinéma</strong></td><td>6e–3e</td><td>L'Archipel</td><td>Transmettre le cinéma</td><td>398 000</td><td><span class="pill pill-danger">−14,8 %</span></td></tr>
+        <tr><td><strong>LAAC</strong></td><td>Lycées + CFA</td><td><em>CNC direct</em></td><td>Transmettre le cinéma</td><td>311 000</td><td><span class="pill pill-warn">−7 % /N-2</span></td></tr>
+        <tr><td><strong>Passeurs d'images</strong></td><td>Jeunes HTS</td><td>L'Archipel</td><td>—</td><td>~165 000 bénéf.</td><td><span class="pill pill-danger">Budget −20 %</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="sub03" class="sec-pane">
+    <h2 class="sh1">Passeurs d'images — dispositif hors temps scolaire</h2>
+    <div class="two-col">
+      <div>
+        <div class="stats-grid" style="grid-template-columns:1fr 1fr">
+          <div class="stat-card"><p class="stat-label">Coordinations régionales</p><p class="stat-value">21</p></div>
+          <div class="stat-card"><p class="stat-label">Actions / an</p><p class="stat-value">2 500+</p></div>
+          <div class="stat-card"><p class="stat-label">Structures relais</p><p class="stat-value">415+</p></div>
+          <div class="stat-card"><p class="stat-label">Partenaires total</p><p class="stat-value">1 200</p></div>
+        </div>
+      </div>
+      <div>
+        <p class="sh2">Périmètre et bénéficiaires</p>
+        <ul class="doc-list" style="font-size:12px"><li>Jeunes &lt; 25 ans, prioritairement QPV et milieu rural</li><li>Publics à besoins spécifiques (champ social, médico-social)</li><li>Métropole et Outre-mer</li><li>Hors temps scolaire (quelques actions en temps scolaire)</li><li>~165 000 bénéficiaires /an (hors MCC scolaire)</li></ul>
+      </div>
+    </div>
+    <h2 class="sh2">Architecture opérationnelle à trois niveaux</h2>
+    <table class="doc-table">
+      <thead><tr><th>Niveau</th><th>Porteur</th><th>Missions</th></tr></thead>
+      <tbody>
+        <tr><td><strong>National</strong></td><td>L'Archipel des Lucioles</td><td>Animation réseau, mutualisation ressources, accompagnement coordinations régionales, cohérence nationale, représentation CNC/ANCT/DRAC, plaidoyer</td></tr>
+        <tr><td><strong>Régional</strong></td><td>Coordination régionale (mandatée DRAC + Région)</td><td>Appels à projets, comités de sélection, journées professionnelles, formation porteurs, impulsion et accompagnement projets locaux</td></tr>
+        <tr><td><strong>Local</strong></td><td>Porteur de projet (ville, asso, centre social…)</td><td>Mise en œuvre : ateliers de pratique + séances de diffusion — articulation systématique "voir + faire"</td></tr>
+      </tbody>
+    </table>
+    <h2 class="sh2">Typologies d'actions</h2>
+    <ul class="doc-list"><li><strong>Ateliers de pratique artistique</strong> : écriture, tournage, montage, programmation, création numérique</li><li><strong>Séances de projection</strong> : en salle, en plein air (mai–septembre), dans des lieux de proximité — accompagnées par des professionnels</li><li><strong>Parcours en festival</strong> : rencontres artistiques, découverte des œuvres</li><li><strong>Séances de restitution</strong> : valorisation des créations auprès des pairs et des familles</li><li><strong>Projets expérimentaux</strong> : recherche-action, résidences artistiques, coopérations universitaires (colloque IRCAV/Sorbonne Nouvelle depuis 2025)</li><li><strong>Opération Des cinés, la vie !</strong> : jeunes PJJ + champ médico-social, vote national, remise prix Cinémathèque française</li></ul>
+    <div class="alert alert-danger">Situation de crise (2025) : le CNC a annoncé ~−20% de subventions à Passeurs d'images. Plusieurs DRAC ont réduit leurs soutiens de 10% à 40%. Des projets ont été suspendus, des artistes précarisés. Cette fragilité est un élément contextuel structurant pour le futur marché : elle peut plaider pour un portage plus solide institutionnellement.</div>
+  </div>
+
+  <div id="sub04" class="sec-pane">
+    <h2 class="sh1">Architecture des missions de coordination nationale</h2>
+    <p>L'analyse des sources permet de distinguer dix familles de missions exercées par la coordination nationale. Cette cartographie est l'élément le plus directement opérationnel pour la construction de P4.</p>
+    <div class="mission-grid">
+      <div class="mission-card"><p class="mission-num">MISSION 01</p><p class="mission-title">Animation et structuration du réseau</p><p class="mission-desc">Animation des 240+ coordinations territoriales, rencontres nationales annuelles (3 jours pour EEC, journées thématiques CAC et Passeurs d'images), serveur Discord, webinaires, "midis des dispositifs". Journées inter-dispositifs (depuis 2020).</p></div>
+      <div class="mission-card"><p class="mission-num">MISSION 02</p><p class="mission-title">Gestion du catalogue et sélection des films</p><p class="mission-desc">Participation aux comités de sélection nationaux présidés par le CNC. Collecte candidatures distributeurs, instruction des titres, gestion des listes nationales par dispositif, mise à jour annuelle (calendrier n+2 pour les distributeurs).</p></div>
+      <div class="mission-card"><p class="mission-num">MISSION 03</p><p class="mission-title">Production des ressources pédagogiques</p><p class="mission-desc">Édition des Cahiers de notes (EEC), production des dossiers pédagogiques par film, fiches élèves, cartes élèves, avant-programmes, vidéos d'analyse de séquences. Enjeux éditoriaux et graphiques propres à chaque dispositif.</p></div>
+      <div class="mission-card"><p class="mission-num">MISSION 04</p><p class="mission-title">Gestion des plateformes numériques</p><p class="mission-desc">Nanouk (Maternelle + EEC) : maintenance, enrichissement, 3 espaces distincts (famille / enseignant / classe), activités interactives. Contribution à Transmettre le cinéma pour CAC/LAAC. Le Fil des images pour les pôles régionaux.</p></div>
+      <div class="mission-card"><p class="mission-num">MISSION 05</p><p class="mission-title">Formation des acteurs du réseau</p><p class="mission-desc">Conception et animation de modules de formation pour coordinateurs, enseignants, médiateurs culturels, animateurs, acteurs sociaux. Journées thématiques, webinaires, ateliers. Contribution aux Plans académiques de formation (PAF).</p></div>
+      <div class="mission-card"><p class="mission-num">MISSION 06</p><p class="mission-title">Coordination technique et logistique</p><p class="mission-desc">Interfaces avec distributeurs (circulation physique et dématérialisée des copies — CNC prend en charge les frais). Coordination des bilans (collecte données d'inscription et de fréquentation). Interfaces avec circuits itinérants.</p></div>
+      <div class="mission-card"><p class="mission-num">MISSION 07</p><p class="mission-title">Suivi, évaluation et bilans nationaux</p><p class="mission-desc">Collecte et consolidation des données de tous les territoires, production des bilans nationaux annuels par dispositif, reporting au CNC, suivi des indicateurs (inscriptions, fréquentation, satisfaction). Publication des résultats.</p></div>
+      <div class="mission-card"><p class="mission-num">MISSION 08</p><p class="mission-title">Plaidoyer et représentation institutionnelle</p><p class="mission-desc">Représentation de l'éducation aux images auprès du CNC, des Ministères, des collectivités, des instances sectorielles (HCEAC, FNCF, AFCAE, GNCR…). Communication nationale sur les dispositifs.</p></div>
+      <div class="mission-card"><p class="mission-num">MISSION 09</p><p class="mission-title">Innovation et expérimentation</p><p class="mission-desc">Projets expérimentaux nationaux ("Cours, saute, filme, regarde !", autour des séries). Partenariats avec la recherche (colloque IRCAV/Sorbonne Nouvelle 2025). Pilotage d'expérimentations dans les coordinations régionales. Archivage films d'ateliers (BnF/DELIA).</p></div>
+      <div class="mission-card"><p class="mission-num">MISSION 10</p><p class="mission-title">Décloisonnement et parcours continus</p><p class="mission-desc">Articulation entre dispositifs scolaires et hors temps scolaire. Appels à projets transversaux. Vision de parcours continus de la maternelle au hors-temps scolaire — ambition fondatrice de L'Archipel depuis 2018.</p></div>
+    </div>
+    <h2 class="sh2">Ce que la coordination nationale ne fait pas</h2>
+    <ul class="doc-list" style="font-size:12px"><li>Elle ne finance pas les projections (copies : CNC ; billetterie : salles + élèves)</li><li>Elle ne gère pas les relations directes avec les salles de cinéma (rôle des coordinateurs régionaux/départementaux)</li><li>Elle ne définit pas le catalogue seule : le CNC préside les comités de sélection</li><li>Pour LAAC : elle n'assure pas la coordination nationale directe (rôle du CNC)</li><li>Elle ne gère pas la formation des enseignants en direct (rôle des rectorats et PAF)</li></ul>
+  </div>
+
+  <div id="sub05" class="sec-pane">
+    <h2 class="sh1">Infrastructure numérique — cartographie et enjeux</h2>
+    <table class="doc-table">
+      <thead><tr><th>Outil</th><th>Dispositifs</th><th>Éditeur / propriétaire</th><th>Contenu et usage</th><th>Enjeu marché</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Nanouk</strong><br><span style="font-size:10px;color:var(--color-text-tertiary)">nanouk.fr</span></td><td>Maternelle au cinéma<br>École et cinéma</td><td><strong>L'Archipel des Lucioles</strong><br><em>(propriété associative)</em></td><td>Plateforme pédagogique en ligne : 3 espaces (famille / enseignant / classe), ressources par film, activités interactives, fiches, vidéos-analyses de séquences</td><td><span class="pill pill-danger">Critique</span> Actif numérique appartenant à l'opérateur sortant. En cas de changement de titulaire : transfert de propriété, licence d'exploitation ou substitution à anticiper explicitement.</td></tr>
+        <tr><td><strong>Transmettre le cinéma</strong></td><td>Collège au cinéma<br>LAAC</td><td>CNC / historique partenariat EN</td><td>Site historique (1999), très référencé, fiches pédagogiques, analyses de séquences commentées, vidéos, critique. Plus dense et moins interactif que Nanouk.</td><td><span class="pill pill-info">À clarifier</span> Propriété et gestion effective à vérifier — potentiellement plus neutre vis-à-vis d'un changement d'opérateur.</td></tr>
+        <tr><td><strong>Le Fil des images</strong></td><td>Pôles régionaux</td><td>Réseau des pôles régionaux d'éducation aux images</td><td>Agrégateur de ressources des pôles régionaux, conférences, publications, valorisation des pratiques territoriales</td><td><span class="pill pill-info">Périphérique</span> Hors périmètre de la coordination nationale directe. À citer dans l'offre comme écosystème ressource.</td></tr>
+        <tr><td><strong>Discord / visioconférence</strong></td><td>Tous dispositifs</td><td>L'Archipel</td><td>Animation quotidienne du réseau, échanges de pratiques, "midis des dispositifs"</td><td><span class="pill pill-warn">Transférable</span> Outil reproductible, mais la communauté construite ne l'est pas automatiquement.</td></tr>
+      </tbody>
+    </table>
+    <div class="alert alert-danger">Point d'attention stratégique : Nanouk est une propriété de L'Archipel des Lucioles, développée et maintenue par l'association. En cas de changement de titulaire du marché, la question du devenir de la plateforme est structurante pour la continuité de service de 849 000 élèves (EEC) et 300 000 élèves (Maternelle). Trois scénarios possibles : (a) rachat ou cession par le CNC, (b) licence au futur titulaire, (c) plateforme de substitution. Ce point doit figurer dans l'offre — si le CDC ne le traite pas, c'est une question de clarification obligatoire.</div>
+  </div>
+
+  <div id="sub06" class="sec-pane">
+    <h2 class="sh1">Points stratégiques au regard du futur marché</h2>
+    <h2 class="sh2">1. Périmètre du marché — LAAC et Passeurs d'images</h2>
+    <p>Les dispositifs coordonnés par L'Archipel (Maternelle, EEC, CAC, Passeurs d'images) forment un ensemble cohérent. LAAC, dont la coordination nationale est exercée directement par le CNC, peut être inclus ou non dans le périmètre. À travailler dans P1-5 : hypothèse d'un lot "dispositifs scolaires MCC" distinct d'un lot "hors temps scolaire (Passeurs d'images)" — ou lot unique intégrant les cinq opérations avec gouvernance différenciée pour LAAC.</p>
+    <h2 class="sh2">2. Les trajectoires démographiques comme signal politique</h2>
+    <p>La baisse de Collège au cinéma (−14,8%) et d'École et cinéma (−9% en deux ans) signale une érosion structurelle que le CNC ne peut ignorer. Le futur marché portera une ambition de stabilisation ou de reconquête. Un consortium intégrant une stratégie de développement des inscriptions (formation des chefs d'établissement, simplification logistique, amélioration numérique) se différencie sur ce point de manière décisive.</p>
+    <h2 class="sh2">3. Hétérogénéité des missions selon les dispositifs</h2>
+    <p>Maternelle au cinéma (dispositif en phase de structuration, 300K élèves, enjeux petite enfance) a des missions de coordination substantiellement différentes de Collège au cinéma (dispositif mature à reconquérir, 400K élèves). Cette hétérogénéité plaide pour une organisation du consortium par profils d'expertise et non par découpage géographique.</p>
+    <h2 class="sh2">4. Nanouk comme enjeu de continuité de service</h2>
+    <p>Toute réponse qui ne traite pas la question de la plateforme pédagogique numérique sera perçue comme incomplète. La proposition de valeur numérique — maintien, amélioration, substitution — est un terrain de différenciation central et un enjeu de crédibilité opérationnelle immédiate.</p>
+    <h2 class="sh2">5. Passeurs d'images : fragilité et opportunité</h2>
+    <p>La fragilité budgétaire de Passeurs d'images (−20% CNC) est un contexte défavorable mais aussi un argument : un consortium à assise plus large peut sécuriser le dispositif davantage que l'opérateur sortant isolé. Cet argument est d'autant plus recevable si le consortium inclut des structures territorialement ancrées en QPV et milieu rural.</p>
+    <h2 class="sh2">6. La coordination nationale comme ingénierie de réseau</h2>
+    <p>La coordination nationale n'est pas une mission de prestation directe aux usagers finaux mais une mission d'ingénierie de réseau : former des formateurs, animer des coordinateurs, produire des ressources pour des intermédiaires. Cette logique "réseau de réseaux" doit structurer l'organisation interne du consortium et sa proposition pédagogique — elle implique des compétences distinctes de celles d'un opérateur culturel classique.</p>
+  </div>
+</div>
+
+<div id="s03" class="sec-pane">
+  <h2 class="sh1">Points de vigilance</h2>
+  <div class="vig-item"><div class="vig-hdr"><span class="vig-num">V1</span><span class="pill pill-danger">Critique</span><span class="vig-title">Propriété de Nanouk et continuité de service numérique</span></div><p class="vig-body">Nanouk est une propriété de L'Archipel des Lucioles. En cas de changement de titulaire, le sort de cet actif numérique n'est pas automatiquement résolu. Le CDC devra clarifier ce point — mais il est possible qu'il ne le fasse pas explicitement. Une question de clarification doit être anticipée dès la réception du DCE. Si la réponse du consortium ne traite pas ce point, elle sera perçue comme lacunaire sur un aspect opérationnel immédiat.</p></div>
+  <div class="vig-item"><div class="vig-hdr"><span class="vig-num">V2</span><span class="pill pill-danger">Critique</span><span class="vig-title">Architecture de coordination de LAAC — périmètre à clarifier</span></div><p class="vig-body">Lycéens et apprentis au cinéma a une architecture de coordination nationale distincte (CNC direct, pas L'Archipel). Si LAAC est inclus dans le marché, l'offre doit proposer une gouvernance compatible avec cette particularité. Si LAAC est exclu, l'offre peut se concentrer sur les 4 autres dispositifs. Cette distinction structurelle doit apparaître dans la réponse pour montrer la maîtrise du sujet.</p></div>
+  <div class="vig-item"><div class="vig-hdr"><span class="vig-num">V3</span><span class="pill pill-warn">Important</span><span class="vig-title">Trajectoires démographiques divergentes — risque de réponse indifférenciée</span></div><p class="vig-body">Les cinq dispositifs ont des dynamiques très différentes. Une offre proposant une approche uniforme sera perçue comme superficielle. L'offre doit montrer une stratégie différenciée par dispositif, avec une attention particulière à la reconquête de Collège au cinéma et à l'accompagnement de la croissance de Maternelle au cinéma.</p></div>
+  <div class="vig-item"><div class="vig-hdr"><span class="vig-num">V4</span><span class="pill pill-warn">Important</span><span class="vig-title">Périmètre exact des missions "coordination nationale" à vérifier sur le CCTP</span></div><p class="vig-body">Ce module s'appuie sur des sources publiques. Le CCTP du marché est le document de référence. Certaines missions identifiées ici peuvent être hors périmètre, ou des missions non documentées peuvent être incluses. La v2 devra réviser intégralement ce module à la lecture du CDC.</p></div>
+  <div class="vig-item"><div class="vig-hdr"><span class="vig-num">V5</span><span class="pill pill-warn">Important</span><span class="vig-title">Fragilité de Passeurs d'images — argument à double tranchant</span></div><p class="vig-body">La pression budgétaire peut être présentée comme un argument pour un nouveau porteur (meilleure assise). Mais elle signifie aussi que les financements déconcentrés sont incertains. L'offre ne doit pas reposer sur l'hypothèse d'un maintien des niveaux de financement actuels des DRAC pour Passeurs d'images.</p></div>
+  <div class="vig-item"><div class="vig-hdr"><span class="vig-num">V6</span><span class="pill pill-info">À surveiller</span><span class="vig-title">Réseau de 240 coordinations — valeur opérationnelle et temps de transfert</span></div><p class="vig-body">Le réseau territorial est construit dans la durée, relationnel et peu transférable immédiatement. Un nouveau titulaire devra gérer une transition réseau explicite — si elle est mal conduite, elle peut désorganiser une ou plusieurs saisons scolaires. C'est l'argument que l'opérateur sortant utilisera. L'offre doit anticiper une stratégie de transition réseau crédible.</p></div>
+  <div class="vig-item"><div class="vig-hdr"><span class="vig-num">V7</span><span class="pill pill-info">À surveiller</span><span class="vig-title">Lacunes documentaires bloquantes pour les modules aval</span></div><p class="vig-body">Le budget annuel de la coordination nationale (montant subvention CNC à L'Archipel) n'est pas disponible publiquement. Les effectifs internes affectés à la coordination nationale sont inconnus. Ces données sont indispensables pour calibrer l'offre financière (P2-6) et la proposition RH. P2-6 et P4-1 ne peuvent être finalisés qu'à la publication du RC/CCTP.</p></div>
+</div>
+
+<div id="s04" class="sec-pane">
+  <h2 class="sh1">Statut et révisions</h2>
+  <div class="status-box">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <div><span class="status-badge">v1 — Anticipée</span><span style="font-size:11px;color:var(--color-text-secondary);margin-left:8px">Produite avant publication du marché</span></div>
+      <span style="font-size:10px;color:var(--color-text-tertiary)">Avril 2026</span>
+    </div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:0;line-height:1.6">Construit sur la base des sources publiques disponibles : sites CNC et L'Archipel des Lucioles, sites des coordinations régionales, données présentées au Congrès FNCF 2025 (Deauville, sept. 2025), documentation pédagogique accessible en ligne. Ne dispose pas du cahier des charges du marché, des bilans financiers internes de l'opérateur, ni des comptes rendus de gouvernance interne.</p>
+  </div>
+  <h2 class="sh2">Révisions requises à la publication du marché</h2>
+  <table class="doc-table">
+    <thead><tr><th>Élément</th><th>Statut actuel</th><th>Révision à effectuer</th></tr></thead>
+    <tbody>
+      <tr><td>Périmètre exact des missions</td><td><span class="pill pill-warn">Hypothétique</span></td><td>Vérification complète au CCTP — certaines missions peuvent être hors périmètre ou reformulées</td></tr>
+      <tr><td>Inclusion de LAAC dans le marché</td><td><span class="pill pill-warn">Incertain</span></td><td>Confirmation périmètre : LAAC inclus ? Avec quelle gouvernance ? Lot distinct ou intégré ?</td></tr>
+      <tr><td>Sort de Nanouk</td><td><span class="pill pill-danger">Non documenté</span></td><td>Question de clarification si le CCTP ne répond pas — point bloquant pour P4-3</td></tr>
+      <tr><td>Budget de référence coord. nationale</td><td><span class="pill pill-danger">Inconnu</span></td><td>Indispensable pour P2-6 (BPU/DQE) et P4-1 — à extraire du RC ou CCAP</td></tr>
+      <tr><td>Volume des ressources pédagogiques</td><td><span class="pill pill-warn">Partiel</span></td><td>Nombre de films/an, volume des documents, fréquence de mise à jour par dispositif</td></tr>
+      <tr><td>Chiffres 2025-26</td><td><span class="pill pill-info">À venir</span></td><td>À intégrer si publiés avant le dépôt de l'offre</td></tr>
+      <tr><td>Cahier des charges MCC (version en vigueur)</td><td><span class="pill pill-warn">À analyser</span></td><td>Document accessible sur le site L'Archipel — analyse complémentaire à intégrer en v2</td></tr>
+    </tbody>
+  </table>
+  <h2 class="sh2">Informations manquantes bloquantes pour les modules aval</h2>
+  <ul class="doc-list" style="font-size:12px"><li><strong>P2-6 (offre financière)</strong> : impossible à finaliser sans le budget de référence de la coordination nationale</li><li><strong>P4-1 (coordination centrale)</strong> : version anticipée possible mais périmètre à confirmer sur CCTP</li><li><strong>P1-5 (configuration des lots)</strong> : peut avancer sur la base de la présente analyse, mais décision LAAC nécessaire</li></ul>
+  <div id="store-status" class="store-status">Sauvegarde en cours…</div>
+</div>
+</div>
+
+<script>
+function showSec(id,btn){
+  document.querySelectorAll('#s01,#s02,#s03,#s04').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sec-nav:first-of-type .sec-tab').forEach(t=>t.classList.remove('active'));
+  var p=document.getElementById(id);if(p)p.classList.add('active');if(btn)btn.classList.add('active');
+}
+function showSub(id,btn){
+  var par=btn.closest('#s02');if(!par)return;
+  par.querySelectorAll('#sub01,#sub02,#sub03,#sub04,#sub05,#sub06').forEach(p=>p.classList.remove('active'));
+  par.querySelectorAll('.sec-nav:not(:first-of-type) .sec-tab').forEach(t=>t.classList.remove('active'));
+  var s=document.getElementById(id);if(s)s.classList.add('active');if(btn)btn.classList.add('active');
+}
+function toggleDev(hdr){
+  var body=hdr.nextElementSibling;
+  var tog=hdr.querySelector('.device-toggle');
+  var open=body.classList.contains('open');
+  body.classList.toggle('open',!open);
+  if(tog)tog.textContent=open?'▾':'▴';
+}
+async function saveModule(){
+  try{
+    var data={id:'mcc_P1-2',titre:'P1-2 · Analyse des missions existantes',statut:'v1-anticipee',date:new Date().toISOString(),dispositifs:['Maternelle au cinéma','École et cinéma','Collège au cinéma','LAAC','Passeurs d\'images'],chiffres:{mcc_total:1858000,maternelle:300000,ecole:849000,college:398000,laac:311000},missions_nationales:10,points_vigilance:7};
+    if(window.storage){await window.storage.set('mcc_P1-2',JSON.stringify(data));document.getElementById('store-status').textContent='Module sauvegardé · clé mcc_P1-2 · '+new Date().toLocaleTimeString('fr-FR');}
+    else{document.getElementById('store-status').textContent='Storage non disponible dans ce contexte';}
+  }catch(e){document.getElementById('store-status').textContent='Erreur sauvegarde : '+e.message;}
+}
+saveModule();
+</script>

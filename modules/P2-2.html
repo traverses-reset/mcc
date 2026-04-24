@@ -1,0 +1,588 @@
+
+<style>
+  :root {
+    --navy: #0C447C;
+    --navy-light: #E6F1FB;
+    --navy-mid: #378ADD;
+    --amber: #BA7517;
+    --amber-light: #FAEEDA;
+    --amber-mid: #FAC775;
+    --teal: #0F6E56;
+    --teal-light: #E1F5EE;
+    --coral: #993C1D;
+    --coral-light: #FAECE7;
+    --gray-light: #F1EFE8;
+    --gray-mid: #888780;
+    --tag-font: 11px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans, sans-serif); font-size: 14px; line-height: 1.65; color: var(--color-text-primary); }
+  
+  .module-header {
+    border-left: 3px solid var(--navy-mid);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    background: var(--color-background-secondary);
+    border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+  }
+  .module-id { font-size: 11px; font-weight: 500; color: var(--color-text-secondary); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+  .module-title { font-size: 18px; font-weight: 500; color: var(--color-text-primary); }
+  .module-subtitle { font-size: 13px; color: var(--color-text-secondary); margin-top: 4px; }
+
+  .tag { display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .tag-anticipé { background: var(--amber-light); color: var(--amber); }
+  .tag-vigilance { background: var(--coral-light); color: var(--coral); }
+  .tag-stratégique { background: var(--navy-light); color: var(--navy); }
+  .tag-juridique { background: var(--teal-light); color: var(--teal); }
+
+  .section { margin-bottom: 2rem; }
+  .section-title {
+    font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--color-text-secondary); border-bottom: 0.5px solid var(--color-border-tertiary);
+    padding-bottom: 6px; margin-bottom: 1rem;
+  }
+  .section-num {
+    display: inline-block; width: 18px; height: 18px; border-radius: 50%;
+    background: var(--color-background-secondary); border: 0.5px solid var(--color-border-secondary);
+    font-size: 10px; font-weight: 500; text-align: center; line-height: 18px;
+    margin-right: 6px; color: var(--color-text-secondary);
+  }
+
+  .card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .card-title { font-size: 14px; font-weight: 500; margin-bottom: 0.5rem; color: var(--color-text-primary); }
+  .card-sub { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 0.75rem; }
+
+  .criterion-block {
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+  }
+  .criterion-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 14px;
+    background: var(--color-background-secondary);
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    gap: 12px;
+  }
+  .criterion-name { font-size: 13px; font-weight: 500; flex: 1; }
+  .criterion-weight {
+    font-size: 13px; font-weight: 500; white-space: nowrap;
+    color: var(--navy);
+  }
+  .weight-bar-wrap { height: 4px; background: var(--color-border-tertiary); border-radius: 2px; margin: 0 14px 0 14px; }
+  .weight-bar { height: 4px; border-radius: 2px; transition: width 0.3s; }
+  .w-navy { background: var(--navy-mid); }
+  .w-amber { background: var(--amber-mid); }
+  .w-teal { background: #1D9E75; }
+  .criterion-body { padding: 10px 14px; }
+  .sub-list { list-style: none; }
+  .sub-list li {
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 13px; color: var(--color-text-secondary);
+    padding: 3px 0;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+  }
+  .sub-list li:last-child { border-bottom: none; }
+  .sub-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--navy-mid); margin-top: 7px; flex-shrink: 0; }
+  .sub-dot-amber { background: var(--amber-mid); }
+  .sub-dot-teal { background: #1D9E75; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+  .info-block {
+    border-left: 2px solid var(--navy-mid);
+    padding: 0.6rem 1rem;
+    margin: 0.75rem 0;
+    background: var(--navy-light);
+    border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+    font-size: 13px;
+    color: var(--navy);
+  }
+  .warn-block {
+    border-left: 2px solid var(--amber-mid);
+    padding: 0.6rem 1rem;
+    margin: 0.75rem 0;
+    background: var(--amber-light);
+    border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+    font-size: 13px;
+    color: var(--amber);
+  }
+  .alert-block {
+    border-left: 2px solid #D85A30;
+    padding: 0.6rem 1rem;
+    margin: 0.75rem 0;
+    background: var(--coral-light);
+    border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+    font-size: 13px;
+    color: var(--coral);
+  }
+  .success-block {
+    border-left: 2px solid #1D9E75;
+    padding: 0.6rem 1rem;
+    margin: 0.75rem 0;
+    background: var(--teal-light);
+    border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+    font-size: 13px;
+    color: var(--teal);
+  }
+
+  .ref-badge {
+    display: inline-block; font-size: 10px; font-family: var(--font-mono, monospace);
+    background: var(--gray-light); border: 0.5px solid var(--color-border-secondary);
+    border-radius: 3px; padding: 1px 5px; color: var(--color-text-secondary);
+    margin-left: 4px;
+  }
+
+  .phase-label {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase;
+    color: var(--color-text-secondary); display: flex; align-items: center; gap: 6px;
+    margin-bottom: 0.75rem;
+  }
+  .phase-line { flex: 1; height: 0.5px; background: var(--color-border-tertiary); }
+
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+  @media (max-width: 600px) { .grid-3 { grid-template-columns: 1fr; } }
+  .metric-card {
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-md);
+    padding: 0.75rem 1rem;
+    text-align: center;
+  }
+  .metric-label { font-size: 11px; color: var(--color-text-secondary); margin-bottom: 4px; }
+  .metric-value { font-size: 22px; font-weight: 500; }
+  .metric-navy { color: var(--navy); }
+  .metric-amber { color: var(--amber); }
+  .metric-teal { color: var(--teal); }
+
+  .divider { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 1.5rem 0; }
+
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-secondary); padding: 6px 10px; text-align: left; border-bottom: 0.5px solid var(--color-border-secondary); }
+  td { padding: 7px 10px; border-bottom: 0.5px solid var(--color-border-tertiary); color: var(--color-text-primary); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  .td-label { color: var(--color-text-secondary); font-size: 12px; }
+
+  .status-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 0.75rem 1rem;
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-md);
+    font-size: 13px;
+  }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--amber-mid); flex-shrink: 0; }
+
+  .footnote { font-size: 11px; color: var(--color-text-secondary); margin-top: 0.5rem; line-height: 1.5; }
+
+  .expandable-toggle {
+    display: flex; align-items: center; gap: 8px; cursor: pointer;
+    font-size: 13px; font-weight: 500; padding: 8px 0;
+    color: var(--navy); border-bottom: 0.5px solid var(--color-border-tertiary);
+    user-select: none;
+  }
+  .toggle-arrow { font-size: 11px; transition: transform 0.2s; }
+  .expandable-body { display: none; padding: 10px 0 4px; }
+  .expandable-body.open { display: block; }
+</style>
+
+<div style="padding: 1rem 0 2rem;">
+
+<div class="module-header">
+  <div class="module-id">P2 — Commande publique · Entrée 2 · v1 anticipée</div>
+  <div class="module-title">Critères de sélection et d'attribution</div>
+  <div class="module-subtitle">Cadre d'évaluation des candidatures et des offres — marché national d'éducation à l'image</div>
+  <div style="margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap;">
+    <span class="tag tag-anticipé">Version anticipée</span>
+    <span class="tag tag-stratégique">Lecture indispensable avant P4</span>
+    <span class="tag tag-juridique">CCP L.2142 · L.2152</span>
+  </div>
+</div>
+
+<!-- SECTION 01 : CONTEXTE -->
+<div class="section">
+  <div class="section-title"><span class="section-num">1</span>Contexte et enjeux</div>
+
+  <p style="font-size: 14px; margin-bottom: 1rem;">Le dispositif d'évaluation des offres repose sur deux séquences distinctes et successives dans la procédure : la <strong style="font-weight:500">sélection des candidatures</strong> (qui peut répondre) et l'<strong style="font-weight:500">attribution de l'offre économiquement la plus avantageuse</strong> (qui remporte le marché). Ces deux séquences mobilisent des règles juridiques, des documents et des logiques d'appréciation entièrement différents.</p>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Articulation avec P2-1</div>
+      <p style="font-size: 13px; color: var(--color-text-secondary);">P2-1 a établi le régime juridique applicable, les seuils de procédure et le cadre documentaire (DCE). P2-2 descend dans le détail du système d'évaluation que le CNC devra publier. Ces deux modules sont codépendants : le choix procédural (AO ouvert vs procédure avec négociation) conditionne la plasticité des critères d'attribution.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Implications pour P3 et P4</div>
+      <p style="font-size: 13px; color: var(--color-text-secondary);">Les critères d'attribution sont la <em>matrice de rédaction</em> de P4. La conception de l'offre, le positionnement du consortium, la mise en valeur des compétences distribuées entre membres — tout doit être structuré pour servir les critères tels qu'anticipés ici. P3 (architecture du consortium) doit refléter les capacités attestables au moment de la candidature.</p>
+    </div>
+  </div>
+
+  <div class="info-block">
+    <strong style="font-weight:500">Position dans le DCE.</strong> Les critères de sélection sont publiés dans l'avis d'appel public à la concurrence (AAPC) et dans le règlement de la consultation (RC). Les critères d'attribution figurent impérativement dans le RC, avec leur pondération. Toute modification après publication engage la responsabilité du CNC et peut invalider la procédure.
+  </div>
+</div>
+
+<!-- SECTION 02 : DÉVELOPPEMENT -->
+<div class="section">
+  <div class="section-title"><span class="section-num">2</span>Développement</div>
+
+  <!-- PHASE A : SÉLECTION CANDIDATURES -->
+  <div class="phase-label">
+    Phase A <span class="ref-badge">L.2142-1 à L.2142-6 CCP</span>
+    <div class="phase-line"></div>
+    Sélection des candidatures
+  </div>
+
+  <p style="font-size: 13px; color: var(--color-text-secondary); margin-bottom: 1rem;">La sélection des candidatures est un filtre d'accès, non un classement. Elle vise à écarter les opérateurs qui ne présentent pas les garanties minimales de capacité ou qui font l'objet d'une exclusion légale. Le CNC retient les candidats dont le dossier satisfait aux niveaux minimaux exigés — et admet tous les candidats qui y répondent.</p>
+
+  <div class="grid-3" style="margin-bottom: 1rem;">
+    <div class="metric-card">
+      <div class="metric-label">Capacités économiques</div>
+      <div class="metric-value metric-navy" style="font-size: 14px; padding-top: 4px;">Financières</div>
+      <div class="footnote" style="margin-top: 4px;">chiffre d'affaires, bilans, garanties</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Capacités techniques</div>
+      <div class="metric-value metric-teal" style="font-size: 14px; padding-top: 4px;">Professionnelles</div>
+      <div class="footnote" style="margin-top: 4px;">références, moyens humains, outils</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Situations d'exclusion</div>
+      <div class="metric-value metric-amber" style="font-size: 14px; padding-top: 4px;">Régularité</div>
+      <div class="footnote" style="margin-top: 4px;">fiscale, sociale, pénale, déontologique</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Capacités économiques et financières — anticipation</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Critère probable</th><th>Justificatif attendu</th><th>Enjeu consortium</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Chiffre d'affaires global</td>
+            <td class="td-label">Déclaration CA (DC2) ou bilans</td>
+            <td class="td-label">Apprécié au niveau du groupement — le CA cumulé des membres compte</td>
+          </tr>
+          <tr>
+            <td>Absence de procédure collective</td>
+            <td class="td-label">Déclaration sur l'honneur (DC1)</td>
+            <td class="td-label">Chaque membre individuellement</td>
+          </tr>
+          <tr>
+            <td>Assurance responsabilité civile professionnelle</td>
+            <td class="td-label">Attestation d'assurance en cours de validité</td>
+            <td class="td-label">Mandataire au minimum — voire chaque cotraitant selon RC</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="warn-block" style="margin-top: 0.75rem;">
+      Le CNC n'est pas tenu de fixer un seuil de CA minimum pour un marché de services culturels. Si un seuil est fixé, il ne peut excéder deux fois le montant estimé du lot concerné <span class="ref-badge">R.2143-18 CCP</span>. Un seuil trop élevé serait susceptible de recours.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Capacités techniques et professionnelles — anticipation</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Critère probable</th><th>Justificatif attendu</th><th>Enjeu consortium</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Références de prestations similaires (3 ans)</td>
+            <td class="td-label">Liste avec montants, dates, destinataires — attestations si demandées</td>
+            <td class="td-label">Chaque membre apporte les siennes — appréciation globale du groupement</td>
+          </tr>
+          <tr>
+            <td>Moyens humains dédiés</td>
+            <td class="td-label">Effectifs, qualifications, CVs des référents clés</td>
+            <td class="td-label">Peut se cumuler entre membres — nécessite coordination DC2</td>
+          </tr>
+          <tr>
+            <td>Connaissance du dispositif MCC / éducation à l'image</td>
+            <td class="td-label">Non formalisé — mais conditionnera la valeur des références</td>
+            <td class="td-label">Point fort du consortium si secteur bien représenté</td>
+          </tr>
+          <tr>
+            <td>Outillage numérique / infrastructure technique</td>
+            <td class="td-label">Description des outils existants</td>
+            <td class="td-label">Transversal — peut être porté par un seul membre si désigné</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom: 0.5rem;">
+    <div class="card-title">Documents de candidature — rappel pratique</div>
+    <div class="two-col">
+      <div>
+        <div class="phase-label" style="margin-bottom: 0.5rem;">Pour chaque membre du groupement</div>
+        <ul class="sub-list">
+          <li><span class="sub-dot"></span><span>DC1 — lettre de candidature et habilitation du mandataire (signé par tous ou délégation)</span></li>
+          <li><span class="sub-dot"></span><span>DC2 — déclaration du candidat (capacités, références, CA)</span></li>
+          <li><span class="sub-dot"></span><span>Attestations fiscales et sociales (ou déclaration sur l'honneur si marché &lt; 5 000€ HT annuels — non applicable ici)</span></li>
+          <li><span class="sub-dot"></span><span>Justificatifs d'assurance RC Pro</span></li>
+        </ul>
+      </div>
+      <div>
+        <div class="phase-label" style="margin-bottom: 0.5rem;">Alternatives / simplifications</div>
+        <ul class="sub-list">
+          <li><span class="sub-dot sub-dot-teal"></span><span>DUME (Document unique de marché européen) — accepté si mentionné dans le RC, valeur déclarative</span></li>
+          <li><span class="sub-dot sub-dot-teal"></span><span>Service MPES (marché public simplifié) — si activé par le CNC, permet de ne fournir que son SIRET</span></li>
+          <li><span class="sub-dot sub-dot-amber"></span><span>Références antérieures déjà transmises au CNC — peuvent être requalifiées sans re-déposer (vérifier dans RC)</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- PHASE B : ATTRIBUTION -->
+  <div class="phase-label" style="margin-top: 1rem;">
+    Phase B <span class="ref-badge">L.2152-6 à L.2152-8 CCP</span>
+    <div class="phase-line"></div>
+    Critères d'attribution — offre économiquement la plus avantageuse
+  </div>
+
+  <p style="font-size: 13px; color: var(--color-text-secondary); margin-bottom: 1rem;">L'article L.2152-6 impose que les critères d'attribution soient liés à l'objet du marché, non discriminatoires et permettant une évaluation comparative. Pour un marché de services à forte dimension intellectuelle comme celui-ci, la valeur technique prime quasi systématiquement. Le prix est un critère obligatoire mais secondarisable par la pondération.</p>
+
+  <div class="info-block">
+    <strong style="font-weight:500">Scénario procédural AO ouvert.</strong> Les critères sont fixés une fois pour toutes dans le RC avant remise des offres. Aucune modification possible. Les sous-critères peuvent figurer dans le RC ou être communiqués ultérieurement, mais ne peuvent alourdir le dispositif d'évaluation au-delà de ce qui était annoncé.
+  </div>
+  <div class="warn-block">
+    <strong style="font-weight:500">Scénario procédure avec négociation.</strong> Si cette procédure est retenue (hypothèse non écartée — cf. P2-1), les critères d'attribution sont fixés avant l'invitation à soumissionner et ne peuvent être modifiés. En revanche, les éléments de l'offre peuvent évoluer au cours des phases de négociation dans la limite des conditions définies initialement.
+  </div>
+
+  <div style="margin-top: 1.25rem;">
+
+    <!-- Critère 1 : Valeur technique -->
+    <div class="criterion-block">
+      <div class="criterion-header">
+        <div class="criterion-name">Valeur technique de l'offre</div>
+        <div class="criterion-weight">Anticipé : 60 à 70 %</div>
+      </div>
+      <div class="weight-bar-wrap"><div class="weight-bar w-navy" style="width: 65%;"></div></div>
+      <div class="criterion-body">
+        <p style="font-size: 13px; color: var(--color-text-secondary); margin-bottom: 0.75rem;">Critère central pour tout marché de services intellectuels. La pondération effective dépendra de la philosophie de commande du CNC — une administration culturelle privilégie généralement la qualité intrinsèque. Ce critère se décompose probablement en plusieurs sous-critères, dont voici l'anticipation.</p>
+        <ul class="sub-list">
+          <li><span class="sub-dot"></span><span><strong style="font-weight:500">Expertise cinématographique et pédagogique</strong> — connaissance des dispositifs nationaux, des acteurs du secteur, de la chaîne éducation à l'image</span></li>
+          <li><span class="sub-dot"></span><span><strong style="font-weight:500">Méthodologie de coordination nationale</strong> — organisation du pilotage, interfaces avec les opérateurs régionaux, protocoles de suivi et de reporting</span></li>
+          <li><span class="sub-dot"></span><span><strong style="font-weight:500">Ancrage territorial et réseau opérationnel</strong> — capacité à couvrir l'ensemble du territoire, relations établies avec les structures régionales et les établissements scolaires</span></li>
+          <li><span class="sub-dot"></span><span><strong style="font-weight:500">Qualité et expérience des équipes dédiées</strong> — profils, volumes ETP, complémentarité des expertises dans le groupement</span></li>
+          <li><span class="sub-dot"></span><span><strong style="font-weight:500">Capacité d'innovation et d'outillage</strong> — outils numériques, ressources pédagogiques, dispositifs d'animation de réseau</span></li>
+          <li><span class="sub-dot"></span><span><strong style="font-weight:500">Gestion de la transition et continuité de service</strong> — plan de reprise, garanties de démarrage au 1er septembre 2027</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Critère 2 : Prix -->
+    <div class="criterion-block">
+      <div class="criterion-header">
+        <div class="criterion-name">Prix</div>
+        <div class="criterion-weight">Anticipé : 30 à 40 %</div>
+      </div>
+      <div class="weight-bar-wrap"><div class="weight-bar w-amber" style="width: 35%;"></div></div>
+      <div class="criterion-body">
+        <p style="font-size: 13px; color: var(--color-text-secondary); margin-bottom: 0.75rem;">Critère obligatoire <span class="ref-badge">L.2152-6</span>. Pour des marchés de services culturels, le CNC peut légitimement minorer sa pondération au profit de la valeur technique — pratique courante et sécurisée jurisprudentiellement. Le prix peut être apprécié de plusieurs manières.</p>
+        <ul class="sub-list">
+          <li><span class="sub-dot sub-dot-amber"></span><span><strong style="font-weight:500">Montant global du marché</strong> — ventilé par mission si lots distincts, ou global si marché unique</span></li>
+          <li><span class="sub-dot sub-dot-amber"></span><span><strong style="font-weight:500">Structure du budget</strong> — répartition charges de personnel / frais de fonctionnement / coordination / sous-traitance</span></li>
+          <li><span class="sub-dot sub-dot-amber"></span><span><strong style="font-weight:500">Coût unitaire par élève ou par établissement</strong> — possible si le CNC veut benchmarker l'efficience</span></li>
+        </ul>
+        <div class="warn-block" style="margin-top: 0.75rem;">
+          La base subsidy CNC pour l'Archipel des Lucioles (mission de coordination centrale) représente moins d'un cinquième des financements totaux du dispositif. L'offre financière devra démontrer une efficience budgétaire documentée, sans underbidding qui fragiliserait la crédibilité opérationnelle.
+        </div>
+      </div>
+    </div>
+
+    <!-- Critère 3 éventuel : Performance en matière de protection de l'environnement / développement durable -->
+    <div class="criterion-block">
+      <div class="criterion-header">
+        <div class="criterion-name">Critères complémentaires éventuels</div>
+        <div class="criterion-weight">0 à 10 % selon choix CNC</div>
+      </div>
+      <div class="weight-bar-wrap"><div class="weight-bar w-teal" style="width: 5%;"></div></div>
+      <div class="criterion-body">
+        <p style="font-size: 13px; color: var(--color-text-secondary); margin-bottom: 0.75rem;">Autorisés par L.2152-6 dès lors que liés à l'objet du marché. Pour un marché de coordination culturelle et éducative, les options suivantes sont plausibles — sans certitude.</p>
+        <ul class="sub-list">
+          <li><span class="sub-dot sub-dot-teal"></span><span><strong style="font-weight:500">Accessibilité et équité territoriale</strong> — dispositif d'attention aux zones rurales, d'éducation prioritaire, REP+</span></li>
+          <li><span class="sub-dot sub-dot-teal"></span><span><strong style="font-weight:500">Performance sociale</strong> — politique RH, emploi de RQTH, recours aux structures de l'ESS</span></li>
+          <li><span class="sub-dot sub-dot-teal"></span><span><strong style="font-weight:500">Développement durable / empreinte</strong> — si le CNC s'inscrit dans une politique de sobriété de ses prestataires</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- SYSTÈME DE NOTATION -->
+  <div class="phase-label" style="margin-top: 0.5rem;">
+    Méthodes de notation
+    <div class="phase-line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Notation de la valeur technique</div>
+    <p style="font-size: 13px; color: var(--color-text-secondary); margin-bottom: 0.75rem;">Le CNC est libre de choisir sa méthode de notation, à condition que celle-ci soit indiquée dans le RC et ne conduise pas à une distorsion entre les candidats. Deux méthodes sont courantes pour les marchés de services intellectuels :</p>
+    <div class="two-col">
+      <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 0.75rem 1rem;">
+        <div style="font-size: 12px; font-weight: 500; margin-bottom: 6px; color: var(--navy);">Notation sur grille qualitative</div>
+        <p style="font-size: 12px; color: var(--color-text-secondary);">Chaque sous-critère est noté de 0 à 5 ou sur 20 par un jury. La pondération entre sous-critères doit être précisée. Risque : subjectivité si les appréciateurs ne sont pas formés.</p>
+      </div>
+      <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 0.75rem 1rem;">
+        <div style="font-size: 12px; font-weight: 500; margin-bottom: 6px; color: var(--navy);">Notation par rapport à la meilleure offre</div>
+        <p style="font-size: 12px; color: var(--color-text-secondary);">L'offre la mieux notée techniquement reçoit le maximum de points. Les autres sont proportionnées. Méthode plus objective mais défavorable aux offres très différenciées.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Notation du prix</div>
+    <p style="font-size: 13px; color: var(--color-text-secondary); margin-bottom: 0.75rem;">La méthode de notation du prix doit également être décrite dans le RC. La méthode la plus fréquente est la règle de proportionnalité inverse — l'offre la moins chère obtient le maximum de points, les autres sont calculées en proportion :</p>
+    <div class="info-block" style="font-family: var(--font-mono, monospace); font-size: 12px;">
+      Note prix (offre X) = (prix min / prix X) × pondération maximale
+    </div>
+    <p class="footnote">Certains acheteurs utilisent des méthodes alternatives (interclassement, courbe de Bézier, prix médian de référence) pour éviter que des offres anormalement basses ne captent tous les points prix. Leur usage doit être explicitement annoncé dans le RC.</p>
+    <div class="alert-block" style="margin-top: 0.75rem;">
+      <strong style="font-weight:500">Risque d'offre anormalement basse (OAB).</strong> Si l'offre du consortium est significativement inférieure à l'estimation du CNC, le pouvoir adjudicateur est tenu de demander des justifications <span class="ref-badge">L.2152-5 CCP</span>. L'offre financière doit être défendable et documentée, non sacrifiée pour maximiser les points prix.
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ENJEUX CONSORTIUM -->
+  <div class="phase-label" style="margin-top: 0.5rem;">
+    Lecture stratégique consortium
+    <div class="phase-line"></div>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div style="font-size: 12px; font-weight: 500; color: var(--teal); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.07em;">Atouts valorisables</div>
+      <ul class="sub-list">
+        <li><span class="sub-dot sub-dot-teal"></span><span>Réseau territorial dense — argument fort sur le critère "ancrage territorial" si le groupement couvre l'ensemble des régions</span></li>
+        <li><span class="sub-dot sub-dot-teal"></span><span>Complémentarité des expertises — la diversité des membres du consortium peut être présentée comme une richesse sur le critère "qualité des équipes"</span></li>
+        <li><span class="sub-dot sub-dot-teal"></span><span>Antériorité dans le secteur — les membres ont des références directes dans les dispositifs d'éducation à l'image, attestables en DC2</span></li>
+        <li><span class="sub-dot sub-dot-teal"></span><span>Sobriété budgétaire démontrable — si le budget est structuré de manière transparente et documentée, le critère prix peut devenir un atout différenciateur</span></li>
+      </ul>
+    </div>
+    <div>
+      <div style="font-size: 12px; font-weight: 500; color: var(--coral); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.07em;">Points de tension à anticiper</div>
+      <ul class="sub-list">
+        <li><span class="sub-dot" style="background: #D85A30;"></span><span>Le critère "continuité de service" est potentiellement favorable à l'Archipel — formuler l'équivalent comme "capacité de démarrage robuste" dès la rédaction P4</span></li>
+        <li><span class="sub-dot" style="background: #D85A30;"></span><span>Les références du groupement sont distribuées entre membres — bien consolider la présentation DC2 pour montrer la couverture globale</span></li>
+        <li><span class="sub-dot" style="background: #D85A30;"></span><span>La multiplicité des membres peut être perçue comme complexité de gouvernance — la réponse sur l'organisation interne doit être limpide</span></li>
+        <li><span class="sub-dot" style="background: #D85A30;"></span><span>Les sous-critères non publiés à l'avance (si procédure avec négociation) peuvent introduire des surprises — surveiller attentivement le RC</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="success-block" style="margin-top: 1rem;">
+    <strong style="font-weight:500">Principe directeur pour P4.</strong> Chaque élément de l'offre doit pouvoir être cartographié sur au moins un critère d'attribution. La rédaction du mémoire technique (P5) sera structurée chapitre par chapitre selon les critères et sous-critères annoncés. Anticiper cette structure dès P4 permet de ne rien laisser sans appui évaluatif.
+  </div>
+</div>
+
+<!-- SECTION 03 : POINTS DE VIGILANCE -->
+<div class="section">
+  <div class="section-title"><span class="section-num">3</span>Points de vigilance</div>
+
+  <div class="card">
+    <div class="card-title">Incertitudes majeures en version anticipée</div>
+    <ul class="sub-list" style="margin-top: 0.5rem;">
+      <li><span class="sub-dot sub-dot-amber"></span><span><strong style="font-weight:500">Pondérations inconnues.</strong> Toutes les pondérations anticipées ici sont hypothétiques. Le RC publié par le CNC fera foi. Toute stratégie P4 sur la base de pondérations supposées devra être révisée à la publication.</span></li>
+      <li><span class="sub-dot sub-dot-amber"></span><span><strong style="font-weight:500">Nombre et périmètre des sous-critères.</strong> Le CNC peut décomposer la valeur technique en 3 ou en 8 sous-critères. La réponse devra couvrir tous les angles sans savoir exactement lesquels seront notés.</span></li>
+      <li><span class="sub-dot sub-dot-amber"></span><span><strong style="font-weight:500">Configuration des lots.</strong> Si le marché est alloti, chaque lot a ses propres critères ou pondérations. La présente entrée vaut pour un marché non alloti ou à lot unique — à décliner si nécessaire.</span></li>
+      <li><span class="sub-dot sub-dot-amber"></span><span><strong style="font-weight:500">Niveau minimal de capacités.</strong> Sans RC, on ne connaît pas les niveaux minimaux exigés pour la sélection des candidatures. Un niveau trop élevé en CA ou en références pourrait justifier une demande d'éclaircissement auprès du CNC pendant la période de questions.</span></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Risques juridiques à surveiller</div>
+    <ul class="sub-list" style="margin-top: 0.5rem;">
+      <li><span class="sub-dot" style="background: #D85A30;"></span><span><strong style="font-weight:500">Critères discriminatoires.</strong> Si un critère est rédigé de manière à n'avantager qu'un seul opérateur (ex. "avoir coordonné le dispositif MCC pendant au moins 5 ans"), il peut être attaqué. Préparer une argumentation si ce cas se présente.</span></li>
+      <li><span class="sub-dot" style="background: #D85A30;"></span><span><strong style="font-weight:500">Sous-critères non publiés.</strong> Les sous-critères ne sont pas obligatoires dans le RC, mais leur absence nuit à la prévisibilité. Si le RC est muet sur la décomposition, il est licite de demander des précisions par la voie officielle de questions aux acheteurs.</span></li>
+      <li><span class="sub-dot" style="background: #D85A30;"></span><span><strong style="font-weight:500">Rapport qualité/prix vs. MAPA.</strong> Au-dessus du seuil européen (143 000 € HT), le CNC ne peut se soustraire à l'obligation de transparence et de pondération des critères. Aucun critère "coup de cœur" ou discrétionnaire n'est admissible.</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- SECTION 04 : STATUT -->
+<div class="section">
+  <div class="section-title"><span class="section-num">4</span>Statut et révisions</div>
+
+  <div class="status-row" style="margin-bottom: 0.75rem;">
+    <div class="status-dot"></div>
+    <div style="flex: 1;">
+      <strong style="font-weight:500">Version anticipée — v1</strong>
+      <span style="color: var(--color-text-secondary); font-size: 12px; margin-left: 8px;">Produit avant publication du marché</span>
+    </div>
+    <span class="tag tag-anticipé">À réviser à parution RC</span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Élément</th><th>Statut actuel</th><th>Déclenche la révision</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Pondérations valeur technique / prix</td>
+          <td class="td-label">Anticipées (65/35 %)</td>
+          <td class="td-label">Publication du RC — révision immédiate P2-2 et P4</td>
+        </tr>
+        <tr>
+          <td>Sous-critères de la valeur technique</td>
+          <td class="td-label">Hypothèses sectorielles</td>
+          <td class="td-label">Publication RC — mise à jour de la matrice de rédaction P4</td>
+        </tr>
+        <tr>
+          <td>Méthode de notation du prix</td>
+          <td class="td-label">Non connue</td>
+          <td class="td-label">Publication RC — simulation comparative des scenarios prix</td>
+        </tr>
+        <tr>
+          <td>Niveaux minimaux de capacités (CA, références)</td>
+          <td class="td-label">Non fixés</td>
+          <td class="td-label">Publication AAPC + RC — vérification adéquation membres</td>
+        </tr>
+        <tr>
+          <td>Configuration lots</td>
+          <td class="td-label">Indéterminée</td>
+          <td class="td-label">Publication DCE — décliner par lot si nécessaire</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="info-block" style="margin-top: 1rem;">
+    <strong style="font-weight:500">Prochaine entrée recommandée.</strong> P3-A à P3-D (architecture du consortium) peut commencer à partir de P2-2. P4 ne peut être structuré finement qu'après confirmation des critères — la version anticipée de P4 devra couvrir tous les sous-critères plausibles sans parier sur une pondération fixe.
+  </div>
+</div>
+
+<div style="font-size: 11px; color: var(--color-text-secondary); border-top: 0.5px solid var(--color-border-tertiary); padding-top: 0.75rem; margin-top: 0.5rem;">
+  Clé de stockage : <span style="font-family: var(--font-mono); background: var(--gray-light); padding: 1px 5px; border-radius: 3px;">mcc_P2-2</span> · Références : CCP L.2141-1, L.2142-1 à 6, L.2152-5 à 8, R.2143-1 à 18 · Formulaires : DC1, DC2, DUME
+</div>
+
+</div>
+
+<script>
+document.querySelectorAll('.expandable-toggle').forEach(toggle => {
+  toggle.addEventListener('click', () => {
+    const body = toggle.nextElementSibling;
+    const arrow = toggle.querySelector('.toggle-arrow');
+    body.classList.toggle('open');
+    if (arrow) arrow.style.transform = body.classList.contains('open') ? 'rotate(90deg)' : '';
+  });
+});
+
+document.querySelectorAll('.weight-bar').forEach(bar => {
+  const w = bar.style.width;
+  bar.style.width = '0';
+  setTimeout(() => { bar.style.width = w; }, 200);
+});
+</script>
