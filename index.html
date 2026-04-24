@@ -404,7 +404,7 @@ function buildSidebar() {
 }
 
 function checkFilled(id) {
-  fetch(`modules/${id}.html`, { method: 'HEAD' })
+  fetch(`modules/${id}.html`, { method: 'GET', cache: 'no-cache' })
     .then(r => {
       if (r.ok) markFilled(id);
     })
