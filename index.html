@@ -365,13 +365,12 @@ function buildSidebar() {
     } else {
       g.entries.forEach(e => {
         const isLocked = e.locked || g.locked;
-        const isFilled = e.filled === true;
         const sc = STATUS_CLASS[e.status] || 'anticipe';
 
         const item = document.createElement('div');
         item.className = 'nav-item'
           + (isLocked ? ' locked' : '')
-          + (!isFilled && !isLocked ? ' empty-module' : '')
+          + ' empty-module'
           + (ACTIVE === e.id ? ' active' : '');
         item.dataset.id = e.id;
         item.dataset.group = g.label;
@@ -386,12 +385,13 @@ function buildSidebar() {
           <div class="nav-tags">
             ${e.strategic ? '<span class="tag-star">★</span>' : ''}
             ${e.scenarized ? '<span class="tag-sc">sc</span>' : ''}
-            ${!isFilled && !isLocked ? '<span class="tag-empty">vide</span>' : ''}
+            <span class="tag-empty" id="tag-empty-${e.id}">vide</span>
             ${isLocked ? '<span class="tag-lock">⊘</span>' : ''}
           </div>`;
 
         if (!isLocked) {
           item.addEventListener('click', () => openModule(e, g.label));
+          checkFilled(e.id);
         }
         groupEl.appendChild(item);
       });
@@ -401,6 +401,22 @@ function buildSidebar() {
   });
 
   buildLegend(sb);
+}
+
+function checkFilled(id) {
+  fetch(`modules/${id}.html`, { method: 'HEAD' })
+    .then(r => {
+      if (r.ok) markFilled(id);
+    })
+    .catch(() => {});
+}
+
+function markFilled(id) {
+  const item = document.querySelector(`.nav-item[data-id="${id}"]`);
+  if (!item) return;
+  item.classList.remove('empty-module');
+  const tag = document.getElementById(`tag-empty-${id}`);
+  if (tag) tag.remove();
 }
 
 function buildLegend(sb) {
