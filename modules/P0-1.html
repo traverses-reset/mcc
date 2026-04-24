@@ -3,7 +3,7 @@
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--font-sans,"system-ui,sans-serif");font-size:15px;line-height:1.65;color:var(--color-text-primary,#111);background:transparent;padding:1.5rem 1rem 3rem}
+body{font-family:var(--font-sans,"system-ui,sans-serif");font-size:15px;line-height:1.65;color:var(--color-text-primary,#111);background:#fdfcf9;padding:1.5rem 1rem 3rem}
 h1{font-family:var(--font-serif,Georgia,serif);font-size:24px;font-weight:500;line-height:1.25;color:var(--color-text-primary,#111);margin-bottom:0.35rem}
 h2{font-size:17px;font-weight:500;color:var(--color-text-primary,#111)}
 p{margin-bottom:0.7rem}
@@ -381,12 +381,12 @@ select{font-size:12px;padding:3px 8px;border-radius:6px;border:0.5px solid var(-
 
 <script>
 const KEY='mcc_P0-1';
-async function load(){try{const r=await window.storage.get(KEY);if(!r||!r.value)return;const d=JSON.parse(r.value);if(d.status){document.getElementById('status-display').textContent=d.status;document.getElementById('status-select').value=d.status;document.getElementById('status-badge').textContent=d.status;}if(d.notes&&d.notes.length)renderNotes(d.notes);}catch(e){}}
-async function get(){try{const r=await window.storage.get(KEY);if(r&&r.value)return JSON.parse(r.value);}catch(e){}return{status:'Anticipé',notes:[]};}
-async function save(d){try{await window.storage.set(KEY,JSON.stringify(d));}catch(e){}}
+function load(){try{const s=localStorage.getItem(KEY);if(!s)return;const d=JSON.parse(s);if(d.status){document.getElementById('status-display').textContent=d.status;document.getElementById('status-select').value=d.status;document.getElementById('status-badge').textContent=d.status;}if(d.notes&&d.notes.length)renderNotes(d.notes);}catch(e){}}
+function get(){try{const s=localStorage.getItem(KEY);if(s)return JSON.parse(s);}catch(e){}return{status:'Anticipé',notes:[]};}
+function save(d){try{localStorage.setItem(KEY,JSON.stringify(d));}catch(e){}}
 function renderNotes(notes){if(!notes||!notes.length){document.getElementById('notes-entries').innerHTML='<div class="divider-note">Aucune note pour l\'instant.</div>';return;}document.getElementById('notes-entries').innerHTML=notes.map(n=>`<div class="note-entry"><div class="note-meta">${n.date}</div><div>${n.text}</div></div>`).join('');}
-async function addNote(){const el=document.getElementById('note-input');const text=el.value.trim();if(!text)return;const d=await get();const now=new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});d.notes=d.notes||[];d.notes.unshift({date:now,text});await save(d);renderNotes(d.notes);el.value='';}
-async function updateStatus(val){document.getElementById('status-display').textContent=val;document.getElementById('status-badge').textContent=val;const d=await get();d.status=val;await save(d);}
+function addNote(){const el=document.getElementById('note-input');const text=el.value.trim();if(!text)return;const d=get();const now=new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});d.notes=d.notes||[];d.notes.unshift({date:now,text});save(d);renderNotes(d.notes);el.value='';}
+function updateStatus(val){document.getElementById('status-display').textContent=val;document.getElementById('status-badge').textContent=val;const d=get();d.status=val;save(d);}
 load();
 </script>
 </body>
