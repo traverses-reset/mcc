@@ -1,0 +1,246 @@
+{
+  "groups": [
+    {
+      "id": "P0",
+      "label": "P0 — Recomposition politique",
+      "adminOnly": true,
+      "entries": [
+        {
+          "id": "P0-1",
+          "label": "Analyse de la négociation en cours",
+          "status": "stabilisé",
+          "scenarized": false,
+          "locked": false
+        },
+        {
+          "id": "P0-2",
+          "label": "Scénarios avec / sans acteur concerné",
+          "status": "anticipé",
+          "scenarized": false,
+          "locked": false
+        },
+        {
+          "id": "P0-3",
+          "label": "Critères d'arbitrage",
+          "status": "anticipé",
+          "scenarized": false,
+          "locked": false
+        }
+      ]
+    },
+    {
+      "id": "P1",
+      "label": "P1 — Cadrage stratégique",
+      "adminOnly": false,
+      "entries": [
+        {
+          "id": "P1-1",
+          "label": "Cartographie des acteurs",
+          "status": "anticipé",
+          "scenarized": false,
+          "locked": false
+        },
+        {
+          "id": "P1-2",
+          "label": "Analyse des missions existantes",
+          "status": "stabilisé",
+          "scenarized": false,
+          "locked": false
+        },
+        {
+          "id": "P1-3",
+          "label": "Périmètre probable du marché",
+          "status": "anticipé",
+          "scenarized": false,
+          "locked": false
+        },
+        {
+          "id": "P1-4",
+          "label": "Enjeux institutionnels",
+          "status": "anticipé",
+          "scenarized": false,
+          "locked": false
+        },
+        {
+          "id": "P1-5",
+          "label": "Hypothèses de configuration des lots",
+          "status": "stabilisé",
+          "scenarized": false,
+          "strategic": true,
+          "locked": false
+        }
+      ]
+    },
+    {
+      "id": "P2",
+      "label": "P2 — Commande publique",
+      "adminOnly": false,
+      "entries": [
+        {
+          "id": "P2-1",
+          "label": "Cadre juridique et CCP",
+          "status": "stabilisé",
+          "scenarized": false,
+          "locked": false
+        },
+        {
+          "id": "P2-2",
+          "label": "Procédures et seuils applicables",
+          "status": "anticipé",
+          "scenarized": false,
+          "locked": false
+        },
+        {
+          "id": "P2-3",
+          "label": "Co-traitance / sous-traitance",
+          "status": "anticipé",
+          "scenarized": false,
+          "locked": false
+        },
+        {
+          "id": "P2-4",
+          "label": "Critères de sélection et notation",
+          "status": "anticipé",
+          "scenarized": false,
+          "locked": false
+        },
+        {
+          "id": "P2-5",
+          "label": "Documents administratifs requis",
+          "status": "anticipé",
+          "scenarized": false,
+          "locked": false
+        },
+        {
+          "id": "P2-6",
+          "label": "Offre financière — BPU / DQE / AE",
+          "status": "anticipé",
+          "scenarized": false,
+          "locked": false
+        }
+      ]
+    },
+    {
+      "id": "P3",
+      "label": "P3 — Architecture du consortium",
+      "adminOnly": false,
+      "entries": [
+        {
+          "id": "P3-1",
+          "label": "Formes juridiques du groupement",
+          "status": "anticipé",
+          "scenarized": true,
+          "locked": false
+        },
+        {
+          "id": "P3-2",
+          "label": "Portage — mandataire FACC",
+          "status": "anticipé",
+          "scenarized": true,
+          "locked": false
+        },
+        {
+          "id": "P3-3",
+          "label": "Pilotage opérationnel",
+          "status": "anticipé",
+          "scenarized": true,
+          "locked": false
+        },
+        {
+          "id": "P3-4",
+          "label": "Coopération inter-membres",
+          "status": "anticipé",
+          "scenarized": true,
+          "locked": false
+        },
+        {
+          "id": "P3-5",
+          "label": "Gouvernance — décision / litige",
+          "status": "anticipé",
+          "scenarized": true,
+          "locked": false
+        }
+      ]
+    },
+    {
+      "id": "P4",
+      "label": "P4 — Conception de l'offre",
+      "adminOnly": false,
+      "entries": [
+        {
+          "id": "P4-1",
+          "label": "Coordination centrale — missions",
+          "status": "anticipé",
+          "scenarized": true,
+          "locked": false
+        },
+        {
+          "id": "P4-2",
+          "label": "Animation du réseau territorial",
+          "status": "anticipé",
+          "scenarized": true,
+          "locked": false
+        },
+        {
+          "id": "P4-3",
+          "label": "Outils et dispositifs pédagogiques",
+          "status": "anticipé",
+          "scenarized": true,
+          "locked": false
+        },
+        {
+          "id": "P4-4",
+          "label": "Évaluation et reporting",
+          "status": "anticipé",
+          "scenarized": true,
+          "locked": false
+        },
+        {
+          "id": "P4-5",
+          "label": "Version révisée sur CDC réel",
+          "status": "verrouillé",
+          "scenarized": false,
+          "locked": true
+        }
+      ]
+    },
+    {
+      "id": "P5",
+      "label": "P5 — Rédaction de la réponse",
+      "adminOnly": false,
+      "locked": true,
+      "entries": [
+        {
+          "id": "P5-1",
+          "label": "Mémoire technique",
+          "status": "verrouillé",
+          "locked": true
+        },
+        {
+          "id": "P5-2",
+          "label": "Offre financière",
+          "status": "verrouillé",
+          "locked": true
+        },
+        {
+          "id": "P5-3",
+          "label": "Documents administratifs",
+          "status": "verrouillé",
+          "locked": true
+        },
+        {
+          "id": "P5-4",
+          "label": "Relecture finale",
+          "status": "verrouillé",
+          "locked": true
+        }
+      ]
+    },
+    {
+      "id": "SRC",
+      "label": "SRC — Notes de terrain",
+      "adminOnly": false,
+      "entries": []
+    }
+  ]
+}
