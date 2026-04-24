@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P1-4 · Enjeux institutionnels</title>
+<style>
+  :root {
+    --bg: #fdfcf9;
+    --text: #1a1a1a;
+    --text-secondary: #4a4a4a;
+    --border: #d8d4cc;
+    --border-light: #e8e4dc;
+    --accent: #2c4a6e;
+    --accent-light: #e8eef5;
+    --warning: #7a4a1a;
+    --warning-light: #fdf3e8;
+    --success: #2a5a3a;
+    --success-light: #e8f5ed;
+    --tag-bg: #f0ede6;
+    --module-id: #8a8078;
+    --section-num: #c8c0b4;
+    --risk-high: #8a1a1a;
+    --risk-high-bg: #fdf0f0;
+    --risk-med: #7a4a1a;
+    --risk-med-bg: #fdf3e8;
+    --risk-low: #2a5a3a;
+    --risk-low-bg: #e8f5ed;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 15px;
+    line-height: 1.7;
+    padding: 0;
+  }
+
+  /* HEADER */
+  .module-header {
+    border-bottom: 2px solid var(--text);
+    padding: 2rem 2.5rem 1.5rem;
+    background: var(--bg);
+  }
+
+  .module-meta {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .module-id {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: var(--module-id);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    padding: 2px 8px;
+    border-radius: 2px;
+  }
+
+  .module-flag {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 2px;
+    border: 1px solid;
+  }
+
+  .flag-non-sc { color: var(--accent); border-color: #b0c4de; background: var(--accent-light); }
+  .flag-v1 { color: var(--module-id); border-color: var(--border); background: var(--tag-bg); }
+
+  .module-title {
+    font-size: 1.6rem;
+    font-weight: normal;
+    line-height: 1.25;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+
+  .module-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 0.4rem;
+    font-style: italic;
+  }
+
+  /* NAV */
+  .module-nav {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-item {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    padding: 0.7rem 1.2rem;
+    cursor: pointer;
+    border-right: 1px solid var(--border);
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+    text-decoration: none;
+    display: block;
+  }
+
+  .nav-item:hover { background: var(--tag-bg); color: var(--text); }
+  .nav-item.active { color: var(--accent); border-bottom-color: var(--accent); background: var(--accent-light); }
+
+  /* CONTENT */
+  .module-content { padding: 2rem 2.5rem; max-width: 900px; }
+
+  .section {
+    margin-bottom: 3rem;
+    scroll-margin-top: 3rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-num {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: var(--section-num);
+    letter-spacing: 0.08em;
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    font-size: 1rem;
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text);
+  }
+
+  /* PROSE */
+  .prose p { margin-bottom: 1rem; color: var(--text); }
+  .prose p:last-child { margin-bottom: 0; }
+
+  /* SUBSECTION */
+  .subsection {
+    margin-bottom: 2rem;
+  }
+
+  .subsection-title {
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+    padding-left: 0.8rem;
+    border-left: 3px solid var(--accent);
+  }
+
+  /* CALLOUT */
+  .callout {
+    border-left: 3px solid;
+    padding: 0.8rem 1rem;
+    margin: 1rem 0;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .callout-warning {
+    border-color: var(--warning);
+    background: var(--warning-light);
+    color: var(--warning);
+  }
+
+  .callout-info {
+    border-color: var(--accent);
+    background: var(--accent-light);
+    color: var(--accent);
+  }
+
+  .callout-label {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+  }
+
+  .callout p { color: inherit; margin-bottom: 0.5rem; }
+  .callout p:last-child { margin-bottom: 0; }
+
+  /* RISK TABLE */
+  .risk-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.875rem;
+  }
+
+  .risk-table th {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    border-bottom: 2px solid var(--border);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    background: var(--tag-bg);
+  }
+
+  .risk-table td {
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid var(--border-light);
+    vertical-align: top;
+  }
+
+  .risk-table tr:last-child td { border-bottom: none; }
+  .risk-table tr:hover td { background: var(--tag-bg); }
+
+  .risk-badge {
+    display: inline-block;
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px 6px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .risk-high { color: var(--risk-high); background: var(--risk-high-bg); border: 1px solid #f0c0c0; }
+  .risk-med { color: var(--risk-med); background: var(--risk-med-bg); border: 1px solid #f0d8b0; }
+  .risk-low { color: var(--risk-low); background: var(--risk-low-bg); border: 1px solid #b0d8c0; }
+
+  /* ACTOR CARDS */
+  .actor-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+
+  @media (max-width: 680px) { .actor-grid { grid-template-columns: 1fr; } }
+
+  .actor-card {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1rem;
+    background: var(--bg);
+  }
+
+  .actor-card-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .actor-name {
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+
+  .actor-role {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .actor-card p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* SCENARIO BLOCKS */
+  .scenario-block {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    margin: 0.75rem 0;
+    overflow: hidden;
+  }
+
+  .scenario-header {
+    background: var(--tag-bg);
+    padding: 0.5rem 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .scenario-label {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--module-id);
+  }
+
+  .scenario-title {
+    font-size: 0.88rem;
+    color: var(--text);
+  }
+
+  .scenario-prob {
+    margin-left: auto;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+
+  .scenario-body {
+    padding: 0.8rem 0.9rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* POSTURE BOX */
+  .posture-box {
+    border: 2px solid var(--accent);
+    border-radius: 4px;
+    padding: 1.2rem 1.4rem;
+    margin: 1.2rem 0;
+    background: var(--accent-light);
+  }
+
+  .posture-box-title {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+  }
+
+  .posture-box p { color: var(--accent); margin-bottom: 0.5rem; }
+  .posture-box p:last-child { margin-bottom: 0; }
+
+  /* VIGILANCE ITEMS */
+  .vigilance-list { list-style: none; padding: 0; margin: 0.5rem 0; }
+
+  .vigilance-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.5rem 0.8rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 0.875rem;
+    align-items: start;
+  }
+
+  .vigilance-item:last-child { border-bottom: none; }
+
+  .vigilance-marker {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px 6px;
+    border-radius: 2px;
+    margin-top: 2px;
+    white-space: nowrap;
+  }
+
+  .v-legal { color: var(--risk-high); background: var(--risk-high-bg); border: 1px solid #f0c0c0; }
+  .v-strat { color: var(--risk-med); background: var(--risk-med-bg); border: 1px solid #f0d8b0; }
+  .v-proc { color: #3a3a7a; background: #ebebf8; border: 1px solid #c0c0e8; }
+  .v-reput { color: #5a2a6a; background: #f5eef8; border: 1px solid #d8b8e8; }
+
+  .vigilance-text { color: var(--text-secondary); line-height: 1.5; }
+  .vigilance-text strong { color: var(--text); }
+
+  /* STATUS SECTION */
+  .status-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (max-width: 600px) { .status-grid { grid-template-columns: 1fr; } }
+
+  .status-block label {
+    display: block;
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    margin-bottom: 0.4rem;
+  }
+
+  .status-select {
+    width: 100%;
+    font-family: 'Georgia', serif;
+    font-size: 0.875rem;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.45rem 0.6rem;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238a8078'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.6rem center;
+    padding-right: 2rem;
+  }
+
+  .notes-textarea {
+    width: 100%;
+    font-family: 'Georgia', serif;
+    font-size: 0.875rem;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.6rem 0.7rem;
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.6;
+    margin-top: 0.4rem;
+  }
+
+  .notes-textarea:focus, .status-select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(44,74,110,0.1);
+  }
+
+  .save-btn {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--bg);
+    background: var(--accent);
+    border: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 0.75rem;
+    transition: background 0.15s;
+  }
+
+  .save-btn:hover { background: #1e3550; }
+
+  .save-confirm {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    color: var(--success);
+    margin-left: 0.75rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .save-confirm.visible { opacity: 1; }
+
+  .revision-triggers {
+    margin-top: 1.5rem;
+  }
+
+  .revision-triggers-title {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+  }
+
+  .trigger-item {
+    display: flex;
+    gap: 0.6rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    padding: 0.3rem 0;
+    align-items: baseline;
+  }
+
+  .trigger-item::before {
+    content: '→';
+    color: var(--border);
+    flex-shrink: 0;
+    font-family: 'Courier New', monospace;
+  }
+
+  /* LINKS */
+  .module-links {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.8rem;
+  }
+
+  .module-link {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    background: var(--accent-light);
+    border: 1px solid #b0c4de;
+    padding: 2px 8px;
+    border-radius: 2px;
+    text-decoration: none;
+    cursor: default;
+  }
+
+  /* FOOTER */
+  .module-footer {
+    border-top: 1px solid var(--border);
+    padding: 1rem 2.5rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .footer-item {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--module-id);
+  }
+
+  .footer-sep { color: var(--border); }
+
+  /* Util */
+  em { font-style: italic; }
+  strong { font-weight: bold; }
+  .text-sm { font-size: 0.85rem; color: var(--text-secondary); }
+</style>
+</head>
+<body>
+
+<header class="module-header">
+  <div class="module-meta">
+    <span class="module-id">mcc_P1-4</span>
+    <span class="module-flag flag-non-sc">Non scénarisé</span>
+    <span class="module-flag flag-v1">v1 · Anticipé</span>
+  </div>
+  <h1 class="module-title">P1-4 · Enjeux institutionnels</h1>
+  <p class="module-subtitle">Lecture de la situation CNC, fragilités procédurales, risques stratégiques et posture sectorielle</p>
+</header>
+
+<nav class="module-nav">
+  <a class="nav-item active" href="#s01">01 · Contexte</a>
+  <a class="nav-item" href="#s02">02 · Développement</a>
+  <a class="nav-item" href="#s03">03 · Vigilance</a>
+  <a class="nav-item" href="#s04">04 · Statut</a>
+</nav>
+
+<main class="module-content">
+
+  <!-- ===================== 01 CONTEXTE ===================== -->
+  <section class="section" id="s01">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Contexte et enjeux</h2>
+    </div>
+
+    <div class="prose">
+      <p>Ce module analyse la situation institutionnelle dans laquelle le marché public CNC est préparé — non pas le marché lui-même, mais les conditions de sa genèse : la posture du pouvoir adjudicateur, ses fragilités procédurales observables, les risques qui en découlent pour toutes les parties, et la posture que le consortium doit adopter face à cette configuration.</p>
+
+      <p>P1-4 est le module central de lecture politique et institutionnelle du projet. Il conditionne la compréhension de P3 (architecture du consortium), de P4 (conception de l'offre) et constitue le contexte dans lequel P1-5 (configuration des lots) doit être lu. Il se nourrit directement des notes de terrain SRC-sourcing-cnc et SRC-bruneau-germain, et entretient une relation étroite avec P0-1 (analyse de la négociation en cours).</p>
+
+      <p>Ce module est produit à partir d'observations directes de la phase préparatoire — questionnaire de sourcing, échanges informels, signaux du secteur — et sera révisé dès publication du DCE.</p>
+    </div>
+
+    <div class="module-links">
+      <span class="module-link">↑ P1-3 Périmètre probable</span>
+      <span class="module-link">→ P1-5 Configuration des lots</span>
+      <span class="module-link">→ P0-1 Négociation</span>
+      <span class="module-link">→ P2-2 Procédures et seuils</span>
+      <span class="module-link">SRC sourcing-cnc</span>
+      <span class="module-link">SRC bruneau-germain</span>
+    </div>
+  </section>
+
+  <!-- ===================== 02 DÉVELOPPEMENT ===================== -->
+  <section class="section" id="s02">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Développement</h2>
+    </div>
+
+    <!-- 2.1 -->
+    <div class="subsection">
+      <div class="subsection-title">2.1 — La transition marché public : une décision au fondement contestable</div>
+      <div class="prose">
+        <p>Le CNC fonde le passage des missions de coordination nationale d'un régime de subvention à un régime de marché public sur le rapport Geffray rendu en septembre 2025. Cette référence est juridiquement et politiquement fragile : ce rapport ne formule aucune recommandation explicite en faveur d'une transition vers la commande publique. Le CNC en opère une lecture orientée que les acteurs du secteur peuvent contester publiquement sans avoir à révéler de sources confidentielles.</p>
+        <p>Ce point est stratégiquement important car il affaiblit la légitimité narrative du CNC dans ses échanges avec les tutelles et avec le secteur. La TVA applicable aux marchés publics de services — environ 20 % — constitue par ailleurs un surcoût matériel par rapport au régime de subvention, argument recevable dans une phase de sourcing ou de négociation.</p>
+      </div>
+    </div>
+
+    <!-- 2.2 -->
+    <div class="subsection">
+      <div class="subsection-title">2.2 — L'impréparation procédurale du CNC : un faisceau d'indices convergents</div>
+      <div class="prose">
+        <p>La phase préparatoire telle qu'elle a été conduite révèle une impréparation méthodologique structurelle — non une intention frauduleuse. Plusieurs indices convergent vers ce diagnostic.</p>
+      </div>
+
+      <div class="callout callout-warning">
+        <div class="callout-label">Signal 1 — Découverte du droit en temps réel</div>
+        <p>La pilote de la démarche a indiqué par écrit qu'elle était <em>"en train de se renseigner"</em> sur les règles applicables au moment de répondre à un opérateur, à quatre à six semaines de la publication prévue du marché. Ce signal, docté et daté, est la pièce la plus significative de l'ensemble.</p>
+      </div>
+
+      <div class="callout callout-warning">
+        <div class="callout-label">Signal 2 — Construction ad hoc sans base légale</div>
+        <p>La distinction opérée entre "phase d'identification des besoins" (avec exclusion des candidats) et "phase de sourcing" (réservée aux candidats) n'existe pas dans le Code de la commande publique. Elle a été inventée pour résoudre un problème pratique sans les outils juridiques appropriés.</p>
+      </div>
+
+      <div class="callout callout-warning">
+        <div class="callout-label">Signal 3 — Calendrier incompatible</div>
+        <p>Un marché publié dans quatre à six semaines devrait avoir un CCTP quasi finalisé et un sourcing terminé. Le fait que la méthode du sourcing soit encore en cours de définition au fil des sollicitations entrantes signale un retard réel masqué par une date de publication maintenue sous pression institutionnelle.</p>
+      </div>
+
+      <div class="callout callout-warning">
+        <div class="callout-label">Signal 4 — Délai de réponse au questionnaire</div>
+        <p>Sept jours calendaires pour répondre à un questionnaire de vingt-six questions couvrant des dimensions stratégiques, opérationnelles et financières complexes. Ce délai contraint avantage structurellement les opérateurs disposant d'une connaissance préalable du dossier — au premier rang desquels l'opérateur sortant.</p>
+      </div>
+    </div>
+
+    <!-- 2.3 -->
+    <div class="subsection">
+      <div class="subsection-title">2.3 — Les fragilités juridiques de la phase préparatoire</div>
+
+      <table class="risk-table">
+        <thead>
+          <tr>
+            <th>Fragilité</th>
+            <th>Référence légale</th>
+            <th>Niveau</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Absence de publicité formelle du sourcing — réseau fermé, critères de sélection des invités non publiés</td>
+            <td>Art. L. 3 CCP — principe d'égalité de traitement</td>
+            <td><span class="risk-badge risk-high">Élevé</span></td>
+          </tr>
+          <tr>
+            <td>Exclusion automatique initiale des participants à la phase préparatoire</td>
+            <td>Art. L. 2111-2 CCP — exclusion uniquement en dernier recours</td>
+            <td><span class="risk-badge risk-high">Élevé</span></td>
+          </tr>
+          <tr>
+            <td>Avantage concurrentiel de l'opérateur sortant non neutralisé — aucune mesure annoncée</td>
+            <td>Art. L. 2111-2 CCP — neutralisation obligatoire</td>
+            <td><span class="risk-badge risk-high">Élevé</span></td>
+          </tr>
+          <tr>
+            <td>Collecte de documents organisationnels de l'opérateur sortant pour construire le CCTP</td>
+            <td>Art. L. 2111-3 CCP — interdiction des spécifications orientées</td>
+            <td><span class="risk-badge risk-high">Élevé</span></td>
+          </tr>
+          <tr>
+            <td>Questions financières et d'intention dans le questionnaire — collecte anticipée d'éléments d'offre</td>
+            <td>Art. L. 2111-1 CCP — périmètre légitime du sourcing</td>
+            <td><span class="risk-badge risk-med">Moyen</span></td>
+          </tr>
+          <tr>
+            <td>Délai de réponse manifestement insuffisant — inégalité de fait entre opérateurs</td>
+            <td>Art. L. 3 CCP — égalité de traitement</td>
+            <td><span class="risk-badge risk-med">Moyen</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-info">
+        <div class="callout-label">Point de droit — Référé précontractuel</div>
+        <p>Ces fragilités ne produisent pas de contentieux immédiat — la phase préparatoire est un acte préparatoire non décisionnel, non attaquable en tant que tel. Mais elles constituent le socle d'un référé précontractuel (art. L. 551-1 CJA) dès publication de l'avis de marché. Le juge peut ordonner la suspension de la procédure. Délai perdu en cas de succès du référé : 12 à 18 mois.</p>
+      </div>
+    </div>
+
+    <!-- 2.4 -->
+    <div class="subsection">
+      <div class="subsection-title">2.4 — La tension stratégique du CNC : barrière à l'entrée vs restriction illégale</div>
+      <div class="prose">
+        <p>Le CNC cherche à construire une barrière à l'entrée par l'expertise sectorielle — intention légitime dans son principe — tout en redoutant simultanément le marché infructueux. Cette tension produit un couloir de rédaction du CCTP extrêmement étroit.</p>
+      </div>
+
+      <div class="scenario-block">
+        <div class="scenario-header">
+          <span class="scenario-label">Risque A</span>
+          <span class="scenario-title">Critères trop vagues — entrée de nouveaux acteurs sans légitimité sectorielle</span>
+          <span class="scenario-prob">Probabilité : réelle</span>
+        </div>
+        <div class="scenario-body">
+          Des opérateurs disposant d'une forte capacité opérationnelle générale — nationale, logistique, financière — mais d'aucune expertise spécifique de l'éducation au cinéma et à l'image peuvent légitimement candidater si les critères de sélection ne définissent pas précisément la nature et le niveau d'expertise sectorielle requis. Des fondations culturelles à forte capacité institutionnelle, des groupes de l'économie sociale et solidaire avec expérience nationale de la commande publique, voire des acteurs de l'exploitation cinématographique, disposent de moyens pour construire rapidement un dossier compétitif si le CCTP le leur permet.
+        </div>
+      </div>
+
+      <div class="scenario-block">
+        <div class="scenario-header">
+          <span class="scenario-label">Risque B</span>
+          <span class="scenario-title">Critères trop restrictifs — restriction illégale à la concurrence</span>
+          <span class="scenario-prob">Probabilité : réelle</span>
+        </div>
+        <div class="scenario-body">
+          Des critères exigeant une expérience si spécifique qu'elle ne peut être satisfaite que par l'opérateur sortant — ou un périmètre très restreint d'acteurs — constitueraient une restriction illégale au sens de l'article L. 2142-1 du CCP. Tout opérateur écarté sur cette base disposerait d'un fondement solide pour contester la procédure.
+        </div>
+      </div>
+
+      <div class="prose" style="margin-top:1rem;">
+        <p>La construction de critères à la fois défendables juridiquement et pertinents sectoriellement est précisément ce qu'un sourcing de qualité, conduit dans des conditions équitables, permet de réaliser. La procédure telle qu'elle est actuellement conduite ne crée pas les conditions de cette construction — ce qui expose le CNC aux deux risques simultanément.</p>
+      </div>
+    </div>
+
+    <!-- 2.5 -->
+    <div class="subsection">
+      <div class="subsection-title">2.5 — Les scénarios d'évolution de la procédure</div>
+
+      <div class="scenario-block">
+        <div class="scenario-header">
+          <span class="scenario-label">Scénario 1</span>
+          <span class="scenario-title">Publication dans les délais, marché fragilisé</span>
+          <span class="scenario-prob">~50 %</span>
+        </div>
+        <div class="scenario-body">Publication coûte que coûte sous pression institutionnelle. Le DCE porte les traces de la phase amont mal maîtrisée. Marché attaquable par référé précontractuel dès publication.</div>
+      </div>
+
+      <div class="scenario-block">
+        <div class="scenario-header">
+          <span class="scenario-label">Scénario 2</span>
+          <span class="scenario-title">Report de la publication</span>
+          <span class="scenario-prob">~30 %</span>
+        </div>
+        <div class="scenario-body">Prise de conscience des fragilités conduisant à différer la publication pour sécuriser la procédure. Moins mauvais pour le CNC, mais incertitude prolongée pour les opérateurs qui ont mobilisé des ressources.</div>
+      </div>
+
+      <div class="scenario-block">
+        <div class="scenario-header">
+          <span class="scenario-label">Scénario 3</span>
+          <span class="scenario-title">Publication, attribution, puis annulation</span>
+          <span class="scenario-prob">~20 %</span>
+        </div>
+        <div class="scenario-body">En cas de CCTP manifestement orienté ou d'exclusion injustifiée, annulation par le juge administratif après attribution (recours Département du Tarn-et-Garonne). Scénario le plus dommageable : CNC, attributaire, secteur, bénéficiaires finaux.</div>
+      </div>
+    </div>
+
+    <!-- 2.6 -->
+    <div class="subsection">
+      <div class="subsection-title">2.6 — La posture recommandée pour le consortium</div>
+
+      <div class="posture-box">
+        <div class="posture-box-title">Principe directeur</div>
+        <p><strong>Être le recours, pas le problème.</strong> Un CNC qui réalise qu'il a des fragilités procédurales va chercher des appuis. Le consortium FACC doit être naturellement positionné pour être cet appui — ce qui crée une relation de proximité et de confiance bien au-delà de ce marché, quelle que soit la configuration finale de la réponse.</p>
+      </div>
+
+      <table class="risk-table">
+        <thead>
+          <tr>
+            <th>Posture "candidat anxieux"</th>
+            <th>Posture "acteur responsable" ✓</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Perçu comme défense d'intérêts propres</td>
+            <td>Perçu comme contribution à la qualité de la procédure</td>
+          </tr>
+          <tr>
+            <td>Crée de la méfiance chez le CNC</td>
+            <td>Crée de la reconnaissance et de la dette</td>
+          </tr>
+          <tr>
+            <td>Fragilise si association avec l'opérateur sortant</td>
+            <td>Renforce quelle que soit la configuration finale</td>
+          </tr>
+          <tr>
+            <td>Risque d'être ignoré</td>
+            <td>Difficile à ignorer sans faute caractérisée</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="prose" style="margin-top:1rem;">
+        <p>Cette posture est la seule cohérente avec toutes les hypothèses — concurrence, consortium avec l'opérateur sortant, abstention partielle — parce qu'elle ne présuppose rien sur la position future dans le marché. Elle repose sur trois piliers : parler au nom d'un écosystème plutôt qu'en son nom propre ; proposer sans dénoncer ; documenter sans menacer.</p>
+      </div>
+    </div>
+
+    <!-- 2.7 -->
+    <div class="subsection">
+      <div class="subsection-title">2.7 — Les acteurs institutionnels clés et leur positionnement</div>
+
+      <div class="actor-grid">
+        <div class="actor-card">
+          <div class="actor-card-header">
+            <span class="actor-name">Daphné Bruneau</span>
+            <span class="actor-role">Directrice adjointe DPT, pilote du marché</span>
+          </div>
+          <p>Interlocutrice principale. Cherche à bien faire dans un calendrier contraint, sans appui juridique suffisant. Non de mauvaise foi — en difficulté. Réceptive à une alerte formulée dans un registre pédagogique et bienveillant. Réponse documentée du 25 mars 2026 (SRC-bruneau-germain).</p>
+        </div>
+        <div class="actor-card">
+          <div class="actor-card-header">
+            <span class="actor-name">Direction générale CNC</span>
+            <span class="actor-role">Niveau hiérarchique supérieur</span>
+          </div>
+          <p>Non directement impliquée dans la conduite du sourcing. Toute démarche collective adressée uniquement à la pilote opérationnelle risque de rester dans son bureau. Une copie à la DG transforme une alerte technique en signal politique — condition d'efficacité pour une note blanche collective.</p>
+        </div>
+        <div class="actor-card">
+          <div class="actor-card-header">
+            <span class="actor-name">Opérateur sortant</span>
+            <span class="actor-role">Structure portant actuellement les missions</span>
+          </div>
+          <p>Avantage informationnel structurel considérable. Participe activement à la définition du besoin. Situation paradoxale : sa candidature future est elle-même fragilisée par l'absence de neutralisation de cet avantage. La configuration finale (concurrent ou partenaire) reste ouverte.</p>
+        </div>
+        <div class="actor-card">
+          <div class="actor-card-header">
+            <span class="actor-name">Tutelles ministérielles</span>
+            <span class="actor-role">MCC et MEN — co-pilotes des dispositifs</span>
+          </div>
+          <p>Pression institutionnelle probable sur le calendrier. La transition marché public est présentée comme cohérente avec les orientations ministérielles — sans que le rapport Geffray le prescrive explicitement. Enjeu de légitimité narrative important pour le CNC dans cette relation.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2.8 -->
+    <div class="subsection">
+      <div class="subsection-title">2.8 — Ce que le questionnaire de sourcing révèle institutionnellement</div>
+      <div class="prose">
+        <p>Au-delà de son usage déclaré, le questionnaire de sourcing du CNC constitue une source de renseignement institutionnel de premier ordre sur l'état d'avancement de la réflexion interne.</p>
+        <p><strong>Sur le périmètre :</strong> confirmation officielle et première formelle que le marché couvre six dispositifs — les quatre composantes de Ma classe au cinéma en temps scolaire, Passeurs d'images et Des cinés, la vie ! hors temps scolaire.</p>
+        <p><strong>Sur l'allotissement :</strong> la question 18, avec son exemple indicatif à quatre lots, révèle que le CNC n'a pas arrêté sa décision sur la configuration des lots et consulte les opérateurs sur ce point. C'est une fenêtre d'influence directe sur la structure du marché — à exploiter dans la réponse au questionnaire et à intégrer immédiatement dans P1-5.</p>
+        <p><strong>Sur le niveau de préparation interne :</strong> certaines questions — notamment la section VIII sur les aspects financiers — révèlent que le CNC construit encore son modèle économique à partir des réponses du sourcing. Le CCTP et le cadre financier ne sont pas finalisés. Le calendrier de publication dans quatre à six semaines est donc sous très haute tension.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ===================== 03 VIGILANCE ===================== -->
+  <section class="section" id="s03">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Points de vigilance</h2>
+    </div>
+
+    <ul class="vigilance-list">
+
+      <li class="vigilance-item">
+        <span class="vigilance-marker v-legal">Juridique</span>
+        <div class="vigilance-text">
+          <strong>L'absence de neutralisation documentée de l'opérateur sortant est le risque le plus exposé.</strong> Si le CCTP publié révèle des spécifications correspondant aux caractéristiques de l'opérateur sortant — dimensionnement RH, structure de coûts, outils spécifiques — le lien de causalité avec la phase préparatoire sera démontrable. Analyser le DCE dès publication sous cet angle en priorité.
+        </div>
+      </li>
+
+      <li class="vigilance-item">
+        <span class="vigilance-marker v-legal">Juridique</span>
+        <div class="vigilance-text">
+          <strong>La section VIII du questionnaire (aspects financiers) crée une asymétrie entre opérateurs.</strong> Les structures ayant répondu avec précision sur leur structure de coûts ont fourni au CNC le squelette de leur BPU/DQE avant la procédure formelle. Ne pas y répondre substantiellement — réponse de principe uniquement.
+        </div>
+      </li>
+
+      <li class="vigilance-item">
+        <span class="vigilance-marker v-strat">Stratégique</span>
+        <div class="vigilance-text">
+          <strong>La question 18 sur la configuration des lots est la plus stratégique du questionnaire.</strong> La réponse doit argumenter en faveur d'un lot unique ou d'une architecture transversale — jamais accepter sans discussion l'exemple à quatre lots proposé par le CNC, qui fragmenterait la mission et pourrait exclure le consortium de certains périmètres.
+        </div>
+      </li>
+
+      <li class="vigilance-item">
+        <span class="vigilance-marker v-strat">Stratégique</span>
+        <div class="vigilance-text">
+          <strong>Le risque d'entrée de nouveaux acteurs sans légitimité sectorielle est réel et documentable.</strong> Si les critères de sélection du CCTP sont trop vagues, des opérateurs disposant de capacités opérationnelles générales importantes peuvent candidater. Ce risque doit être nommé au CNC — dans son intérêt — pour orienter la rédaction des critères de sélection.
+        </div>
+      </li>
+
+      <li class="vigilance-item">
+        <span class="vigilance-marker v-proc">Procédural</span>
+        <div class="vigilance-text">
+          <strong>La case "Observations / Commentaires" du questionnaire est l'espace le plus stratégique du formulaire.</strong> C'est là que les questions procédurales — neutralisation, communication des informations, critères de sélection des invités au sourcing — doivent être posées de manière tracée et officielle.
+        </div>
+      </li>
+
+      <li class="vigilance-item">
+        <span class="vigilance-marker v-proc">Procédural</span>
+        <div class="vigilance-text">
+          <strong>Documenter systématiquement tous les échanges avec le CNC.</strong> Chaque mail, chaque compte-rendu de réunion, chaque demande formulée constitue une pièce potentielle d'un dossier contentieux. Cette documentation n'est pas une posture agressive — c'est une nécessité procédurale dans le contexte identifié.
+        </div>
+      </li>
+
+      <li class="vigilance-item">
+        <span class="vigilance-marker v-reput">Réputationnel</span>
+        <div class="vigilance-text">
+          <strong>La note blanche collective reste une option ouverte et non engagée.</strong> Sa pertinence dépend de la réaction du CNC aux alertes individuelles et de la capacité à réunir un collectif de quatre à cinq signataires légitimes. Elle ne doit pas être transmise avant validation des pairs — le document de circulation doit précéder, pas suivre.
+        </div>
+      </li>
+
+      <li class="vigilance-item">
+        <span class="vigilance-marker v-strat">Stratégique</span>
+        <div class="vigilance-text">
+          <strong>La position de l'opérateur sortant dans la réponse au marché n'est pas arrêtée.</strong> Toutes les postures (concurrent, partenaire, association) restent ouvertes. Aucun document externe ne doit présager de ce choix — y compris la réponse au questionnaire de sourcing et les éventuelles communications collectives.
+        </div>
+      </li>
+
+    </ul>
+  </section>
+
+  <!-- ===================== 04 STATUT ===================== -->
+  <section class="section" id="s04">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Statut et révisions</h2>
+    </div>
+
+    <div class="status-grid">
+      <div class="status-block">
+        <label for="status-select">Statut du module</label>
+        <select class="status-select" id="status-select">
+          <option value="anticipe">Anticipé</option>
+          <option value="en-cours" selected>En cours</option>
+          <option value="a-reviser">À réviser</option>
+          <option value="stabilise">Stabilisé</option>
+          <option value="verrouille">Verrouillé</option>
+          <option value="archive">Archivé</option>
+        </select>
+      </div>
+      <div class="status-block">
+        <label>Version</label>
+        <select class="status-select" id="version-select">
+          <option value="v1" selected>v1 · Anticipée — avant publication DCE</option>
+          <option value="v2">v2 · Révisée — sur DCE réel</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="status-block">
+      <label for="notes-field">Notes de révision</label>
+      <textarea class="notes-textarea" id="notes-field" placeholder="Indiquer ici les évolutions à apporter, les éléments manquants, les révisions nécessaires…"></textarea>
+    </div>
+
+    <div>
+      <button class="save-btn" id="save-btn">Enregistrer</button>
+      <span class="save-confirm" id="save-confirm">✓ Sauvegardé</span>
+    </div>
+
+    <div class="revision-triggers">
+      <div class="revision-triggers-title">Révisions nécessaires à la publication du marché</div>
+      <div class="trigger-item">Publication du DCE — analyser le CCTP pour y identifier les traces de la phase préparatoire (spécifications orientées, critères de sélection)</div>
+      <div class="trigger-item">Publication du DCE — vérifier si les informations recueillies en sourcing ont bien été communiquées à tous les candidats</div>
+      <div class="trigger-item">Réaction du CNC aux alertes formulées en sourcing — mettre à jour le niveau de risque contentieux</div>
+      <div class="trigger-item">Décision sur la configuration des lots — impact direct sur P1-5, P3 et P4</div>
+      <div class="trigger-item">Clarification de la position de l'opérateur sortant — mise à jour de la section 2.7 et renvoi vers P0-1</div>
+      <div class="trigger-item">Résultat de la démarche collective (note blanche) — documenter la réponse ou l'absence de réponse du CNC</div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="module-footer">
+  <span class="footer-item">mcc_P1-4</span>
+  <span class="footer-sep">·</span>
+  <span class="footer-item">P1 — Cadrage stratégique</span>
+  <span class="footer-sep">·</span>
+  <span class="footer-item">v1 · Avril 2026</span>
+  <span class="footer-sep">·</span>
+  <span class="footer-item">Non scénarisé</span>
+</footer>
+
+<script>
+  const STORAGE_KEY = 'mcc_P1-4';
+
+  // Load saved state
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const state = JSON.parse(raw);
+      if (state.status) document.getElementById('status-select').value = state.status;
+      if (state.version) document.getElementById('version-select').value = state.version;
+      if (state.notes) document.getElementById('notes-field').value = state.notes;
+    } catch(e) {}
+  }
+
+  // Save state
+  document.getElementById('save-btn').addEventListener('click', function() {
+    const state = {
+      status: document.getElementById('status-select').value,
+      version: document.getElementById('version-select').value,
+      notes: document.getElementById('notes-field').value,
+      savedAt: new Date().toISOString()
+    };
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      const confirm = document.getElementById('save-confirm');
+      confirm.classList.add('visible');
+      setTimeout(() => confirm.classList.remove('visible'), 2000);
+    } catch(e) {}
+  });
+
+  // Nav active state on scroll
+  const sections = document.querySelectorAll('.section');
+  const navItems = document.querySelectorAll('.nav-item');
+
+  function updateNav() {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 80) current = s.id;
+    });
+    navItems.forEach(item => {
+      item.classList.toggle('active', item.getAttribute('href') === '#' + current);
+    });
+  }
+
+  window.addEventListener('scroll', updateNav, { passive: true });
+
+  // Smooth scroll
+  navItems.forEach(item => {
+    item.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  loadState();
+</script>
+
+</body>
+</html>
