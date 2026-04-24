@@ -82,6 +82,11 @@ html,body{height:100%;overflow:hidden;font-family:'Karla',sans-serif;background:
   height:48px;background:var(--sb);display:flex;align-items:center;
   justify-content:space-between;padding:0 1.25rem;flex-shrink:0;
   border-bottom:1px solid var(--sb-border);
+  transition:border-color .2s;
+}
+.topbar.admin-mode {
+  border-bottom:2px solid rgba(196,163,90,.45);
+  background:#0e1d2c;
 }
 .topbar-brand{
   display:flex;align-items:baseline;gap:.75rem;
@@ -131,15 +136,15 @@ html,body{height:100%;overflow:hidden;font-family:'Karla',sans-serif;background:
 
 .nav-item {
   display:flex;align-items:flex-start;gap:.5rem;
-  padding:.38rem 1.1rem .38rem 1.3rem;
+  padding:.35rem 1.1rem .35rem 1.1rem;
   cursor:pointer;transition:background .12s;position:relative;
 }
 .nav-item:hover{background:var(--sb-hover)}
-.nav-item.active{background:var(--sb-active);border-left:2px solid var(--accent);padding-left:calc(1.3rem - 2px)}
+.nav-item.active{background:var(--sb-active);border-left:2px solid var(--accent);padding-left:calc(1.1rem - 2px)}
 .nav-item.locked{opacity:.35;cursor:not-allowed}
 .nav-item.locked:hover{background:transparent}
 
-.nav-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:.38rem}
+.nav-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:.55rem}
 .nav-dot.anticipe{background:var(--s-anticipe)}
 .nav-dot.en-cours{background:var(--s-encours)}
 .nav-dot.a-reviser{background:var(--s-areviser)}
@@ -147,8 +152,17 @@ html,body{height:100%;overflow:hidden;font-family:'Karla',sans-serif;background:
 .nav-dot.verrouille{background:var(--s-verrouille)}
 .nav-dot.archive{background:var(--s-archive)}
 
-.nav-label{font-size:.76rem;color:var(--sb-text);line-height:1.35;flex:1}
+.nav-body{flex:1;min-width:0}
+.nav-id{
+  font-size:.65rem;font-weight:500;letter-spacing:.06em;
+  color:var(--accent);opacity:.8;margin-bottom:.1rem;
+}
+.nav-item.active .nav-id{opacity:1;color:var(--accent)}
+.nav-item.empty-module .nav-id{opacity:.4}
+
+.nav-label{font-size:.74rem;color:var(--sb-text);line-height:1.3;flex:1}
 .nav-item.active .nav-label{color:#fff}
+.nav-item.empty-module .nav-label{color:#455a6a;font-style:italic}
 
 .nav-tags{display:flex;align-items:center;gap:.3rem;flex-shrink:0;margin-top:.15rem}
 .tag-sc{
@@ -157,6 +171,10 @@ html,body{height:100%;overflow:hidden;font-family:'Karla',sans-serif;background:
 }
 .tag-star{font-size:.65rem;color:var(--accent);opacity:.7;flex-shrink:0}
 .tag-lock{font-size:.6rem;color:var(--s-verrouille);opacity:.5;flex-shrink:0;line-height:1}
+.tag-empty{
+  font-size:.55rem;letter-spacing:.04em;color:#2e4a60;
+  border:1px solid #1e3448;padding:.1rem .3rem;border-radius:1px;flex-shrink:0;
+}
 
 .nav-empty{
   font-size:.68rem;color:#2e4050;font-style:italic;
@@ -296,6 +314,7 @@ function launch() {
   const b = document.getElementById('mode-badge');
   b.textContent = MODE === 'admin' ? 'Mode administrateur' : 'Mode consortium';
   b.className = 'mode-badge ' + MODE;
+  if (MODE === 'admin') document.querySelector('.topbar').classList.add('admin-mode');
   const d = new Date();
   document.getElementById('topbar-date').textContent =
     d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -346,20 +365,28 @@ function buildSidebar() {
     } else {
       g.entries.forEach(e => {
         const isLocked = e.locked || g.locked;
+        const isFilled = e.filled === true;
         const sc = STATUS_CLASS[e.status] || 'anticipe';
 
         const item = document.createElement('div');
-        item.className = 'nav-item' + (isLocked ? ' locked' : '') + (ACTIVE === e.id ? ' active' : '');
+        item.className = 'nav-item'
+          + (isLocked ? ' locked' : '')
+          + (!isFilled && !isLocked ? ' empty-module' : '')
+          + (ACTIVE === e.id ? ' active' : '');
         item.dataset.id = e.id;
         item.dataset.group = g.label;
         item.dataset.status = e.status;
 
         item.innerHTML = `
           <div class="nav-dot ${sc}"></div>
-          <span class="nav-label">${e.label}</span>
+          <div class="nav-body">
+            <div class="nav-id">${e.id}</div>
+            <div class="nav-label">${e.label}</div>
+          </div>
           <div class="nav-tags">
             ${e.strategic ? '<span class="tag-star">★</span>' : ''}
             ${e.scenarized ? '<span class="tag-sc">sc</span>' : ''}
+            ${!isFilled && !isLocked ? '<span class="tag-empty">vide</span>' : ''}
             ${isLocked ? '<span class="tag-lock">⊘</span>' : ''}
           </div>`;
 
@@ -411,41 +438,7 @@ function openModule(entry, groupLabel) {
   frame.src = `modules/${entry.id}.html`;
   frame.className = 'module-frame on';
 }
-document.getElementById('frame').addEventListener('load', function() {
-  try {
-    const doc = this.contentDocument;
-    if (!doc || !doc.head) return;
-    const style = doc.createElement('style');
-    style.textContent = `
-      :root {
-        --color-background-primary: #ffffff;
-        --color-background-secondary: #f5f5f5;
-        --color-background-tertiary: #eeeeee;
-        --color-text-primary: #1a1a1a;
-        --color-text-secondary: #555555;
-        --color-text-tertiary: #888888;
-        --color-border-tertiary: rgba(0,0,0,0.12);
-        --color-border-secondary: rgba(0,0,0,0.25);
-        --color-border-primary: rgba(0,0,0,0.38);
-        --font-sans: system-ui, sans-serif;
-        --font-serif: Georgia, serif;
-        --font-mono: 'Courier New', monospace;
-        --border-radius-md: 8px;
-        --border-radius-lg: 12px;
-        --border-radius-xl: 16px;
-        --color-background-info: #e6f0fb;
-        --color-text-info: #1a5fa0;
-        --color-background-success: #e6f5ec;
-        --color-text-success: #1f7040;
-        --color-background-warning: #fdf0e0;
-        --color-text-warning: #a05808;
-        --color-background-danger: #fceae8;
-        --color-text-danger: #902018;
-      }
-    `;
-    doc.head.appendChild(style);
-  } catch(e) {}
-});
+
 function restoreLast() {
   const last = localStorage.getItem('mcc_last');
   if (!last || !CFG) return;
